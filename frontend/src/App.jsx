@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Bell, Check, FileText, ChevronDown, ChevronUp, CheckCircle2, Circle, X } from 'lucide-react';
+import { DUMMY_DATA } from './data';
 
 function App() {
   const [curriculumData, setCurriculumData] = useState(null);
@@ -26,13 +27,58 @@ function App() {
         setLoading(false);
       })
       .catch(err => {
-        console.error("Failed to fetch curriculum:", err);
+        console.warn("Backend offline, using local fallback data.", err);
+        setCurriculumData(DUMMY_DATA);
         setLoading(false);
       });
   }, []);
   const [activeWeek, setActiveWeek] = useState('W1');
   const [expandedDay, setExpandedDay] = useState(1);
   const [remindersEnabled, setRemindersEnabled] = useState(false);
+  const [remindersLoading, setRemindersLoading] = useState(false);
+
+  const VAPID_PUBLIC_KEY = "BJhROTASgjO38jCsCYToHXNdrJiedDiVPypo21NZfqUC4fLbD_Xe5ev182PrAkBdkOsgvRwwghBY5BTonxG7CA0";
+
+  const urlBase64ToUint8Array = (base64String) => {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
+  };
+
+  const enableReminders = async () => {
+    if (remindersEnabled) return;
+    setRemindersLoading(true);
+    try {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        alert('Push notifications are not supported in this browser.');
+        return;
+      }
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        alert('Please allow notifications to enable reminders.');
+        return;
+      }
+      const reg = await navigator.serviceWorker.register('/sw.js');
+      await navigator.serviceWorker.ready;
+      const sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+      });
+      await fetch('http://127.0.0.1:8000/api/notifications/subscribe/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sub.toJSON())
+      });
+      setRemindersEnabled(true);
+      alert('✅ Reminders enabled! You will get notified when it\'s time to study.');
+    } catch (err) {
+      console.error('Failed to enable reminders:', err);
+      alert('Could not enable reminders. Make sure the backend is running.');
+    } finally {
+      setRemindersLoading(false);
+    }
+  };
   
   const [completedSessions, setCompletedSessions] = useState({});
   const [completedDays, setCompletedDays] = useState({});
@@ -56,16 +102,43 @@ function App() {
       .catch(err => console.error("Failed to toggle day:", err));
   };
 
+  const [answeredCurrent, setAnsweredCurrent] = useState(false);
+
   const openQuiz = (day) => {
     setActiveQuizBox(day);
     setQuizAnswers({});
     setShowQuizResult(false);
     setQuizScore(0);
     setCurrentQuestionIndex(0);
+    setAnsweredCurrent(false);
   };
 
-  const handleSelectAnswer = (qId, optionIdx) => {
-    setQuizAnswers(prev => ({ ...prev, [qId]: optionIdx }));
+  const handleSelectAnswer = (q, optionIdx) => {
+    if (answeredCurrent) return; // prevent changing answer
+    const isCorrect = optionIdx === q.correct;
+    setQuizAnswers(prev => ({ ...prev, [q.id]: optionIdx }));
+    setAnsweredCurrent(true);
+    // auto-advance after 1.2s
+    setTimeout(() => {
+      const total = activeQuizBox.questions.length;
+      if (currentQuestionIndex < total - 1) {
+        setCurrentQuestionIndex(prev => prev + 1);
+        setAnsweredCurrent(false);
+      } else {
+        // Last question: calculate score and show results
+        setQuizAnswers(prev => {
+          const finalAnswers = { ...prev, [q.id]: optionIdx };
+          let score = 0;
+          activeQuizBox.questions.forEach(ques => {
+            if (finalAnswers[ques.id] === ques.correct) score++;
+          });
+          setQuizScore(score);
+          setShowQuizResult(true);
+          if (!completedDays[activeQuizBox.id]) toggleDayComplete(activeQuizBox.id);
+          return finalAnswers;
+        });
+      }
+    }, 1200);
   };
 
   const submitQuiz = () => {
@@ -109,13 +182,16 @@ function App() {
         {/* Reminders Button */}
         <div className="mb-6">
           <button 
-            onClick={() => setRemindersEnabled(!remindersEnabled)}
+            onClick={enableReminders}
+            disabled={remindersEnabled || remindersLoading}
             className={`flex items-center gap-2 px-4 py-1.5 text-sm rounded-md border transition-colors ${
-              remindersEnabled ? 'bg-yellow-500/10 border-yellow-500/50 text-yellow-400' : 'bg-transparent border-[#444] hover:bg-[#222] text-[#ccc]'
+              remindersEnabled ? 'bg-yellow-500/10 border-yellow-500/50 text-yellow-400 cursor-default' 
+              : remindersLoading ? 'bg-[#222] border-[#444] text-[#888] cursor-wait'
+              : 'bg-transparent border-[#444] hover:bg-[#222] text-[#ccc]'
             }`}
           >
             <Bell size={16} className={remindersEnabled ? 'fill-yellow-500' : ''} />
-            {remindersEnabled ? 'Reminders Enabled' : 'Enable Reminders'}
+            {remindersLoading ? 'Setting up...' : remindersEnabled ? 'Reminders Enabled ✓' : 'Enable Reminders'}
           </button>
         </div>
 
@@ -253,78 +329,58 @@ function App() {
               
               {!showQuizResult ? (
                 <>
-                  <div className="flex justify-between items-center mb-6">
-                    <p className="text-gray-400 text-sm">
-                      Question <strong className="text-white">{currentQuestionIndex + 1}</strong> of {activeQuizBox.questions?.length}
-                    </p>
-                    <div className="text-xs text-[#555]">
-                      {Math.round(((currentQuestionIndex + 1) / activeQuizBox.questions?.length) * 100)}% Complete
+                  {/* Progress bar */}
+                  <div className="mb-5">
+                    <div className="flex justify-between text-xs text-[#666] mb-2">
+                      <span>Question <strong className="text-white">{currentQuestionIndex + 1}</strong> of {activeQuizBox.questions?.length}</span>
+                      <span>{Math.round(((currentQuestionIndex) / activeQuizBox.questions?.length) * 100)}% done</span>
+                    </div>
+                    <div className="w-full bg-[#222] rounded-full h-1.5">
+                      <div 
+                        className="bg-[#2979ff] h-1.5 rounded-full transition-all duration-500"
+                        style={{ width: `${(currentQuestionIndex / activeQuizBox.questions?.length) * 100}%` }}
+                      />
                     </div>
                   </div>
-                  
-                  <div className="space-y-6 mb-8 min-h-[220px]">
+
+                  <div className="min-h-[240px]">
                     {(() => {
                       const q = activeQuizBox.questions[currentQuestionIndex];
                       if (!q) return null;
+                      const selectedIdx = quizAnswers[q.id];
                       return (
-                        <div key={q.id} className="p-5 border border-[#333] rounded-lg bg-[#111]">
-                          <p className="text-sm font-medium text-gray-200 mb-4 leading-relaxed">{q.text}</p>
+                        <div className="p-5 border border-[#333] rounded-lg bg-[#111]">
+                          <p className="text-sm font-medium text-gray-200 mb-5 leading-relaxed">{q.text}</p>
                           <div className="flex flex-col gap-3">
                             {q.options.map((opt, optIdx) => {
-                              const isSelected = quizAnswers[q.id] === optIdx;
+                              const isSelected = selectedIdx === optIdx;
+                              const isCorrect = q.correct === optIdx;
+                              let cls = 'border-[#444] bg-[#222] hover:bg-[#333] hover:border-[#555] text-gray-300 cursor-pointer';
+                              if (answeredCurrent) {
+                                if (isCorrect) cls = 'border-[#00e676] bg-[#00e676]/20 text-[#00e676] font-semibold cursor-default';
+                                else if (isSelected) cls = 'border-[#ff3d00] bg-[#ff3d00]/20 text-[#ff3d00] cursor-default';
+                                else cls = 'border-[#333] bg-[#1a1a1a] text-[#555] cursor-default';
+                              }
                               return (
-                                <button 
+                                <button
                                   key={optIdx}
-                                  onClick={() => handleSelectAnswer(q.id, optIdx)} 
-                                  className={`text-left px-4 py-3 text-sm border rounded-md transition-colors ${
-                                    isSelected 
-                                      ? 'border-[#2979ff] bg-[#2979ff]/20 text-[#2979ff]' 
-                                      : 'border-[#444] bg-[#222] hover:bg-[#333] hover:border-[#555] text-gray-300'
-                                  }`}
+                                  onClick={() => handleSelectAnswer(q, optIdx)}
+                                  disabled={answeredCurrent}
+                                  className={`text-left px-4 py-3 text-sm border rounded-md transition-all duration-300 flex justify-between items-center ${cls}`}
                                 >
-                                  {opt}
+                                  <span>{opt}</span>
+                                  {answeredCurrent && isCorrect && <span className="text-xs font-bold">✓ Correct</span>}
+                                  {answeredCurrent && isSelected && !isCorrect && <span className="text-xs font-bold">✗ Wrong</span>}
                                 </button>
                               );
                             })}
                           </div>
+                          {answeredCurrent && (
+                            <p className="text-center text-xs text-[#666] mt-4 animate-pulse">Moving to next question...</p>
+                          )}
                         </div>
-                      )
+                      );
                     })()}
-                  </div>
-
-                  <div className="flex gap-3">
-                    <button 
-                      onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
-                      disabled={currentQuestionIndex === 0}
-                      className="px-4 py-2.5 bg-[#222] hover:bg-[#333] border border-[#444] rounded-lg text-white font-medium disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                    >
-                      Previous
-                    </button>
-                    {currentQuestionIndex < (activeQuizBox.questions?.length || 1) - 1 ? (
-                      <button 
-                        onClick={() => setCurrentQuestionIndex(prev => prev + 1)}
-                        className={`flex-1 py-2.5 rounded-lg text-white font-medium transition-colors ${
-                          quizAnswers[activeQuizBox.questions[currentQuestionIndex].id] !== undefined 
-                            ? 'bg-[#2979ff] hover:bg-blue-600' 
-                            : 'bg-[#444] text-[#888] cursor-not-allowed'
-                        }`}
-                        disabled={quizAnswers[activeQuizBox.questions[currentQuestionIndex].id] === undefined}
-                      >
-                        Next Question
-                      </button>
-                    ) : (
-                      <button 
-                        onClick={submitQuiz}
-                        className={`flex-1 py-2.5 rounded-lg text-black font-medium transition-colors ${
-                          Object.keys(quizAnswers).length === activeQuizBox.questions?.length
-                            ? 'bg-[#00e676] hover:bg-[#00c853]'
-                            : 'bg-[#444] text-[#888] cursor-not-allowed'
-                        }`}
-                        disabled={Object.keys(quizAnswers).length !== activeQuizBox.questions?.length}
-                      >
-                         Submit Answers
-                      </button>
-                    )}
                   </div>
                 </>
               ) : (

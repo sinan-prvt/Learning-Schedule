@@ -44,7 +44,6 @@ INSTALLED_APPS = [
 
     # Custom
     'tasks',
-    'evaluations',
     'notifications',
 ]
 
@@ -128,3 +127,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# VAPID Keys for Web Push Notifications
+VAPID_PUBLIC_KEY = "BJhROTASgjO38jCsCYToHXNdrJiedDiVPypo21NZfqUC4fLbD_Xe5ev182PrAkBdkOsgvRwwghBY5BTonxG7CA0"
+VAPID_PRIVATE_KEY = """-----BEGIN PRIVATE KEY-----
+MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgLAXeDSQy+TOlTj73
+MQJEJk+FGWXVKmpr4tHJDnB1+ouhRANCAASQua3T53CDSnW0jsCbmq3p/sRQPESM
+W5+NWL7Gks2/9xpgvNbWqPLzoPfi869iNPssiJj1hvrmhCDCxlvw7xms
+-----END PRIVATE KEY-----"""
+VAPID_ADMIN_EMAIL = "admin@learningschedule.local"
+
