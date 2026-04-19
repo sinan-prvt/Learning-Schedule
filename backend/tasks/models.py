@@ -37,3 +37,25 @@ class Question(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class InterviewQuestion(models.Model):
+    LEVEL_CHOICES = [
+        ('Junior', 'Junior'),
+        ('Mid', 'Mid'),
+        ('Senior', 'Senior'),
+    ]
+    TYPE_CHOICES = [
+        ('Conceptual', 'Conceptual'),
+        ('Coding', 'Coding'),
+        ('Scenario', 'Scenario'),
+    ]
+
+    day = models.ForeignKey(Day, related_name='interview_questions', on_delete=models.CASCADE)
+    question = models.TextField()
+    answer = models.TextField()
+    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default='Junior')
+    type = models.CharField(max_length=15, choices=TYPE_CHOICES, default='Conceptual')
+
+    def __str__(self):
+        return f"[{self.level}][{self.type}] {self.question[:60]}"

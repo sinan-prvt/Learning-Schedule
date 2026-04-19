@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Bell, Check, FileText, ChevronDown, ChevronUp, CheckCircle2, Circle, X } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Bell, Check, FileText, ChevronDown, ChevronUp, CheckCircle2, Circle, X, BookOpen, Briefcase, Award, GraduationCap } from 'lucide-react';
 import { DUMMY_DATA } from './data';
 
 function App() {
@@ -7,9 +7,14 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/curriculum/')
-      .then(res => res.json())
+    // Using localhost instead of 127.0.0.1 to avoid common hostname resolution issues
+    fetch('http://localhost:8000/api/curriculum/')
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
       .then(data => {
+        console.log("✅ Backend curriculum loaded successfully.");
         setCurriculumData(data);
         
         const initialCompletedDays = {};
@@ -90,6 +95,11 @@ function App() {
   const [quizScore, setQuizScore] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
+  // Interview State
+  const [activeInterviewBox, setActiveInterviewBox] = useState(null);
+  const [selectedLevel, setSelectedLevel] = useState('All');
+  const [expandedInterviewQ, setExpandedInterviewQ] = useState(null);
+
   const toggleSession = (sessionId) => {
     setCompletedSessions(prev => ({ ...prev, [sessionId]: !prev[sessionId] }));
     fetch(`http://127.0.0.1:8000/api/toggle/session/${sessionId}/`, { method: 'PATCH' })
@@ -152,6 +162,18 @@ function App() {
     setShowQuizResult(true);
     if (!completedDays[activeQuizBox.id]) toggleDayComplete(activeQuizBox.id);
   };
+
+  const openInterview = (day) => {
+    setActiveInterviewBox(day);
+    setSelectedLevel('All');
+    setExpandedInterviewQ(null);
+  };
+
+  const filteredInterviewQuestions = useMemo(() => {
+    if (!activeInterviewBox) return [];
+    if (selectedLevel === 'All') return activeInterviewBox.interview_questions || [];
+    return (activeInterviewBox.interview_questions || []).filter(q => q.level === selectedLevel);
+  }, [activeInterviewBox, selectedLevel]);
 
   const filteredDays = curriculumData ? curriculumData.days.filter(day => day.weekId === activeWeek) : [];
 
@@ -308,6 +330,12 @@ function App() {
                       >
                         <FileText size={16} /> Take Quiz
                       </button>
+                      <button 
+                        onClick={() => openInterview(day)}
+                        className="flex items-center gap-2 px-4 py-2 bg-transparent hover:bg-orange-500/10 border border-orange-500/50 rounded-lg text-orange-500 text-sm font-medium transition-colors"
+                      >
+                        <Briefcase size={16} /> Interview Prep
+                      </button>
                     </div>
                   </div>
                 )}
@@ -438,6 +466,113 @@ function App() {
                   </button>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Interview Prep Modal */}
+        {activeInterviewBox && (
+          <div className="fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+            <div className="bg-[#1a1a1a] border border-[#333] rounded-2xl shadow-2xl max-w-2xl w-full p-0 animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+              {/* Modal Header */}
+              <div className="p-6 border-b border-[#333] flex justify-between items-center bg-[#1e1e1e] rounded-t-2xl">
+                <div>
+                  <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                    <Briefcase className="text-orange-500" size={24} /> Interview Preparation
+                  </h3>
+                  <p className="text-gray-400 text-xs mt-1">{activeInterviewBox.topic}</p>
+                </div>
+                <button 
+                  onClick={() => setActiveInterviewBox(null)} 
+                  className="p-2 rounded-full hover:bg-[#333] text-gray-400 hover:text-white transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* level Tabs */}
+              <div className="flex border-b border-[#333] bg-[#1a1a1a]">
+                {['All', 'Junior', 'Mid', 'Senior'].map(level => (
+                  <button
+                    key={level}
+                    onClick={() => setSelectedLevel(level)}
+                    className={`flex-1 py-3 text-xs font-semibold transition-all relative ${
+                      selectedLevel === level ? 'text-orange-500' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {level}
+                    {selectedLevel === level && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)]"></div>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {/* Questions List */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                {filteredInterviewQuestions.length === 0 ? (
+                  <div className="text-center py-12">
+                    <BookOpen size={48} className="mx-auto text-[#333] mb-4" />
+                    <p className="text-gray-500">No interview questions found for this level yet.</p>
+                  </div>
+                ) : (
+                  filteredInterviewQuestions.map((q, idx) => (
+                    <div 
+                      key={q.id || idx} 
+                      className="border border-[#222] rounded-xl bg-[#111] overflow-hidden transition-all hover:border-[#333]"
+                    >
+                      <button 
+                        onClick={() => setExpandedInterviewQ(expandedInterviewQ === q.id ? null : q.id)}
+                        className="w-full text-left p-4 flex items-start justify-between gap-4"
+                      >
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <span className={`text-[10px] px-2 py-0.5 rounded uppercase font-bold tracking-wider ${
+                              q.level === 'Junior' ? 'bg-green-500/10 text-green-500' :
+                              q.level === 'Mid' ? 'bg-blue-500/10 text-blue-500' :
+                              'bg-purple-500/10 text-purple-500'
+                            }`}>
+                              {q.level}
+                            </span>
+                            <span className="text-[10px] px-2 py-0.5 rounded uppercase font-bold tracking-wider bg-orange-500/10 text-orange-500">
+                              {q.type}
+                            </span>
+                          </div>
+                          <h4 className="text-sm font-semibold text-gray-200 leading-snug">
+                            {q.question}
+                          </h4>
+                        </div>
+                        <div className={`mt-1 shrink-0 text-gray-600 transition-transform duration-200 ${expandedInterviewQ === q.id ? 'rotate-180' : ''}`}>
+                          <ChevronDown size={18} />
+                        </div>
+                      </button>
+                      
+                      {expandedInterviewQ === q.id && (
+                        <div className="p-4 pt-0 border-t border-[#222] animate-in slide-in-from-top-2 duration-200">
+                          <div className="flex gap-3 mt-4">
+                            <div className="mt-1 shrink-0">
+                              <CheckCircle2 size={16} className="text-[#00e676]" />
+                            </div>
+                            <div className="text-sm text-gray-400 leading-relaxed whitespace-pre-wrap">
+                              {q.answer}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* footer */}
+              <div className="p-6 border-t border-[#333] bg-[#1e1e1e] rounded-b-2xl">
+                <button 
+                  onClick={() => setActiveInterviewBox(null)}
+                  className="w-full py-3 bg-[#333] hover:bg-[#444] text-white rounded-xl text-sm font-bold transition-all"
+                >
+                  Done Reviewing
+                </button>
+              </div>
             </div>
           </div>
         )}

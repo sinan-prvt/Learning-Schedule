@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Week, Day, Session, Question
+from .models import Week, Day, Session, Question, InterviewQuestion
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,6 +13,12 @@ class QuestionSerializer(serializers.ModelSerializer):
         return ret
 
 
+class InterviewQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InterviewQuestion
+        fields = ['id', 'question', 'answer', 'level', 'type']
+
+
 class SessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Session
@@ -22,13 +28,14 @@ class SessionSerializer(serializers.ModelSerializer):
 class DaySerializer(serializers.ModelSerializer):
     sessions = SessionSerializer(many=True, read_only=True)
     questions = QuestionSerializer(many=True, read_only=True)
+    interview_questions = InterviewQuestionSerializer(many=True, read_only=True)
     sessionsCount = serializers.SerializerMethodField()
     weekId = serializers.CharField(source='week.week_id', read_only=True)
     day = serializers.IntegerField(source='day_number', read_only=True)
 
     class Meta:
         model = Day
-        fields = ['id', 'weekId', 'day', 'topic', 'category', 'duration', 'is_completed', 'sessionsCount', 'sessions', 'questions']
+        fields = ['id', 'weekId', 'day', 'topic', 'category', 'duration', 'is_completed', 'sessionsCount', 'sessions', 'questions', 'interview_questions']
 
     def get_sessionsCount(self, obj):
         return obj.sessions.count()
