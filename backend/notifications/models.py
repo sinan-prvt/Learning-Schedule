@@ -16,6 +16,7 @@ class GlobalPreference(models.Model):
     curriculum_start_date = models.DateField(null=True, blank=True)
     daily_reminder_time = models.TimeField(default="09:00:00")
     is_enabled = models.BooleanField(default=False)
+    last_sent_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"Settings (Start: {self.curriculum_start_date})"

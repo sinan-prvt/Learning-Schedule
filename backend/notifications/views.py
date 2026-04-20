@@ -71,5 +71,29 @@ class PreferencesView(APIView):
         if 'is_enabled' in data:
             pref.is_enabled = data['is_enabled']
             
+        # Reset sent status so the user can test multiple times a day
+        pref.last_sent_date = None
         pref.save()
         return Response({"status": "success"})
+
+
+class TestPingView(APIView):
+    """Sends a direct 'Ping!' notification to the most recent subscriber."""
+    def post(self, request):
+        sub = PushSubscription.objects.last()
+        if not sub:
+            return Response({'error': 'No active subscription found. Please subscribe first.'}, status=400)
+
+        try:
+            webpush(
+                subscription_info={
+                    "endpoint": sub.endpoint,
+                    "keys": {"p256dh": sub.p256dh, "auth": sub.auth}
+                },
+                data=json.dumps({"title": "Sync Test 🚀", "body": "Your browser is successfully connected to the roadmap!"}),
+                vapid_private_key=settings.VAPID_PRIVATE_KEY,
+                vapid_claims={"sub": f"mailto:{settings.VAPID_ADMIN_EMAIL}"}
+            )
+            return Response({'status': 'success'})
+        except WebPushException as ex:
+            return Response({'error': str(ex)}, status=500)

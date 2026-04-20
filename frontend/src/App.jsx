@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Bell, Check, FileText, ChevronDown, ChevronUp, CheckCircle2, Circle, X, BookOpen, Briefcase, Award, GraduationCap, Calendar, Clock, Save } from 'lucide-react';
+import { Bell, Check, FileText, ChevronDown, ChevronUp, CheckCircle2, Circle, X, BookOpen, Briefcase, Award, GraduationCap } from 'lucide-react';
 import { DUMMY_DATA } from './data';
 
 function App() {
   const [curriculumData, setCurriculumData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Scheduling State
-  const [startDate, setStartDate] = useState('');
-  const [reminderTime, setReminderTime] = useState('09:00');
-  const [isSchedulingEnabled, setIsSchedulingEnabled] = useState(false);
-  const [savingPrefs, setSavingPrefs] = useState(false);
 
   useEffect(() => {
     // Fetch curriculum
@@ -36,97 +31,10 @@ function App() {
         setLoading(false);
       });
 
-    // Fetch preferences
-    fetch('http://localhost:8000/api/notifications/preferences/')
-      .then(res => res.json())
-      .then(data => {
-        if (data.start_date) setStartDate(data.start_date);
-        if (data.reminder_time) setReminderTime(data.reminder_time.substring(0, 5));
-        setIsSchedulingEnabled(data.is_enabled);
-      })
-      .catch(err => console.error("Failed to load preferences:", err));
   }, []);
-
-  const savePreferences = async () => {
-    setSavingPrefs(true);
-    try {
-      await fetch('http://localhost:8000/api/notifications/preferences/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          start_date: startDate,
-          reminder_time: reminderTime,
-          is_enabled: isSchedulingEnabled
-        })
-      });
-      alert('✅ Schedule saved successfully!');
-    } catch (err) {
-      alert('Failed to save schedule.');
-    } finally {
-      setSavingPrefs(false);
-    }
-  };
 
   const [activeWeek, setActiveWeek] = useState('W1');
   const [expandedDay, setExpandedDay] = useState(1);
-  const [remindersEnabled, setRemindersEnabled] = useState(false);
-  const [remindersLoading, setRemindersLoading] = useState(false);
-
-  const VAPID_PUBLIC_KEY = "BP1VlZr5Q0voixadWsDuGkvbcbCnGRIKRP8DPoTfNrJOf8VxQZsctyFHRN5VcqGCC9c5QPVUyl7O0hhxXZVF5BY";
-
-  const urlBase64ToUint8Array = (base64String) => {
-    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-    const rawData = window.atob(base64);
-    return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
-  };
-
-  const enableReminders = async () => {
-    if (remindersEnabled) return;
-    setRemindersLoading(true);
-    try {
-      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-        alert('Push notifications are not supported in this browser.');
-        return;
-      }
-      const permission = await Notification.requestPermission();
-      if (permission !== 'granted') {
-        alert('Please allow notifications to enable reminders.');
-        return;
-      }
-      
-      const reg = await navigator.serviceWorker.register('/sw.js');
-      await navigator.serviceWorker.ready;
-      
-      // Cleanup: Check for and unsubscribe from any existing subscription to avoid key mismatch
-      const existingSub = await reg.pushManager.getSubscription();
-      if (existingSub) {
-        console.log("Unsubscribing from existing push subscription...");
-        await existingSub.unsubscribe();
-      }
-
-      const sub = await reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
-      });
-
-      const response = await fetch('http://localhost:8000/api/notifications/subscribe/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sub.toJSON())
-      });
-
-      if (!response.ok) throw new Error('Backend failed to save subscription');
-      
-      setRemindersEnabled(true);
-      alert('✅ Reminders enabled! You will get notified when it\'s time to study.');
-    } catch (err) {
-      console.error('Failed to enable reminders:', err);
-      alert(`Could not enable reminders: ${err.message}`);
-    } finally {
-      setRemindersLoading(false);
-    }
-  };
   
   const [completedSessions, setCompletedSessions] = useState({});
   const [completedDays, setCompletedDays] = useState({});
@@ -242,76 +150,6 @@ function App() {
           <p className="text-[#8c8c8c] text-sm mt-1">
             8 hrs/day • 6 days/week • Intermediate • Python → Django → DRF → ORM → FastAPI → AWS → React → Redux
           </p>
-        </div>
-
-        {/* Scheduling & Notifications Panel */}
-        <div className="mb-8 p-6 bg-[#1a1a1a] border border-[#333] rounded-2xl shadow-sm">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="space-y-4 flex-1">
-              <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <Calendar className="text-indigo-400" size={20} /> Schedule Your Learning
-              </h3>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Start Date</label>
-                  <div className="relative">
-                    <input 
-                      type="date" 
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                      className="w-full bg-[#111] border border-[#333] rounded-lg px-4 py-2.5 text-sm text-white focus:border-indigo-500 focus:outline-none transition-colors"
-                    />
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Reminder Time</label>
-                  <div className="relative">
-                    <input 
-                      type="time" 
-                      value={reminderTime}
-                      onChange={(e) => setReminderTime(e.target.value)}
-                      className="w-full bg-[#111] border border-[#333] rounded-lg px-4 py-2.5 text-sm text-white focus:border-indigo-500 focus:outline-none transition-colors"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 pt-2">
-                <button 
-                  onClick={() => setIsSchedulingEnabled(!isSchedulingEnabled)}
-                  className={`relative inline-flex h-5 w-10 items-center rounded-full transition-colors ${isSchedulingEnabled ? 'bg-indigo-600' : 'bg-[#333]'}`}
-                >
-                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isSchedulingEnabled ? 'translate-x-5' : 'translate-x-1'}`} />
-                </button>
-                <span className="text-sm font-medium text-gray-300">Enable Daily Reminders</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-3">
-              <button 
-                onClick={savePreferences}
-                disabled={savingPrefs}
-                className="flex items-center justify-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-600/50 text-white rounded-lg text-sm font-bold transition-all shadow-lg shadow-indigo-600/20"
-              >
-                <Save size={18} /> {savingPrefs ? 'Saving...' : 'Save Schedule'}
-              </button>
-
-              <button 
-                onClick={enableReminders}
-                disabled={remindersEnabled || remindersLoading}
-                className={`flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg border text-sm font-bold transition-all ${
-                  remindersEnabled ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-500' 
-                  : remindersLoading ? 'bg-[#222] border-[#444] text-[#888] cursor-wait'
-                  : 'bg-transparent border-[#444] hover:bg-[#222] text-[#ccc]'
-                }`}
-              >
-                <Bell size={18} className={remindersEnabled ? 'fill-emerald-500' : ''} />
-                {remindersLoading ? 'Setup...' : remindersEnabled ? 'Subscribed ✓' : 'Subscribe to Push'}
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Week Pill Selector */}
