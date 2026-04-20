@@ -9,3 +9,13 @@ class PushSubscription(models.Model):
 
     def __str__(self):
         return f"Subscription @ {self.endpoint[:80]}..."
+
+
+class GlobalPreference(models.Model):
+    """Stores global user preferences for the roadmap scheduling."""
+    curriculum_start_date = models.DateField(null=True, blank=True)
+    daily_reminder_time = models.TimeField(default="09:00:00")
+    is_enabled = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Settings (Start: {self.curriculum_start_date})"

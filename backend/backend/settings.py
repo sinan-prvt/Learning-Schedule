@@ -10,10 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -129,11 +132,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # VAPID Keys for Web Push Notifications
-VAPID_PUBLIC_KEY = "BJhROTASgjO38jCsCYToHXNdrJiedDiVPypo21NZfqUC4fLbD_Xe5ev182PrAkBdkOsgvRwwghBY5BTonxG7CA0"
-VAPID_PRIVATE_KEY = """-----BEGIN PRIVATE KEY-----
-MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgLAXeDSQy+TOlTj73
-MQJEJk+FGWXVKmpr4tHJDnB1+ouhRANCAASQua3T53CDSnW0jsCbmq3p/sRQPESM
-W5+NWL7Gks2/9xpgvNbWqPLzoPfi869iNPssiJj1hvrmhCDCxlvw7xms
------END PRIVATE KEY-----"""
-VAPID_ADMIN_EMAIL = "admin@learningschedule.local"
+VAPID_PUBLIC_KEY = os.getenv("VAPID_PUBLIC_KEY", "BP1VlZr5Q0voixadWsDuGkvbcbCnGRIKRP8DPoTfNrJOf8VxQZsctyFHRN5VcqGCC9c5QPVUyl7O0hhxXZVF5BY")
+VAPID_PRIVATE_KEY = os.getenv("VAPID_PRIVATE_KEY", "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg_B2yTAu33hg-zOv2XsqfwD7YHjI3EoOTzxAvKmuqEA-hRANCAAT9VZWa-UNL6IsWnVrA7hpL23GwpxkSCkT_Az6E3zayTn_FcUGbHLchR0TeVXKhggvXOUD1VMpeztIYcV2VReQW")
+VAPID_ADMIN_EMAIL = os.getenv("VAPID_ADMIN_EMAIL", "admin@learningschedule.local")
 
