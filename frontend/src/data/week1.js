@@ -1,0 +1,232 @@
+export const week1 = {
+  id: "W1",
+  title: "Python Mastery",
+  days: [
+    {
+      day_number: 1,
+      topic: "Python Introduction & Basics",
+      category: "Python",
+      duration: "8h",
+      sessions: [
+        { time: "09:00 AM", title: "Installation & Environment Setup", description: "Installing Python, setting up VS Code, and understanding the interpreter vs. compiler." },
+        { time: "11:00 AM", title: "Variables & Data Types", description: "Integers, floats, strings, booleans, and type casting in depth." },
+        { time: "01:00 PM", title: "Control Flow: Conditionals", description: "Mastering if-elif-else statements and logical operators." },
+        { time: "03:00 PM", title: "Loops: For & While", description: "Iterating through ranges and sequences, using break and continue." },
+        { time: "05:00 PM", title: "Basic Input/Output", description: "Using print formatting (f-strings) and taking user input." }
+      ],
+      quiz: [
+        { text: "Who developed Python?", options: ["Dennis Ritchie", "Guido van Rossum", "James Gosling", "Bjarne Stroustrup"], correct: 1 },
+        { text: "Python is an ___ language.", options: ["Interpreted", "Compiled", "Machine", "Assembly"], correct: 0 },
+        { text: "Which file extension is used for Python files?", options: [".pyt", ".py", ".pyth", ".p"], correct: 1 },
+        { text: "How do you start a single-line comment in Python?", options: ["//", "/*", "#", "--"], correct: 2 },
+        { text: "What is the output of print(type(5.0))?", options: ["<class 'int'>", "<class 'float'>", "<class 'number'>", "<class 'double'>"], correct: 1 },
+        { text: "Which of these is a valid variable name?", options: ["1_variable", "variable-name", "variable_name", "variable name"], correct: 2 },
+        { text: "How do you create a variable with the numeric value 5?", options: ["x = float(5)", "x = int(5)", "x = 5", "All of the above"], correct: 3 },
+        { text: "Which operator is used for exponentiation?", options: ["^", "**", "//", "exp"], correct: 1 },
+        { text: "What is the correct way to declare a function in Python?", options: ["function myFunc():", "def myFunc():", "void myFunc():", "func myFunc():"], correct: 1 },
+        { text: "Which of the following is used for block indentation in Python?", options: ["Curly braces", "Parentheses", "Whitespace", "Semicolons"], correct: 2 },
+        { text: "What is the output of print(2 * 3 + 4)?", options: ["14", "10", "24", "12"], correct: 1 },
+        { text: "Which keyword is used to stop a loop?", options: ["stop", "exit", "break", "return"], correct: 2 },
+        { text: "What is the outcome of 10 // 3?", options: ["3.33", "3", "4", "3.0"], correct: 1 },
+        { text: "Which built-in function returns the length of an object?", options: ["size()", "count()", "length()", "len()"], correct: 3 },
+        { text: "What is the result of 'Hello' + 'World'?", options: ["Hello World", "HelloWorld", "Error", "Hello+World"], correct: 1 }
+      ],
+      interview: [
+        { level: "Junior", q: "What are the benefits of using Python?", a: "Python is easy to learn, highly readable, has a massive library ecosystem (standard and third-party), and is cross-platform.", type: "Conceptual" },
+        { level: "Junior", q: "What is the difference between an interpreted and a compiled language?", a: "Compiled languages translate the whole code into machine code before execution (e.g., C++). Interpreted languages translate code line-by-line during execution (e.g., Python).", type: "Conceptual" },
+        { level: "Junior", q: "What is PEP 8?", a: "PEP 8 is Python's style guide. It provides guidelines on how to format Python code for maximum readability.", type: "Conceptual" },
+        { level: "Mid", q: "How is memory managed in Python?", a: "Python uses a private heap to store objects. It employs reference counting and a cyclic garbage collector to manage memory automatically.", type: "Conceptual" },
+        { level: "Mid", q: "Explain the difference between / and // operators.", a: "/ is floating-point division (returns a float). // is floor division (rounds down to the nearest integer).", type: "Conceptual" },
+        { level: "Mid", q: "What are 'f-strings' and why are they preferred?", a: "Formatted string literals. They allow embedding expressions inside strings using {}. They are faster and more readable than % or .format().", type: "Conceptual" },
+        { level: "Mid", q: "What is the purpose of the 'pass' statement?", a: "It is a null operation. It serves as a placeholder when a statement is syntactically required but you don't want any command or code to execute.", type: "Conceptual" },
+        { level: "Mid", q: "How do you handle exceptions in Python?", a: "Using try-except-finally blocks. You 'try' a block of code, catch specific exceptions in 'except', and always run cleanup in 'finally'.", type: "Conceptual" },
+        { level: "Senior", q: "Is Python pass-by-value or pass-by-reference?", a: "Python is 'pass-by-object-reference'. If you pass a mutable object, changes inside the function affect the original. If immutable, it behaves like pass-by-value.", type: "Conceptual" },
+        { level: "Senior", q: "Explain the Global Interpreter Lock (GIL).", a: "A mutex that allows only one thread to hold the control of the Python interpreter, meaning only one thread can execute Python bytecode at a time.", type: "Conceptual" },
+        { level: "Senior", q: "How does the garbage collector handle circular references?", a: "While standard reference counting fails for circular references, Python's GC specifically tracks and detects unreachable cycles to clean them up.", type: "Conceptual" },
+        { level: "Senior", q: "What is the difference between __str__ and __repr__?", a: "__str__ is for end-users (informal). __repr__ is for developers (formal/debugging, should ideally be valid Python code to recreate the object).", type: "Conceptual" }
+      ]
+    },
+    {
+      day_number: 2,
+      topic: "Data Structures",
+      category: "Python",
+      duration: "8h",
+      sessions: [
+        { time: "09:00 AM", title: "Lists & Tuples", description: "Understanding mutability vs immutability and sequence operations." },
+        { time: "11:00 AM", title: "Dictionaries & JSON", description: "Key-value pairs, nested structures, and working with external data." },
+        { time: "01:00 PM", title: "Sets & Frozensets", description: "Uniqueness, set operations (union, intersection), and performance benefits." },
+        { time: "03:00 PM", title: "List & Dict Comprehensions", description: "Writing clean, efficient, and Pythonic one-liner transformations." },
+        { time: "05:00 PM", title: "Common Algorithms", description: "Sorting lists, searching elements, and sequence slicing mastery." }
+      ],
+      quiz: [
+        { text: "Which of these is a mutable data type?", options: ["Tuple", "String", "List", "Integer"], correct: 2 },
+        { text: "How do you add an element to the end of a list?", options: ["list.add(x)", "list.insert(x)", "list.append(x)", "list.push(x)"], correct: 2 },
+        { text: "Which data structure uses keys and values?", options: ["Set", "List", "Dictionary", "Tuple"], correct: 2 },
+        { text: "What is the output of len([1, 2, [3, 4]])?", options: ["4", "3", "2", "Error"], correct: 1 },
+        { text: "Tuples are defined using which brackets?", options: ["[]", "{}", "()", "<>"], correct: 2 },
+        { text: "Which method removes an element from a set but fails if it doesn't exist?", options: ["discard()", "remove()", "pop()", "clear()"], correct: 1 },
+        { text: "What is the complexity of accessing a dictionary value by key?", options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], correct: 0 },
+        { text: "How do you slice a list 'L' to get the first 3 elements?", options: ["L[0,3]", "L[:3]", "L[1:3]", "L[3:]"], correct: 1 },
+        { text: "Which keyword creates a shallow copy of a list?", options: ["copy()", "list()", "L[:]", "All of the above"], correct: 3 },
+        { text: "What is the time complexity of 'x in my_list' for a list of size n?", options: ["O(1)", "O(n)", "O(log n)", "O(1) if sorted"], correct: 1 },
+        { text: "Dictionaries can have duplicate keys.", options: ["True", "False"], correct: 1 },
+        { text: "Which command removes the last element and returns it?", options: ["remove()", "pop()", "delete()", "discard()"], correct: 1 },
+        { text: "Sets are ordered sequences.", options: ["True", "False"], correct: 1 },
+        { text: "How do you create an empty set in Python?", options: ["s = {}", "s = set()", "s = []", "s = set([])"], correct: 1 },
+        { text: "Which of the following can be used as a dictionary key?", options: ["List", "Set", "Tuple", "Dictionary"], correct: 2 }
+      ],
+      interview: [
+        { level: "Junior", q: "Difference between a List and a Tuple?", a: "Lists are mutable and use []. Tuples are immutable and use (). Tuples are generally faster and safer for fixed data.", type: "Conceptual" },
+        { level: "Junior", q: "How do you remove duplicates from a list?", a: "The easiest way is to convert the list to a set: list(set(my_list)).", type: "Coding" },
+        { level: "Junior", q: "What is a 'shallow copy' vs a 'deep copy'?", a: "Shallow copy creates a new object but references the internal child objects. Deep copy creates a new object and recursively copies all internal children.", type: "Conceptual" },
+        { level: "Mid", q: "Explain list comprehensions.", a: "A concise way to create lists. Syntax: [expression for item in iterable if condition]. It is usually faster than a for loop.", type: "Conceptual" },
+        { level: "Mid", q: "When should you use a Dictionary instead of a List?", a: "When you need to look up values based on a unique key rather than an index. Dictionaries provide O(1) lookup on average.", type: "Scenario" },
+        { level: "Mid", q: "What is the difference between .remove() and .pop() on a list?", a: "remove(x) deletes the first occurrence of the value x. pop(i) removes and returns the element at index i.", type: "Conceptual" },
+        { level: "Mid", q: "Can a list be used as a dictionary key? Why?", a: "No, because dictionary keys must be hashable and immutable. Lists are mutable and therefore not hashable.", type: "Conceptual" },
+        { level: "Senior", q: "How do dictionaries handle collisions under the hood?", a: "Python dictionaries use open addressing with pseudo-random probing to handle hash collisions.", type: "Conceptual" },
+        { level: "Senior", q: "Explain the performance difference between 'in' for lists vs sets.", a: "For lists, 'in' is O(n) as it iterates. For sets, it is O(1) on average because sets use hashing.", type: "Conceptual" },
+        { level: "Senior", q: "What is a 'frozenset' and when would you use it?", a: "An immutable version of a set. Use it when you need a set that can be used as a dictionary key or an element of another set.", type: "Conceptual" },
+        { level: "Senior", q: "What is the 'collections' module?", a: "A module providing specialized container datatypes like Counter, deque, namedtuple, OrderedDict, and defaultdict.", type: "Conceptual" },
+        { level: "Senior", q: "How does Python handle memory for small integers?", a: "Python pre-allocates (interns) integers in the range [-5, 256] to save memory and time.", type: "Conceptual" }
+      ]
+    },
+    {
+      day_number: 3,
+      topic: "Functions & Iterables",
+      category: "Python",
+      duration: "8h",
+      sessions: [
+        { time: "09:00 AM", title: "Defining Functions & Scope", description: "Mastering def, return, global vs local variables, and LEGB rule." },
+        { time: "11:00 AM", title: "Arguments & Parameters", description: "Positional, keyword, default values, *args, and **kwargs." },
+        { time: "01:00 PM", title: "Lambda Functions & Higher Order Functions", description: "Anonymous functions, map, filter, and reduce." },
+        { time: "03:00 PM", title: "Iterators & Generators", description: "Understanding the iterator protocol (__iter__, __next__) and using yield." },
+        { time: "05:00 PM", title: "Recursion & Decorators", description: "Recursive problem solving and wrapping functions with @syntax." }
+      ],
+      quiz: [
+        { text: "How do you define a function in Python?", options: ["function name():", "def name():", "void name():", "func name():"], correct: 1 },
+        { text: "What keyword is used to return a value from a function?", options: ["give", "yield", "return", "back"], correct: 2 },
+        { text: "What is '*args' used for in function definitions?", options: ["Named arguments", "Variable number of positional arguments", "Keyword arguments", "Default values"], correct: 1 },
+        { text: "What is '**kwargs' used for?", options: ["Dictionary of keyword arguments", "List of arguments", "Global variables", "None of the above"], correct: 0 },
+        { text: "Which keyword creates an anonymous function?", options: ["def", "func", "lambda", "inline"], correct: 2 },
+        { text: "What does the 'yield' keyword do?", options: ["Exits a function", "Returns a list", "Creates a generator", "Pauses execution"], correct: 2 },
+        { text: "What is the global scope search order in Python?", options: ["Local, Enclosing, Global, Built-in", "Global, Local, Built-in", "Enclosing, Local, Global", "Built-in, Global, Enclosing"], correct: 0 },
+        { text: "A function that calls itself is called ___.", options: ["Infinite", "Recursive", "Repetitive", "Self-aware"], correct: 1 },
+        { text: "Which built-in function applies a function to all items in an iterable?", options: ["apply()", "map()", "filter()", "each()"], correct: 1 },
+        { text: "What is the output of (lambda x: x*2)(5)?", options: ["10", "52", "x*2", "Error"], correct: 0 },
+        { text: "Can a function return multiple values in Python?", options: ["No", "Yes, as a tuple", "Yes, as a list only", "Yes, using multiple return statements"], correct: 1 },
+        { text: "Which decorator is used to define a static method in a class?", options: ["@static", "@classmethod", "@staticmethod", "@property"], correct: 2 },
+        { text: "What is a 'closure' in Python?", options: ["Closing a file", "A function object that remembers values in enclosing scopes", "Ending a loop", "A private class member"], correct: 1 },
+        { text: "Iterators must implement which methods?", options: ["__start__, __next__", "__get__, __set__", "__iter__, __next__", "__call__, __iter__"], correct: 2 },
+        { text: "What is the purpose of the 'nonlocal' keyword?", options: ["Accessing global variables", "Accessing variables in the nearest biological scope", "Defining public variables", "None of the above"], correct: 1 },
+        { text: "Which function returns a list of attributes and methods of any object?", options: ["help()", "dir()", "list()", "attr()"], correct: 1 }
+      ],
+      interview: [
+        { level: "Junior", q: "What is the result of '1' + 1 in Python?", a: "It results in a TypeError because Python does not support implicit type conversion between strings and integers.", type: "Conceptual" },
+        { level: "Junior", q: "What are *args and **kwargs?", a: "*args allows passing a variable number of positional arguments. **kwargs allows passing a variable number of keyword arguments (key-value pairs).", type: "Conceptual" },
+        { level: "Junior", q: "What is the 'return' keyword used for?", a: "It is used to send a result back to the caller and terminate the function's execution.", type: "Conceptual" },
+        { level: "Mid", q: "Difference between a function and a method?", a: "A function is a piece of code called by name. A method is a function associated with an object and usually operates on its data.", type: "Conceptual" },
+        { level: "Mid", q: "Explain the LEGB rule.", a: "Local, Enclosing, Global, and Built-in. This is the order in which Python searches for variable names.", type: "Conceptual" },
+        { level: "Mid", q: "What is a decorator?", a: "A function that takes another function as an argument and extends its behavior without explicitly modifying it. It uses the @decorator syntax.", type: "Conceptual" },
+        { level: "Mid", q: "What is the difference between map() and a list comprehension?", a: "Map returns an iterator and is often faster for pre-defined functions. List comprehensions are more readable and versatile (can include filters).", type: "Conceptual" },
+        { level: "Mid", q: "Explain the use of 'yield'.", a: "It turns a function into a generator. It 'returns' a value but saves the state of the function so it can resume where it left off.", type: "Conceptual" },
+        { level: "Senior", q: "How do you avoid mutable default arguments in functions?", a: "Avoid using lists or dicts as defaults. Use 'None' instead and initialize inside the function: if x is None: x = [].", type: "Coding" },
+        { level: "Senior", q: "What are function annotations?", a: "A way to associate metadata with function parameters and return values (e.g., def f(x: int) -> str:). They don't affect runtime but are used by type checkers.", type: "Conceptual" },
+        { level: "Senior", q: "Explain memoization.", a: "An optimization technique where you store the results of expensive function calls and return the cached result when the same inputs occur again.", type: "Conceptual" },
+        { level: "Senior", q: "What is the 'functools' module?", a: "A module for higher-order functions. Key tools: @lru_cache for memoization and 'partial' to fix a certain number of arguments of a function.", type: "Conceptual" },
+        { level: "Senior", q: "How does Python handle garbage collection for local variables?", a: "Local variables are usually cleared when the function finishes execution because their reference count drops to zero.", type: "Conceptual" }
+      ]
+    },
+    {
+      day_number: 4,
+      topic: "Object Oriented Programming (OOP)",
+      category: "Python",
+      duration: "8h",
+      sessions: [
+        { time: "09:00 AM", title: "Classes & Objects", description: "Defining classes, creating instances, and understanding attributes." },
+        { time: "11:00 AM", title: "The Pillar: Encapsulation", description: "Private vs Public members and using getters/setters with @property." },
+        { time: "01:00 PM", title: "The Pillar: Inheritance", description: "Single, Multiple, and Multi-level inheritance, and using super()." },
+        { time: "03:00 PM", title: "The Pillar: Polymorphism", description: "Method overriding, operator overloading, and interface concepts." },
+        { time: "05:00 PM", title: "The Pillar: Abstraction", description: "Using abc module and Abstract Base Classes (ABCs)." }
+      ],
+      quiz: [
+        { text: "Which keyword is used to create a class?", options: ["class", "object", "def", "struct"], correct: 0 },
+        { text: "What is 'self' in a method?", options: ["Global variable", "Instance of the class", "The class name", "Parent class"], correct: 1 },
+        { text: "Which method is the constructor?", options: ["__start__", "__main__", "__init__", "__new__"], correct: 2 },
+        { text: "___ is the process of hiding implementation details.", options: ["Inheritance", "Abstraction", "Polymorphism", "Encapsulation"], correct: 1 },
+        { text: "Which keyword calls a method from the parent class?", options: ["parent", "base", "super", "this"], correct: 2 },
+        { text: "What is multiple inheritance?", options: ["One class inheriting from many", "Many classes inheriting from one", "Inheriting through levels", "None"], correct: 0 },
+        { text: "How do you denote a 'private' attribute in Python?", options: ["private var", "var_", "__var", "#var"], correct: 2 },
+        { text: "Changing method behavior in a child class is called ___.", options: ["Overloading", "Overriding", "Inheriting", "Shadowing"], correct: 1 },
+        { text: "Which decorator creates a 'getter'?", options: ["@get", "@setter", "@property", "@attr"], correct: 2 },
+        { text: "What is an Abstract Base Class (ABC)?", options: ["A class that cannot be instantiated", "A class with no methods", "The first class in a project", "A class for data storage only"], correct: 0 },
+        { text: "___ allows using the same interface for different data types.", options: ["Inheritance", "Encapsulation", "Polymorphism", "Abstraction"], correct: 2 },
+        { text: "What is MRO?", options: ["Main Return Object", "Method Resolution Order", "Module Run Option", "Memory Range Offset"], correct: 1 },
+        { text: "Which method is called to delete an object?", options: ["__stop__", "__del__", "__exit__", "__delete__"], correct: 1 },
+        { text: "Method overloading is natively supported in Python.", options: ["True", "False"], correct: 1 },
+        { text: "Which function checks if an object is an instance of a class?", options: ["checktype()", "typeof()", "isinstance()", "isinstanceof()"], correct: 2 },
+        { text: "What does the @classmethod decorator do?", options: ["Binds method to instance", "Binds method to class itself", "Prevents calling", "Makes it private"], correct: 1 }
+      ],
+      interview: [
+        { level: "Junior", q: "What is 'self' in Python?", a: "It represents the instance of the class. It allows us to access the attributes and methods of the specific object being called.", type: "Conceptual" },
+        { level: "Junior", q: "What is inheritance?", a: "A mechanism where one class (child) copies all the properties and behaviors of another class (parent).", type: "Conceptual" },
+        { level: "Junior", q: "What is a class?", a: "A blueprint for creating objects. It defines a set of attributes and methods that the objects will have.", type: "Conceptual" },
+        { level: "Mid", q: "What is the difference between @staticmethod and @classmethod?", a: "@staticmethod does not take 'self' or 'cls'. @classmethod takes the class ('cls') as its first argument and can access class-level state.", type: "Conceptual" },
+        { level: "Mid", q: "Explain the concept of MRO.", a: "Method Resolution Order. It is the order in which Python searches for a method in a hierarchy of classes, specifically in multiple inheritance.", type: "Conceptual" },
+        { level: "Mid", q: "What are dunder (magic) methods?", a: "Methods with double underscores (e.g., __init__, __str__). They allow you to define standard behaviors like addition or printing for your classes.", type: "Conceptual" },
+        { level: "Mid", q: "How do you implement data encapsulation?", a: "By using leading underscores (_ or __) to signal that variables are intended for internal use, and using properties to control access.", type: "Scenario" },
+        { level: "Mid", q: "What is the purpose of super()?", a: "It returns a proxy object that delegates method calls to a parent or sibling class of a type, common in single and multiple inheritance.", type: "Conceptual" },
+        { level: "Senior", q: "Explain the C3 Linearization algorithm.", a: "The algorithm Python uses to compute the Method Resolution Order (MRO) in complex inheritance structures.", type: "Conceptual" },
+        { level: "Senior", q: "What are metaclasses?", a: "The 'classes of classes'. They define how a class behaves. By default, 'type' is the metaclass in Python.", type: "Conceptual" },
+        { level: "Senior", q: "Difference between __new__ and __init__?", a: "__new__ is for creating the instance (the actual constructor). __init__ is for initializing that instance (the initializer).", type: "Conceptual" },
+        { level: "Senior", q: "How would you implement a Singleton pattern in Python?", a: "Usually by overriding __new__ to return a cached instance, or using a decorator or a metaclass.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Duck Typing'.", a: "'If it walks like a duck and quacks like a duck, it's a duck.' Python cares about whether an object has specific methods, not its specific type.", type: "Conceptual" }
+      ]
+    },
+    {
+      day_number: 5,
+      topic: "Advanced & Under the Hood",
+      category: "Python",
+      duration: "8h",
+      sessions: [
+        { time: "09:00 AM", title: "Memory Management & Garbage Collection", description: "Reference counting, cycle detection, and the gc module." },
+        { time: "11:00 AM", title: "Iterators, Generators & Context Managers", description: "Writing custom iterators and using the 'with' statement (__enter__, __exit__)." },
+        { time: "01:00 PM", title: "Multithreading vs Multiprocessing", description: "Threading, GIL, and utilizing multiple CPU cores." },
+        { time: "03:00 PM", title: "Asynchronous Programming", description: "async/await, event loops, and asyncio mastery." },
+        { time: "05:00 PM", title: "Metaprogramming & Introspection", description: "Metaclasses, type(), and inspecting objects at runtime." }
+      ],
+      quiz: [
+        { text: "What is the primary memory management mechanism in Python?", options: ["Reference Counting", "Manual Freeing", "Pointer Tracking", "Stack Allocation"], correct: 0 },
+        { text: "Which module is used for manual garbage collection control?", options: ["mem", "os", "gc", "sys"], correct: 2 },
+        { text: "What prevents multiple threads from executing Python code at once?", options: ["MMU", "GIL", "CPU Lock", "Thread Guard"], correct: 1 },
+        { text: "Which keyword starts an asynchronous function?", options: ["await", "async", "thread", "yield"], correct: 1 },
+        { text: "Context managers use which methods?", options: ["__open__, __close__", "__enter__, __exit__", "__start__, __stop__", "__with__, __done__"], correct: 1 },
+        { text: "Which module handles multi-core CPU parallelization?", options: ["threading", "asyncio", "multiprocessing", "subprocess"], correct: 2 },
+        { text: "What is an event loop?", options: ["A for loop", "A mechanism that waits for and dispatches events", "A recursive call", "A loop in the OS"], correct: 1 },
+        { text: "Which built-in class is the base for all classes and metaclasses?", options: ["Object", "Base", "type", "Class"], correct: 2 },
+        { text: "Generating values one by one to save memory is done by a ___.", options: ["List", "Generator", "Dictionary", "Tuple"], correct: 1 },
+        { text: "What does asgi stand for?", options: ["Async System Gateway Interface", "Asynchronous Server Gateway Interface", "Asynchronous Socket Group Interface", "None"], correct: 1 },
+        { text: "How do you measure execution time of a code block?", options: ["time module", "datetime module", "timeit module", "All of above"], correct: 3 },
+        { text: "Which function returns information about the current Python version?", options: ["sys.version", "version()", "python_version()", "sys.info"], correct: 0 },
+        { text: "Can you change the GIL behavior in standard CPython?", options: ["No, it's hardcoded", "Yes, using sys module", "Yes, by compiling from source", "No, it's not needed"], correct: 0 },
+        { text: "What is 'pickling' in Python?", options: ["Cleaning code", "Converting objects to byte streams", "Making code faster", "Debugging"], correct: 1 },
+        { text: "What module provides access to the Python interpreter variables?", options: ["os", "sys", "inspect", "dis"], correct: 1 },
+        { text: "The ___ function can create a class on the fly.", options: ["class()", "type()", "create()", "new()"], correct: 1 }
+      ],
+      interview: [
+        { level: "Junior", q: "What is a virtual environment?", a: "A tool to create isolated Python environments where you can install specific versions of libraries for different projects.", type: "Conceptual" },
+        { level: "Junior", q: "What is the difference between a list and a set?", a: "Lists are ordered and allow duplicates. Sets are unordered and store unique elements only.", type: "Conceptual" },
+        { level: "Junior", q: "How do you read a file in Python?", a: "Using the 'with open(filename, 'r') as f' statement, which ensures the file is automatically closed.", type: "Coding" },
+        { level: "Mid", q: "Explain the Global Interpreter Lock (GIL).", a: "It's a mutex in CPython that prevents multiple native threads from executing Python bytecodes at the same time. It exists to make memory management thread-safe.", type: "Conceptual" },
+        { level: "Mid", q: "Multiprocessing vs Multithreading?", a: "Multithreading shares memory and is good for I/O bound tasks. Multiprocessing has separate memory and is better for CPU-bound tasks to bypass the GIL.", type: "Conceptual" },
+        { level: "Mid", q: "What is a context manager?", a: "An object that defines the runtime context to be established when executing a 'with' statement. Useful for managing resources like files or database connections.", type: "Conceptual" },
+        { level: "Mid", q: "How does Python handle memory cycles?", a: "Python's cyclic garbage collector periodically searches for groups of objects with circular references that are unreachable and sweeps them.", type: "Conceptual" },
+        { level: "Mid", q: "What is asyncio?", a: "A library to write concurrent code using the async/await syntax. It's built on top of an event loop and is excellent for high-performance I/O bound network applications.", type: "Conceptual" },
+        { level: "Senior", q: "How do you optimize memory usage in a large Python program?", a: "Using generators, using __slots__ in classes to reduce per-instance overhead, using memory-mapped files, and careful use of garbage collection.", type: "Scenario" },
+        { level: "Senior", q: "Explain the 'pickle' module security risks.", a: "Pickle can execute arbitrary code during unpickling. You should never unpickle data from untrusted sources.", type: "Conceptual" },
+        { level: "Senior", q: "What is Monkey Patching?", a: "Dynamic replacement of attributes at runtime. Often used in tests to replace real network calls with mocks, but can be dangerous in production.", type: "Conceptual" },
+        { level: "Senior", q: "How would you profile a Python application?", a: "Using the cProfile module for CPU usage, memory_profiler for memory tracking, and timeit for small code snippets.", type: "Scenario" },
+        { level: "Senior", q: "What is the difference between 'is' and '=='?", a: "'is' checks for identity (same object in memory). '==' checks for equality (same value).", type: "Conceptual" }
+      ]
+    }
+  ]
+};

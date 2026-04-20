@@ -1,0 +1,226 @@
+export const week6 = {
+  id: "W6",
+  title: "FastAPI Advanced & Deployment",
+  days: [
+    {
+      day_number: 1,
+      topic: "Security & Authentication",
+      category: "FastAPI",
+      duration: "8h",
+      sessions: [
+        { time: "09:00 AM", title: "OAuth2 with Password Flow", description: "Integrating OAuth2PasswordBearer for secure token-based logins." },
+        { time: "11:00 AM", title: "JWT (JSON Web Tokens)", description: "Creating, signing, and verifying JWTs using python-jose." },
+        { time: "01:00 PM", title: "Hashing Passwords", description: "Using passlib and bcrypt to store passwords safely." },
+        { time: "03:00 PM", title: "Current User Dependency", description: "Building a secure dependency to retrieve the authenticated user." },
+        { time: "05:00 PM", title: "Scopes & Granular Permissions", description: "Implementing OAuth2 scopes to restrict specific endpoints." }
+      ],
+      quiz: [
+        { text: "What does JWT stand for?", options: ["Java Web Tool", "JSON Web Token", "Joint Web Team", "Just Web Tracking"], correct: 1 },
+        { text: "Which library is commonly used for hashing passwords in FastAPI?", options: ["requests", "passlib", "pydantic", "jose"], correct: 1 },
+        { text: "OAuth2PasswordBearer is a ___ class.", options: ["Pydantic", "FastAPI Security", "Database", "Logging"], correct: 1 },
+        { text: "A JWT contains how many parts separated by dots?", options: ["2", "3", "4", "5"], correct: 1 },
+        { text: "The first part of a JWT is the ___.", options: ["Payload", "Signature", "Header", "Key"], correct: 2 },
+        { text: "Tokens should be sent in which HTTP header?", options: ["Token", "Secret", "Authorization", "Cookie"], correct: 2 },
+        { text: "Which keyword precedes the token in the Authorization header?", options: ["Key", "Token", "Bearer", "Secret"], correct: 2 },
+        { text: "Where do you store the information inside a JWT?", options: ["Header", "Payload", "Signature", "None"], correct: 1 },
+        { text: "JWTs are encrypted by default.", options: ["True", "False (they are signed and encoded)", "Only in dev", "Only for passwords"], correct: 1 },
+        { text: "Which class handles checking scopes in FastAPI?", options: ["SecurityScopes", "Permission", "Auth", "ScopeChecker"], correct: 0 },
+        { text: "Password hashing should be ___.", options: ["Reversible", "One-way", "Symmetric", "Clear"], correct: 1 },
+        { text: "OAuth2 is a framework for ___.", options: ["Encryption", "Authorization", "Routing", "Storage"], correct: 1 },
+        { text: "The 'sub' claim in JWT typically stores ___.", options: ["The subject (User ID)", "The sub-domain", "The subscription status", "None"], correct: 0 },
+        { text: "Which error code should be returned for an expired token?", options: ["404", "500", "401 Unauthorized", "200"], correct: 2 },
+        { text: "Can you revoke a standard JWT without a database list?", options: ["Yes", "No (must wait for expiry or use denylist)", "Automatically", "None"], correct: 1 }
+      ],
+      interview: [
+        { level: "Junior", q: "What is OAuth2?", a: "A standard for authorization that allows applications to access user data without knowing their password.", type: "Conceptual" },
+        { level: "Junior", q: "What is a JWT?", a: "JSON Web Token. A compact, URL-safe way of representing claims between two parties.", type: "Conceptual" },
+        { level: "Junior", q: "Why shouldn't you store passwords in plain text?", a: "If the database is leaked, all user passwords would be exposed. Hashing ensures only the user knows the original password.", type: "Conceptual" },
+        { level: "Mid", q: "Explain the three parts of a JWT.", a: "Header (Algorithm/Type), Payload (Data/Claims), and Signature (Verifies the sender and that message wasn't changed).", type: "Conceptual" },
+        { level: "Mid", q: "How does OAuth2PasswordBearer work in FastAPI?", a: "It's a class that FastAPI uses to extract a token from the 'Authorization: Bearer <token>' header automatically.", type: "Conceptual" },
+        { level: "Mid", q: "What is a 'salt' in password hashing?", a: "A random string added to the password before hashing to ensure that identical passwords have different hashes, preventing rainbow table attacks.", type: "Conceptual" },
+        { level: "Mid", q: "How do you verify a JWT in FastAPI?", a: "Using the python-jose library to decode the token with a secret key and verifying the algorithm used.", type: "Coding" },
+        { level: "Senior", q: "Difference between Authorization and Authentication?", a: "Authentication is identifying the user. Authorization is checking if the identified user has permission to do something.", type: "Conceptual" },
+        { level: "Senior", q: "What are OAuth2 Scopes?", a: "They allow you to grant a specific level of access to a token (e.g., 'read-only' vs 'full-access').", type: "Conceptual" },
+        { level: "Senior", q: "How would you implement token refreshing?", a: "By issuing a 'Refresh Token' with a longer lifespan alongside the 'Access Token'. When access expires, the user exchanges the refresh token for a new access token.", type: "Scenario" },
+        { level: "Senior", q: "Explain the vulnerability of storing JWTs in LocalStorage.", a: "They are susceptible to XSS (Cross-Site Scripting). Secure HttpOnly cookies are often better for storing sensitive tokens in the browser.", type: "Scenario" },
+        { level: "Senior", q: "How do you handle JWT secret key management?", a: "Keys should be long, random, and stored in environment variables or a dedicated secret management service. Never hardcoded.", type: "Scenario" }
+      ]
+    },
+    {
+      day_number: 2,
+      topic: "Relational Databases",
+      category: "FastAPI",
+      duration: "8h",
+      sessions: [
+        { time: "09:00 AM", title: "SQLAlchemy Basics", description: "Mapping Python classes to database tables without a builtin ORM." },
+        { time: "11:00 AM", title: "Session Management", description: "Creating a database engine and handling session scope." },
+        { time: "01:00 PM", title: "SQLModel Introduction", description: "Combining FastAPI (Pydantic) and SQLAlchemy into a single model." },
+        { time: "03:00 PM", title: "CRUD with SQLModel", description: "Creating, Reading, Updating, and Deleting records fluently." },
+        { time: "05:00 PM", title: "Migrations with Alembic", description: "The industry standard for handling database schema changes in FastAPI/SQLAlchemy." }
+      ],
+      quiz: [
+        { text: "FastAPI has a built-in ORM.", options: ["True", "False"], correct: 1 },
+        { text: "Which library is the most common ORM for Python?", options: ["Django ORM", "SQLAlchemy", "Pydantic", "Peewee"], correct: 1 },
+        { text: "SQLModel is based on which two libraries?", options: ["Django and Flask", "Pydantic and SQLAlchemy", "Aiohttp and Requests", "None"], correct: 1 },
+        { text: "Which tool handles migrations for SQLAlchemy?", options: ["Migrate", "Alembic", "SQLMigrate", "DatabaseUp"], correct: 1 },
+        { text: "In SQLModel, table=True means ___.", options: ["This is a database table", "Show as table in UI", "Enable spreadsheets", "None"], correct: 0 },
+        { text: "What is the 'Engine' in SQLAlchemy?", options: ["The database server", "The source of database connectivity", "The query optimizer", "None"], correct: 1 },
+        { text: "Sessions should be created per ___.", options: ["Application", "User", "Request", "CPU Core"], correct: 2 },
+        { text: "Which function creates a database session in a dependency?", options: ["getSession()", "Depends(get_db)", "connect()", "db_init()"], correct: 1 },
+        { text: "Alembic uses which file to store version info?", options: ["versions/", "migrations.py", "db_info.txt", "alembic.ini"], correct: 0 },
+        { text: "How do you read all items in SQLModel?", options: ["select(Item)", "Item.all()", "query(Item)", "find(Item)"], correct: 0 },
+        { text: "SQLAlchemy is synchronous by default.", options: ["True", "False"], correct: 0 },
+        { text: "Which class represents a database session?", options: ["Session", "Connection", "Transaction", "Query"], correct: 0 },
+        { text: "Defining a primary key in SQLModel uses ___.", options: ["pk=True", "primary_key=True", "id=1", "key=True"], correct: 1 },
+        { text: "Can you use Pydantic validation inside SQLModel?", options: ["Yes", "No", "Only for strings", "Only in dev"], correct: 0 },
+        { text: "What is an 'Engine'?", options: ["A car part", "An abstraction over the DB connection details", "The SQL parser", "None"], correct: 1 }
+      ],
+      interview: [
+        { level: "Junior", q: "What is SQLAlchemy?", a: "A powerful SQL toolkit and Object-Relational Mapper (ORM) for Python.", type: "Conceptual" },
+        { level: "Junior", q: "What is SQLModel?", a: "A library created by the author of FastAPI that allows using the same model for both Pydantic and SQLAlchemy.", type: "Conceptual" },
+        { level: "Junior", q: "What is a database session?", a: "A workspace for your database operations. It tracks changes until you commit them.", type: "Conceptual" },
+        { level: "Mid", q: "Why choose SQLModel over plain SQLAlchemy?", a: "It reduces code duplication because you don't need separate models for the database and the API input/output.", type: "Conceptual" },
+        { level: "Mid", q: "What is Alembic used for?", a: "It handles database migrations (schema changes) for SQLAlchemy projects, similar to how Django handles its migrations.", type: "Conceptual" },
+        { level: "Mid", q: "Explain the importance of closing a database session.", a: "Failing to close sessions can lead to connection leaks, eventually causing the database to stop accepting new requests.", type: "Scenario" },
+        { level: "Mid", q: "How do you implement a One-to-Many relationship in SQLModel?", a: "By using the Relationship() class and setting the 'back_populates' attribute to link the two models.", type: "Coding" },
+        { level: "Senior", q: "Difference between Declarative and Imperative mapping in SQLAlchemy?", a: "Declarative uses classes to define tables. Imperative maps existing table objects to classes manually. Declarative is most common.", type: "Conceptual" },
+        { level: "Senior", q: "How does SQLAlchemy handle connection pooling?", a: "The Engine maintains a pool of active database connections, reusing them for new requests to improve performance.", type: "Conceptual" },
+        { level: "Senior", q: "Explain the N+1 problem in SQLAlchemy and how to fix it.", a: "It occurs when fetching related items in a loop. Fix it using 'joinedload' or 'subqueryload' to fetch data more efficiently.", type: "Scenario" },
+        { level: "Senior", q: "What is the purpose of the 'session.commit()' vs 'session.flush()'?", a: "Flush sends SQL to the DB without finalizing the transaction. Commit finalizes the transaction and makes data permanent.", type: "Conceptual" },
+        { level: "Senior", q: "Can you use FastAPI with a NoSQL database like MongoDB?", a: "Yes, by using drivers like Motor (async) and Pydantic for validation, though it lacks a built-in 'SQLModel-like' official library.", type: "Scenario" }
+      ]
+    },
+    {
+      day_number: 3,
+      topic: "Async Databases",
+      category: "FastAPI",
+      duration: "8h",
+      sessions: [
+        { time: "09:00 AM", title: "Asynchronous DB Architecture", description: "Why parallelizing blocking database calls is critical for performance." },
+        { time: "11:00 AM", title: "Introduction to 'Databases' Library", description: "Using the 'databases' package for simple async SQL execution." },
+        { time: "01:00 PM", title: "Asyncpg for PostgreSQL", description: "Working with the fastest asynchronous PostgreSQL driver for Python." },
+        { time: "03:00 PM", title: "Tortoise ORM (Async-first)", description: "Learning a Django-inspired async ORM for FastAPI." },
+        { time: "05:00 PM", title: "Beanie for MongoDB", description: "Exploring an asynchronous ODM for MongoDB based on Pydantic." }
+      ],
+      quiz: [
+        { text: "Which library is an async-first ORM for Python?", options: ["Django", "Tortoise-ORM", "Flask-SQLA", "None"], correct: 1 },
+        { text: "Async database drivers allow ___.", options: ["Concurrent DB requests", "Deleting data faster", "Auto-backups", "None"], correct: 0 },
+        { text: "Which driver is known for being extremely fast with PostgreSQL?", options: ["psycopg2", "asyncpg", "pymysql", "sqlite3"], correct: 1 },
+        { text: "The 'databases' library supports which databases?", options: ["Postgres only", "MySQL only", "Postgres, MySQL, and SQLite", "None"], correct: 2 },
+        { text: "Which keyword must be used before an async DB call?", options: ["run", "exec", "await", "wait"], correct: 2 },
+        { text: "Async drivers prevent the event loop from ___.", options: ["Running", "Blocking", "Closing", "Starting"], correct: 1 },
+        { text: "Tortoise-ORM was inspired by the ___ ORM.", options: ["Django", "SQLAlchemy", "Hibernate", "Eloquent"], correct: 0 },
+        { text: "MongoDB async driver is called ___.", options: ["Pymongo", "Motor", "Mongoid", "NoSQL-Async"], correct: 1 },
+        { text: "ODM stands for ___.", options: ["Object Document Mapper", "Object Database Manager", "Online Data Master", "None"], correct: 0 },
+        { text: "Beanie uses which library for schema validation?", options: ["Marshmallow", "Pydantic", "Django", "None"], correct: 1 },
+        { text: "Standard SQLAlchemy is natively async in all versions.", options: ["True", "False (Async added in 1.4+)", "Only in v2.0", "None"], correct: 1 },
+        { text: "Which function connects to the DB in Tortoise?", options: ["Tortoise.init()", "db.connect()", "init_db()", "start_orm()"], correct: 0 },
+        { text: "Asyncpg works with which protocol?", options: ["HTTP", "PostgreSQL native protocol", "REST", "SOAP"], correct: 1 },
+        { text: "Can you use SQLite with async drivers?", options: ["No", "Yes, using aiosqlite", "Only in dev", "Only for IDs"], correct: 1 },
+        { text: "Connecting to a database asynchronously improves ___.", options: ["SQL syntax", "Throughput / Concurrency", "Database storage", "None"], correct: 1 }
+      ],
+      interview: [
+        { level: "Junior", q: "Why use an asynchronous database driver?", a: "To prevent the database call from blocking the main event loop, allowing the API to handle other requests while waiting for the DB.", type: "Conceptual" },
+        { level: "Junior", q: "What is an ODM?", a: "Object Document Mapper. It is similar to an ORM but for NoSQL (Document) databases like MongoDB.", type: "Conceptual" },
+        { level: "Junior", q: "What is asyncpg?", a: "A highly optimized asynchronous PostgreSQL database client library for Python/asyncio.", type: "Conceptual" },
+        { level: "Mid", q: "Explain the difference between Tortoise ORM and SQLAlchemy.", a: "Tortoise is built from the ground up for asynchrony and feels like Django. SQLAlchemy is an industry giant that added async support later.", type: "Conceptual" },
+        { level: "Mid", q: "How do you handle migrations with Tortoise ORM?", a: "Using 'Aerich', which is the migration tool designed specifically for Tortoise.", type: "Conceptual" },
+        { level: "Mid", q: "What is Beanie?", a: "An asynchronous ODM for MongoDB that uses Pydantic for its model definitions, making it very cohesive with FastAPI.", type: "Conceptual" },
+        { level: "Mid", q: "How do you handle a database connection pool in an async app?", a: "By using the pool management features of drivers like asyncpg or the pooling provided by ORMs during app startup/shutdown.", type: "Scenario" },
+        { level: "Senior", q: "Explain how to implement SQLAlchemy 1.4+ with async support.", a: "By using 'create_async_engine' and the 'AsyncSession' class, combined with the 'await' keyword for execution.", type: "Coding" },
+        { level: "Senior", q: "Why would you choose asyncpg over psycopg2?", a: "Psycopg2 is synchronous and requires thread pools for concurrency. Asyncpg is much faster and natively supports asyncio.", type: "Conceptual" },
+        { level: "Senior", q: "How do you test an async database in a Pytest environment?", a: "By using 'pytest-asyncio' and creating fixtures that handle the async connection/teardown for each test case.", type: "Scenario" },
+        { level: "Senior", q: "What are the common pitfalls of mixing sync and async DB code?", a: "You can accidentally block the event loop if you call a sync DB driver from an async function without a thread pool.", type: "Scenario" },
+        { level: "Senior", q: "Explain how 'Databases' library handles transactions.", a: "It provides a 'database.transaction()' context manager that you can 'await' to ensure atomic operations.", type: "Conceptual" }
+      ]
+    },
+    {
+      day_number: 4,
+      topic: "WebSockets",
+      category: "FastAPI",
+      duration: "8h",
+      sessions: [
+        { time: "09:00 AM", title: "Introduction to WebSockets", description: "Real-time communication vs standard HTTP requests." },
+        { time: "11:00 AM", title: "WebSocket Endpoints in FastAPI", description: "Defining @app.websocket() and handling the connection lifecycle." },
+        { time: "01:00 PM", title: "Sending & Receiving Messages", description: "Using receive_text, send_json, and stream data." },
+        { time: "03:00 PM", title: "Connection Managers", description: "Managing multiple active connections for chat rooms or notifications." },
+        { time: "05:00 PM", title: "WebSocket Security", description: "Handling authentication and origin checks in persistent connections." }
+      ],
+      quiz: [
+        { text: "WebSockets provide ___ communication.", options: ["One-way", "Full-duplex / Bidirectional", "Slow", "None"], correct: 1 },
+        { text: "Which decorator is used for WebSockets in FastAPI?", options: ["@app.get", "@app.ws", "@app.websocket", "@app.socket"], correct: 2 },
+        { text: "WebSockets start with an HTTP ___ request.", options: ["POST", "GET with Upgrade header", "DELETE", "None"], correct: 1 },
+        { text: "Which method is used to accept a connection?", options: ["accept()", "start()", "connect()", "open()"], correct: 0 },
+        { text: "What happens if you don't await a websocket.send call?", options: ["It works fine", "It causes an error or doesn't send", "It sends twice", "None"], correct: 1 },
+        { text: "WebSockets are stateful.", options: ["True", "False"], correct: 0 },
+        { text: "Which method receives text from a client?", options: ["get_text()", "receive_text()", "read()", "input()"], correct: 1 },
+        { text: "How do you close a connection from the server?", options: ["stop()", "close()", "exit()", "disconnect()"], correct: 1 },
+        { text: "WebSockets require which protocol prefix?", options: ["http://", "ws:// or wss://", "ftp://", "socket://"], correct: 1 },
+        { text: "Can you send JSON through a WebSocket in FastAPI?", options: ["No, only text", "Yes, using send_json()", "Only for IDs", "None"], correct: 1 },
+        { text: "WebSockets are suitable for ___.", options: ["Static blogs", "Real-time chats / dashboards", "File storage", "None"], correct: 1 },
+        { text: "What is an 'Upgrade' header?", options: ["Boosting server speed", "Switching from HTTP to WebSocket", "Security check", "None"], correct: 1 },
+        { text: "FastAPI handles WebSocket disconnections with which exception?", options: ["WebSocketDisconnect", "ConnectionLost", "Error", "Finish"], correct: 0 },
+        { text: "A 'Connection Manager' is used to ___.", options: ["Store user passwords", "Broadcast messages to multiple clients", "Speed up Python", "None"], correct: 1 },
+        { text: "Do WebSockets follow standard REST principles?", options: ["Yes", "No", "Only for GET", "None"], correct: 1 }
+      ],
+      interview: [
+        { level: "Junior", q: "What are WebSockets?", a: "A protocol providing full-duplex communication channels over a single TCP connection, allowing real-time data flow.", type: "Conceptual" },
+        { level: "Junior", q: "How are WebSockets different from HTTP?", a: "HTTP is request-response and stateless. WebSockets are persistent and allow the server to push data to the client at any time.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'ws://' vs 'wss://'?", a: "ws is unencrypted. wss is encrypted (WebSocket Secure), equivalent to https.", type: "Conceptual" },
+        { level: "Mid", q: "How do you handle multiple WebSocket connections in FastAPI?", a: "By creating a ConnectionManager class that stores a list of active WebSocket objects and provides methods for broadcasting.", type: "Coding" },
+        { level: "Mid", q: "How do you authenticate a WebSocket connection?", a: "Usually by passing a token in a query parameter during the initial handshake or checking cookies, as custom headers are sometimes limited in JS WebSocket API.", type: "Scenario" },
+        { level: "Mid", q: "What is the purpose of websocket.accept()?", a: "It completes the handshake with the client and establishes the connection.", type: "Conceptual" },
+        { level: "Mid", q: "How do you catch a client disconnection in a loop?", a: "By wrapping the receive loop in a 'try...except WebSocketDisconnect' block.", type: "Coding" },
+        { level: "Senior", q: "Explain the 'Broadcasting' mechanism.", a: "Iterating through a collection of active connections and calling 'send_text' or 'send_json' on each one to transmit data to many users at once.", type: "Conceptual" },
+        { level: "Senior", q: "How would you implement 'Rooms' in a WebSocket chat?", a: "By using a dictionary in your ConnectionManager where keys are room IDs and values are sets of active WebSocket objects for those rooms.", type: "Scenario" },
+        { level: "Senior", q: "What are the scaling limitations of WebSockets?", a: "Each connection consumes server memory and resources. For massive scale, you'd need a pub/sub system like Redis to sync messages across multiple server instances.", type: "Scenario" },
+        { level: "Senior", q: "How does FastAPI handle WebSocket backpressure?", a: "It uses the underlying Starlette implementation, but as a developer, you must ensure you process messages fast enough to avoid filling buffers.", type: "Conceptual" },
+        { level: "Senior", q: "Can you combine WebSockets with regular REST endpoints in the same FastAPI app?", a: "Yes, they can coexist perfectly, sharing the same models, logic, and even some dependencies.", type: "Scenario" }
+      ]
+    },
+    {
+      day_number: 5,
+      topic: "Testing & Deployment",
+      category: "FastAPI",
+      duration: "8h",
+      sessions: [
+        { time: "09:00 AM", title: "API Testing with Pytest", description: "Writing automated tests for your endpoints using TestClient." },
+        { time: "11:00 AM", title: "Asynchronous Testing", description: "Handling async code in tests with pytest-asyncio and httpx." },
+        { time: "01:00 PM", title: "Dockerizing FastAPI", description: "Creating a production-ready Dockerfile and using docker-compose." },
+        { time: "03:00 PM", title: "Production Deployment", description: "Setting up Gunicorn/Uvicorn, logging, and environment variables." },
+        { time: "05:00 PM", title: "Continuous Integration (CI/CD)", description: "Automating tests and deployment with GitHub Actions." }
+      ],
+      quiz: [
+        { text: "Which tool is the standard for testing Python code?", options: ["Pytest", "Junit", "Mocha", "Selenium"], correct: 0 },
+        { text: "Which FastAPI tool allows testing endpoints easily?", options: ["HttpClient", "TestClient", "ApiTester", "None"], correct: 1 },
+        { text: "For async tests, we often use which client?", options: ["Requests", "Httpx", "Aiohttp", "Axios"], correct: 1 },
+        { text: "___ is used to package the app with its dependencies.", options: ["Pip", "Docker", "Git", "Webpack"], correct: 1 },
+        { text: "Which file defines a Docker image?", options: ["docker.yaml", "Dockerfile", "image.txt", "None"], correct: 1 },
+        { text: "Gunicorn is often used to manage multiple ___.", options: ["Databases", "Uvicorn workers", "Users", "Files"], correct: 1 },
+        { text: "TestClient is based on which library?", options: ["Requests", "Httpx", "Starlette", "Urllib"], correct: 1 },
+        { text: "Which command runs pytest?", options: ["python run tests", "pytest", "npm test", "run-tests"], correct: 1 },
+        { text: "A 'GitHub Action' is used for ___.", options: ["Writing code", "Automating workflows (CI/CD)", "Storing images", "None"], correct: 1 },
+        { text: "In a Dockerfile, FROM specifies ___.", options: ["The source file", "The base image", "The author", "None"], correct: 1 },
+        { text: "CMD in a Dockerfile defines ___.", options: ["A comment", "The command to run when container starts", "The folder name", "None"], correct: 1 },
+        { text: "Environment variables in production should be stored in ___.", options: ["Python code", "settings.py", ".env files / Secret Managers", "ReadMe"], correct: 2 },
+        { text: "Which library allows running async tests in Pytest?", options: ["pytest-asyncio", "async-test", "python-async", "None"], correct: 0 },
+        { text: "Test functions in Pytest should start with ___.", options: ["run_", "test_", "should_", "None"], correct: 1 },
+        { text: "What is the purpose of 'fixtures' in Pytest?", options: ["Hardcoding data", "Providing reusable setup/teardown code for tests", "Debugging", "None"], correct: 1 }
+      ],
+      interview: [
+        { level: "Junior", q: "How do you test a FastAPI endpoint?", a: "By using the 'TestClient' provided by FastAPI/Starlette, which allows you to make mock requests to your app during tests.", type: "Coding" },
+        { level: "Junior", q: "What is Pytest?", a: "A robust testing framework for Python that makes it easy to write small, readable tests.", type: "Conceptual" },
+        { level: "Junior", q: "What is Docker?", a: "A platform that packages an application and all its dependencies into a container, ensuring it runs the same way on any environment.", type: "Conceptual" },
+        { level: "Mid", q: "Explain the difference between TestClient and Httpx (Async) client for testing.", a: "TestClient is synchronous and works with Starlette/FastAPI internals. Httpx is needed for testing properly asynchronous endpoints.", type: "Conceptual" },
+        { level: "Mid", q: "How do you mock a database during testing?", a: "By using dependency_overrides to replace the real database dependency with a test database or an in-memory SQLite instance.", type: "Coding" },
+        { level: "Mid", q: "What is a multi-stage Docker build?", a: "An optimization technique where you use one image for building/compiling and a smaller, cleaner image for the final production run.", type: "Conceptual" },
+        { level: "Mid", q: "How do you manage secrets in a Dockerized environment?", a: "Using environment variables (passed via docker-compose or Kubernetes) or Docker Secrets.", type: "Scenario" },
+        { level: "Senior", q: "Explain the 'Gunicorn + Uvicorn' deployment strategy.", a: "Gunicorn act as a process manager (handling restarts and workers), while Uvicorn workers handle the actual asynchronous API requests.", type: "Conceptual" },
+        { level: "Senior", q: "How would you implement CI/CD for a FastAPI app on GitHub?", a: "By creating a .github/workflows file that runs pytest on every push and triggers a deployment (e.g., to Render or AWS) if tests pass.", type: "Scenario" },
+        { level: "Senior", q: "What are 'Contract Tests' in the context of APIs?", a: "Tests that ensure the API output strictly matches its documented schema, preventing breaking changes for consumers.", type: "Conceptual" },
+        { level: "Senior", q: "How do you ensure zero-downtime deployments with Docker?", a: "Using rolling updates in an orchestrator like Kubernetes or using Blue/Green deployment strategies.", type: "Scenario" },
+        { level: "Senior", q: "What is the benefit of using an ASGI middleware for logging?", a: "It allows you to capture details of every request/response lifecycle across the entire app for observability.", type: "Scenario" }
+      ]
+    }
+  ]
+};
