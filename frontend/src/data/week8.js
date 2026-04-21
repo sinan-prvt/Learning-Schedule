@@ -109,7 +109,17 @@ export const week8 = {
         { level: "Senior", q: "How do you optimize Lambda costs?", a: "Right-sizing memory, reducing runtime duration, and using Graviton processors (cost-efficient ARM).", type: "Scenario" },
         { level: "Senior", q: "Explain 'Function URLs' vs API Gateway.", a: "Function URLs are simple, built-in HTTPS endpoints. API Gateway offers advanced features like auth, caching, and custom domains.", type: "Conceptual" },
         { level: "Senior", q: "How would you design a 'Real-time' app using Serverless?", a: "Using API Gateway WebSockets to maintain persistent connections between clients and Lambda.", type: "Scenario" },
-        { level: "Senior", q: "Explain the impact of VPC networking on Lambda performance.", a: "Historically caused long start times (ENI creation), but modern VPC networking uses AWS Hyperplane for near-instant connectivity.", type: "Conceptual" }
+        { level: "Senior", q: "Explain the impact of VPC networking on Lambda performance.", a: "Historically caused long start times (ENI creation), but modern VPC networking uses AWS Hyperplane for near-instant connectivity.", type: "Conceptual" },
+        { level: "Junior", q: "What is the 'Handler' function in Lambda?", a: "The specific function in your code that starts the execution when the Lambda is triggered.", type: "Conceptual" },
+        { level: "Junior", q: "How do you set a timeout for a Lambda function?", a: "In the function configuration settings, between 1 second and 15 minutes.", type: "Coding" },
+        { level: "Mid", q: "What is 'Environment Variable Encryption'?", a: "Using AWS KMS to encrypt sensitive environment variables so they are secure at rest.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Lambda Concurrent Executions' metric.", a: "The number of function instances that are currently processing events.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Large Deployment Packages' (> 250MB)?", a: "By using Container Images (Docker) for Lambda, which supports up to 10GB images.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Asynchronous Retry' policy.", a: "By default, Lambda retries failed async calls twice with delays. You can configure this or send failures to a DLQ/Destination.", type: "Conceptual" },
+        { level: "Senior", q: "How do you optimize 'Lambda Memory' for cost?", a: "Since CPU and storage scale with memory, doubling memory can sometimes cut execution time in half, resulting in the same cost but faster performance.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Cross-Account Lambda' triggering.", a: "Adding a resource-based policy to the Lambda that allows a 'Principal' from another AWS account to invoke it.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'API Gateway Stage Variables'?", a: "Key-value pairs associated with a specific stage (e.g. dev) that can be accessed in the Lambda code.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Payload Limit' for Lambda.", a: "6MB for synchronous (API Gateway) and 256KB for asynchronous (SNS/SQS) invocations.", type: "Conceptual" }
       ]
     },
     {
@@ -217,7 +227,17 @@ export const week8 = {
         { level: "Senior", q: "What is 'EKS Fargate' profile used for?", a: "Specifying which Kubernetes namespaces or labels should run on Fargate, allowing a mix of node types.", type: "Scenario" },
         { level: "Senior", q: "Explain 'Image Vulnerability' mitigation strategy.", a: "Enabling 'Scan on push' in ECR and using Step Functions to block builds if critical CVEs are found.", type: "Scenario" },
         { level: "Senior", q: "How do you troubleshoot 'Container Crashing' on startup?", a: "Use 'docker logs' locally or check CloudWatch Logs (awslogs driver) to see the application's stderr/stdout.", type: "Scenario" },
-        { level: "Senior", q: "Explain 'VPC CNI' limitations in EKS.", a: "Each pod takes a VPC IP, which can lead to IP exhaustion if subnets are small; requires large subnets or secondary CIDR.", type: "Conceptual" }
+        { level: "Senior", q: "Explain 'VPC CNI' limitations in EKS.", a: "Each pod takes a VPC IP, which can lead to IP exhaustion if subnets are small; requires large subnets or secondary CIDR.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Docker'?", a: "A platform for building, running, and shipping applications in containers.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Dockerfile'?", a: "A text file containing instructions on how to build a Docker image.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Container Registry'?", a: "A service that stores and manages container images (e.g., ECR, Docker Hub).", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Multi-stage build' in Docker?", a: "A technique to reduce image size by using multiple FROM statements in a Dockerfile.", type: "Conceptual" },
+        { level: "Senior", q: "How do you optimize Docker image size?", a: "Using minimal base images (like Alpine), cleaning up cache, and using multi-stage builds.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Kubernetes Namespace'.", a: "A way to divide cluster resources between multiple users or projects.", type: "Conceptual" },
+        { level: "Senior", q: "What is 'Kube-proxy'?", a: "A network proxy that runs on each node in a Kubernetes cluster, maintaining network rules.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Persistent Storage' in EKS?", a: "Using Persistent Volumes (PV) and Persistent Volume Claims (PVC) backed by EBS or EFS.", type: "Scenario" },
+        { level: "Senior", q: "What is 'Horizontal Pod Autoscaler' (HPA)?", a: "Automatically scales the number of pods in a deployment based on CPU/Memory usage.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Cluster Autoscaler'.", a: "Automatically adjusts the number of nodes in an EKS cluster when pods fail to schedule due to lack of resources.", type: "Conceptual" }
       ]
     },
     {
@@ -254,8 +274,8 @@ export const week8 = {
         { text: "Which routing policy uses the user's country/state?", options: ["Geolocation", "None", "None", "None"], correct: 0 },
         { text: "What is 'Geoproximity Routing'?", options: ["Routing based on the geographic location of users and resources", "None", "None", "None"], correct: 0 },
         { text: "What is 'Multivalue Answer Routing'?", options: ["Returns multiple values (e.g. IPs) and checks their health", "None", "None", "None"], correct: 0 },
-        { text: "What is a 'Public Hosted Zone'?", options: ["Contains records for a domain on the internet", "None", "None", "None"], correct: 0 },
-        { text: "What is a 'Private Hosted Zone'?", options: ["Contains records for a domain within a VPC", "None", "None", "None"], correct: 0 },
+        { text: "What is 'Public Hosted Zone'?", options: ["Contains records for a domain on the internet", "None", "None", "None"], correct: 0 },
+        { text: "What is 'Private Hosted Zone'?", options: ["Contains records for a domain within a VPC", "None", "None", "None"], correct: 0 },
         { text: "What is 'CloudFront Origin Access Control' (OAC)?", options: ["Restricts S3 access so it only accepts requests from CloudFront", "None", "None", "None"], correct: 0 },
         { text: "What is 'Origin Shield'?", options: ["An additional caching layer to reduce origin load", "None", "None", "None"], correct: 0 },
         { text: "What is 'Field-Level Encryption' in CloudFront?", options: ["Encrypts specific data fields at the edge for extra security", "None", "None", "None"], correct: 0 },
@@ -321,7 +341,21 @@ export const week8 = {
         { level: "Senior", q: "What are 'Signed Cookies' used for?", a: "Providing access to multiple restricted files or a whole directory of private content using a single signed cookie.", type: "Scenario" },
         { level: "Senior", q: "How do you debug Route 53 resolution issues?", a: "Using 'dig' or 'nslookup' with specific trace flags and checking the Route 53 Resolver query logs.", type: "Scenario" },
         { level: "Senior", q: "Explain the 'Anycast IP' mechanism in Global Accelerator.", a: "It provides a single entry IP that routes over the AWS private backbone to reach your app with lower latency and higher stability.", type: "Conceptual" },
-        { level: "Senior", q: "How do you implement 'Geo-Blocking'?", a: "Using either CloudFront geographic restriction or WAF geo-match rules to allow/deny access based on ISO country codes.", type: "Scenario" }
+        { level: "Senior", q: "How do you implement 'Geo-Blocking'?", a: "Using either CloudFront geographic restriction or WAF geo-match rules to allow/deny access based on ISO country codes.", type: "Scenario" },
+        { level: "Junior", q: "What is 'CloudFront'?", a: "A fast content delivery network (CDN) service that securely delivers data, videos, and APIs to customers globally.", type: "Conceptual" },
+        { level: "Junior", q: "What is an 'Origin' in CloudFront?", a: "The location where the original version of the content is stored (e.g. S3 bucket or ALB).", type: "Conceptual" },
+        { level: "Mid", q: "What is 'TTL' in CloudFront?", a: "Time To Live; specifies how long the content stays in the edge cache before CloudFront checks the origin for updates.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Invalidation' in CloudFront?", a: "Forcing CloudFront to remove a file from the edge cache before its TTL expires.", type: "Coding" },
+        { level: "Senior", q: "How do you implement 'Private Content' delivery?", a: "Using 'CloudFront Signed URLs' or 'Signed Cookies' to restrict access to specific users.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'CloudFront Functions' vs 'Lambda@Edge'.", a: "Functions are for lightweight header/URL manipulation (low cost/ms); Lambda@Edge is for heavy compute or network calls (higher cost).", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Dynamic Content' (API) caching?", a: "By using 'Cache Policy' with a 0 TTL or by forwarding all query strings/headers to ensure the cache varies correctly.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Behavior' settings in CloudFront.", a: "Allows creating different rules (e.g. cache jpg files for 1 day, but /api/* for 0 seconds) within the same distribution.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Distribution'?", a: "A configuration in CloudFront that maps a domain name to an origin service.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'WAF' integration?", a: "Attaching AWS Web Application Firewall to CloudFront to block common web exploits like SQLi/XSS at the edge.", type: "Conceptual" },
+        { level: "Junior", q: "What is an Edge Location?", a: "A site that CloudFront uses to cache copies of your content closer to your users.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Origin Shield'.", a: "An additional caching layer that helps reduce the load on your origin server.", type: "Conceptual" },
+        { level: "Senior", q: "How to handle 'Geoproximity' routing?", a: "Routing traffic based on the geographic location of your users and resources.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Route 53 Resolver'.", a: "A service that provides recursive DNS lookups for your VPC.", type: "Conceptual" }
       ]
     },
     {
@@ -426,7 +460,18 @@ export const week8 = {
         { level: "Senior", q: "What is 'Policy-as-Code'?", a: "Using tools like OPA (Open Policy Agent) or CloudFormation Guard to enforce security rules (e.g. 'no public S3 buckets') during the IaC build phase.", type: "Conceptual" },
         { level: "Senior", q: "Explain 'Custom Resources' in CloudFormation.", a: "Running a Lambda function during stack creation/update to perform tasks not natively supported by CloudFormation (like looking up an AMI ID or calling a 3rd party API).", type: "Scenario" },
         { level: "Senior", q: "How do you handle 'State Migration' in Terraform?", a: "Using 'terraform state mv' commands to re-organize resources without destroying and recreating them.", type: "Scenario" },
-        { level: "Senior", q: "Explain 'AWS SAM' vs 'CDK'.", a: "SAM is a specialized extension of CloudFormation for serverless; CDK is a higher-level general-purpose framework using real languages.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Aurora Serverless v2' scaling architecture.", a: "Scales in increments as small as 0.5 ACUs (Aurora Capacity Units) based on actual CPU and memory utilization, reacting in milliseconds.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'RDS'?", a: "Relational Database Service; makes it easy to set up, operate, and scale a relational database (MySQL, Postgres, etc.) in the cloud.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Aurora'?", a: "A MySQL and PostgreSQL-compatible relational database built for the cloud by AWS.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Multi-AZ' deployment in RDS?", a: "Automatically provisioning a synchronous standby instance in a different AZ for high availability.", type: "Conceptual" },
+        { level: "Mid", q: "What is a 'Read Replica'?", a: "An asynchronous copy of the database used to offload read traffic from the primary instance.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Database Passwords' securely in RDS?", a: "Using 'IAM Database Authentication' to connect without a password, or storing secrets in AWS Secrets Manager with auto-rotation.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'RDS Proxy'.", a: "A fully managed, highly available database proxy that pools and shares connections to improve application scalability and failover times.", type: "Conceptual" },
+        { level: "Senior", q: "How do you perform 'Zero-Downtime Patching' in Aurora?", a: "Aurora uses 'Zero-Downtime Patching' (ZDP) to attempt to preserve client connections while the database engine restarts.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Aurora Global Database'.", a: "Spans multiple AWS regions, providing low-latency global reads and fast disaster recovery with a sub-second lag.", type: "Conceptual" },
+        { level: "Junior", q: "Which DB engines does RDS support?", a: "MySQL, PostgreSQL, MariaDB, Oracle, SQL Server, and Amazon Aurora.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Snapshot' in RDS?", a: "A manual or automatic backup of the entire database instance stored in S3.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'SAM' vs 'CDK'.", a: "SAM is a specialized extension of CloudFormation for serverless; CDK is a higher-level general-purpose framework using real languages.", type: "Conceptual" },
         { level: "Senior", q: "How do you manage 'Multi-Environment' architectures in IaC?", a: "Using Terraform Workspaces, separate folders, or separate state files per environment (dev/staging/prod).", type: "Scenario" },
         { level: "Senior", q: "What is 'Construct' library in CDK?", a: "A collection of pre-baked, well-architected patterns (Level 2/3 constructs) that follow AWS best practices.", type: "Conceptual" },
         { level: "Senior", q: "How do you troubleshoot 'Circular Dependencies' in CloudFormation?", a: "By using intermediate resources (like a Security Group rule resource instead of an inline rule) to break the cycle.", type: "Scenario" },
@@ -541,7 +586,15 @@ export const week8 = {
         { level: "Senior", q: "Explain 'Container Insights' vs standard CloudWatch.", a: "Container Insights automatically collects high-cardinality metrics (task-level, pod-level) which aren't in the standard EC2 namespace.", type: "Conceptual" },
         { level: "Senior", q: "How do you implement 'Log Streaming' to a 3rd party tool (like Splunk)?", a: "Using CloudWatch Logs Destinations or a Kinesis Data Firehose stream to push logs in real-time.", type: "Scenario" },
         { level: "Senior", q: "What is 'AWS Health Aware' (AHA)?", a: "An automated framework that aggregates AWS Health events into a single communication channel (like Slack or Teams).", type: "Conceptual" },
-        { level: "Senior", q: "Explain 'Deployment Hooks' in AppSpec.", a: "Scripts that run at specific stages (e.g. BeforeInstall, AfterInstall, ValidateService) to ensure the server is ready.", type: "Conceptual" }
+        { level: "Senior", q: "Explain 'Deployment Hooks' in AppSpec.", a: "Scripts that run at specific stages (e.g. BeforeInstall, AfterInstall, ValidateService) to ensure the server is ready.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Commit'?", a: "A snapshot of your code changes saved in the repository.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Branch'?", a: "A parallel version of a repository that allows you to work in isolation.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Merge' operations.", a: "Combining changes from one branch into another.", type: "Conceptual" },
+        { level: "Mid", q: "What is a 'Pull Request'?", a: "A method of submitting contributions to a project for review.", type: "Conceptual" },
+        { level: "Senior", q: "How to handle 'Blue/Green' deployments in ECS?", a: "Using CodeDeploy to shift traffic from one target group to another.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Infrastructure Monitoring'.", a: "Tracking the health and performance of your backend resources.", type: "Conceptual" },
+        { level: "Junior", q: "What is an 'Alert'?", a: "A notification triggered by a specific condition being met (e.g. high CPU).", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Log Retention'.", a: "Determining how long log files should be kept before they are deleted.", type: "Conceptual" }
       ]
     }
   ]

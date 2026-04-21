@@ -231,7 +231,17 @@ export const week1 = {
         { level: "Senior", q: "What is the 'memoryview' object?", a: "A built-in that allows accessing the internal data of an object that supports the buffer protocol without copying.", type: "Conceptual" },
         { level: "Senior", q: "Explain 'Array' module vs 'List'.", a: "The array module provides space-efficient storage of basic values (integers, floats) in a compact C-style way, whereas lists are more flexible but use more memory.", type: "Conceptual" },
         { level: "Senior", q: "How do you handle very large datasets that don't fit in RAM?", a: "Using memory mapping (mmap), chunking, or libraries like Dask/Pandas with out-of-core processing.", type: "Scenario" },
-        { level: "Senior", q: "Explain the 'OrderedDict' evolution in Python.", a: "Prior to 3.7, dicts were unordered. In 3.7+, standard dicts preserve insertion order, but OrderedDict still has unique features like move_to_end().", type: "Conceptual" }
+        { level: "Senior", q: "Explain the 'OrderedDict' evolution in Python.", a: "Prior to 3.7, dicts were unordered. In 3.7+, standard dicts preserve insertion order, but OrderedDict still has unique features like move_to_end().", type: "Conceptual" },
+        { level: "Junior", q: "What is the difference between a dictionary and a list?", a: "Dictionary is a key-value pair based collection (unordered/O(1)), while List is an index-based ordered collection (O(n)).", type: "Conceptual" },
+        { level: "Junior", q: "How do you add an element to a set?", a: "Using the add() method.", type: "Coding" },
+        { level: "Junior", q: "What is a 'frozenset'?", a: "An immutable version of a set.", type: "Conceptual" },
+        { level: "Mid", q: "How do you sort a list of dictionaries by a specific key?", a: "Using my_list.sort(key=lambda x: x['key_name']).", type: "Coding" },
+        { level: "Mid", q: "Difference between shallow copy and deep copy for a list?", a: "Shallow copy copy the container only; deep copy copies the container and all nested objects.", type: "Conceptual" },
+        { level: "Mid", q: "What is the purpose of the 'collections' module?", a: "It provides specialized container types like Counter, deque, and namedtuple.", type: "Conceptual" },
+        { level: "Senior", q: "How are dictionaries implemented in Python?", a: "As hash tables using open addressing for collision resolution.", type: "Conceptual" },
+        { level: "Senior", q: "Explain the 'Hash' collision resolution in Python dictionaries.", a: "Python uses a pseudo-random probing sequence to find the next open slot in the hash table.", type: "Conceptual" },
+        { level: "Senior", q: "How does the 'id()' of an object relate to its memory address?", a: "In CPython, id() returns the memory address of the object.", type: "Conceptual" },
+        { level: "Senior", q: "What is the time complexity of a list append?", a: "O(1) amortized, because lists are over-allocated to allow for fast additions.", type: "Conceptual" }
       ]
     },
     {
@@ -344,7 +354,17 @@ export const week1 = {
         { level: "Senior", q: "What is the difference between a Generator and an Iterator?", a: "All generators are iterators, but not all iterators are generators. Generators are built using functions and 'yield'.", type: "Conceptual" },
         { level: "Senior", q: "Explain 'Scope resolution' for nested functions.", a: "Python uses a static scoping (lexical scoping) model where nested functions can access variables from outer functions via closures.", type: "Conceptual" },
         { level: "Senior", q: "How does the 'inspect' module help with functions?", a: "It provides functions to get information about live objects, like the source code of a function or its signature.", type: "Scenario" },
-        { level: "Senior", q: "Explain the impact of the 'with' statement on function execution.", a: "It manages the entry and exit logic, ensuring resources are handled correctly even if the function raises an exception.", type: "Conceptual" }
+        { level: "Senior", q: "Explain the impact of the 'with' statement on function execution.", a: "It manages the entry and exit logic, ensuring resources are handled correctly even if the function raises an exception.", type: "Conceptual" },
+        { level: "Junior", q: "What is the difference between a function and a generator?", a: "A function returns a value once; a generator yields a sequence of values over time using 'yield'.", type: "Conceptual" },
+        { level: "Junior", q: "How do you define a function with a default argument?", a: "def func(a=10): ...", type: "Coding" },
+        { level: "Junior", q: "What is a 'lambda' function?", a: "An anonymous, one-line function.", type: "Conceptual" },
+        { level: "Mid", q: "What is the 'nonlocal' keyword used for?", a: "To access a variable from an outer (but non-global) scope in a nested function.", type: "Conceptual" },
+        { level: "Mid", q: "How do you create a decorator that accepts arguments?", a: "By wrapping the decorator in another function that returns it.", type: "Coding" },
+        { level: "Mid", q: "What is 'functools.partial'?", a: "A function that returns a new version of a function with some arguments pre-filled.", type: "Conceptual" },
+        { level: "Senior", q: "How does Python's stack frame work during recursion?", a: "Each call creates a new frame on the stack; the recursion limit prevents memory exhaustion from too many frames.", type: "Conceptual" },
+        { level: "Senior", q: "Explain the 'yield from' syntax.", a: "It delegates execution from a generator to another generator or iterable.", type: "Conceptual" },
+        { level: "Senior", q: "What is 'Function Currying'?", a: "Transforming a function with multiple arguments into a chain of functions that each take one argument.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Context Management' without the 'with' statement?", a: "By manually calling __enter__() and ensuring __exit__() is called in a try-finally block.", type: "Scenario" }
       ]
     },
     {
@@ -457,7 +477,17 @@ export const week1 = {
         { level: "Senior", q: "Explain the security risks of '__dict__' access.", a: "It allows direct manipulation of object attributes, bypassing any logic in setters or encapsulation efforts.", type: "Scenario" },
         { level: "Senior", q: "What is 'Interface Segregation' in the context of Python?", a: "Using small, focused Abstract Base Classes or Mixins to ensure classes only implement the behavior they actually need.", type: "Conceptual" },
         { level: "Senior", q: "How does Python handle garbage collection for objects with '__del__' methods?", a: "It makes it more complex because __del__ can 'resurrect' the object, and circular references with __del__ used to be difficult to clean up before Python 3.4.", type: "Conceptual" },
-        { level: "Senior", q: "Explain 'Dynamic Dispatch' in Python.", a: "The process of selecting which implementation of a polymorphic method to call at runtime based on the object's type.", type: "Conceptual" }
+        { level: "Senior", q: "Explain 'Dynamic Dispatch' in Python.", a: "The process of selecting which implementation of a polymorphic method to call at runtime based on the object's type.", type: "Conceptual" },
+        { level: "Junior", q: "What is a constructor and what is it called in Python?", a: "A method that initializes an object; it is called __init__ in Python.", type: "Conceptual" },
+        { level: "Junior", q: "How do you inherit from a class in Python?", a: "class Child(Parent): ...", type: "Coding" },
+        { level: "Junior", q: "What is the difference between an attribute and a method?", a: "Attribute is a data member (variable); method is a function belonging to the class.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'super()' used for?", a: "To call methods from the parent class from within the child class.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Method Resolution Order' (MRO).", a: "The order in which Python looks for a method in a class hierarchy.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Composition'?", a: "Including an instance of another class as a member of your class instead of inheriting from it.", type: "Conceptual" },
+        { level: "Senior", q: "What is a 'Metaclass'?", a: "A class that defines how other classes behave (a class of a class).", type: "Conceptual" },
+        { level: "Senior", q: "Explain the difference between __new__ and __init__.", a: "__new__ creates the object instance; __init__ initializes its attributes.", type: "Conceptual" },
+        { level: "Senior", q: "How are 'Slots' used to optimize class memory?", a: "By defining __slots__ to prevent the creation of a __dict__ for every instance.", type: "Conceptual" },
+        { level: "Senior", q: "What is the purpose of the 'type()' function when used with three arguments?", a: "It allows you to create a new class dynamically at runtime.", type: "Conceptual" }
       ]
     },
     {
@@ -570,7 +600,17 @@ export const week1 = {
         { level: "Senior", q: "Explain Metaclasses and the '__new__' method during class creation.", a: "__new__ is called to create the class object itself; metaclasses can override this to modify class structure globally.", type: "Conceptual" },
         { level: "Senior", q: "How do you handle 'Deadlocks' in multithreaded Python?", a: "By using lock hierarchies, timeouts on locks, and avoiding nested locks whenever possible.", type: "Scenario" },
         { level: "Senior", q: "Explain the internal representation of Python objects (PyObject).", a: "Every object in CPython is a pointer to a struct containing a reference count and a pointer to its type object.", type: "Conceptual" },
-        { level: "Senior", q: "What is 'JIT' (Just In Time) compilation and does standard CPython have it?", a: "JIT compiles code to machine code at runtime. Standard CPython does NOT have a JIT, but PyPy and some experimental forks do.", type: "Conceptual" }
+        { level: "Senior", q: "What is 'JIT' (Just In Time) compilation and does standard CPython have it?", a: "JIT compiles code to machine code at runtime. Standard CPython does NOT have a JIT, but PyPy and some experimental forks do.", type: "Conceptual" },
+        { level: "Junior", q: "What is the difference between a process and a thread?", a: "Processes have separate memory and are heavier; threads share memory and are lighter.", type: "Conceptual" },
+        { level: "Junior", q: "How do you start a thread in Python?", a: "Using the 'threading' module: threading.Thread(target=my_func).start().", type: "Coding" },
+        { level: "Junior", q: "What is an event loop in asyncio?", a: "A loop that waits for and dispatches asynchronous events and tasks.", type: "Conceptual" },
+        { level: "Mid", q: "What is the purpose of the 'gc' module?", a: "To provide an interface to the cyclic garbage collector (control, tracking, etc.).", type: "Conceptual" },
+        { level: "Mid", q: "Explain the difference between 'asyncio.run()' and 'loop.run_until_complete()'.", a: "asyncio.run() is the high-level API; loop.run_until_complete() is used when you need manual control over the loop object.", type: "Conceptual" },
+        { level: "Mid", q: "How does the 'contextlib' module simplify context managers?", a: "It provides the @contextmanager decorator to create them from generators easily.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Generational Garbage Collection'.", a: "A strategy where objects are categorized into generations based on their survival time to optimize collection frequency.", type: "Conceptual" },
+        { level: "Senior", q: "How do you bypass the GIL for computationally intensive tasks?", a: "By using the multiprocessing module or using C-extensions that release the GIL during execution.", type: "Scenario" },
+        { level: "Senior", q: "What is 'Metaprogramming' in Python?", a: "Writing code that creates or modifies other code, typically using metaclasses or deep introspection.", type: "Conceptual" },
+        { level: "Senior", q: "How does 'asyncio' handle network I/O internally?", a: "By using non-blocking sockets and a selector/event loop to handle multiple connections on a single thread.", type: "Conceptual" }
       ]
     }
   ]

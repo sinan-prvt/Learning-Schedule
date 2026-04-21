@@ -111,7 +111,17 @@ export const week3 = {
         { level: "Senior", q: "How do you handle 'Race Conditions' in a REST API?", a: "Using database locks, optimistic concurrency control (ETags), or atomic transactions in the view logic.", type: "Scenario" },
         { level: "Senior", q: "What is 'Bulk Operations' and how to support them safely?", a: "Allowing create/update of many items at once. Needs care for validation overhead and database performance (bulk_create).", type: "Scenario" },
         { level: "Senior", q: "Explain the role of 'Negotiated Content Type' internal logic.", a: "DRF matches the client's 'Accept' header against the server's 'renderer_classes' to decide the final format.", type: "Conceptual" },
-        { level: "Senior", q: "How do you implement 'Safe Methods Only' API for public users and full CRUD for admins?", a: "Using the 'IsAuthenticatedOrReadOnly' or 'DjangoModelPermissionsOrAnonReadOnly' classes.", type: "Scenario" }
+        { level: "Senior", q: "How do you implement 'Safe Methods Only' API for public users and full CRUD for admins?", a: "Using the 'IsAuthenticatedOrReadOnly' or 'DjangoModelPermissionsOrAnonReadOnly' classes.", type: "Scenario" },
+        { level: "Junior", q: "What is the difference between an API and a Web Service?", a: "An API is a set of rules for communication; a Web Service is a specific type of API that communicates over a network (usually HTTP).", type: "Conceptual" },
+        { level: "Junior", q: "What is an HTTP Header?", a: "Key-value pairs sent with a request/response to provide metadata like 'Content-Type' or 'Authorization'.", type: "Conceptual" },
+        { level: "Mid", q: "Explain the 'Layered System' constraint in REST.", a: "A client cannot ordinarily tell whether it is connected directly to the end server or to an intermediate (like a proxy or load balancer).", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Pre-flighting' (OPTIONS)?", a: "A browser mechanism to check with the server if a cross-origin request is safe and allowed before sending the actual request.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Etags' for caching in DRF?", a: "By using Django's condition decorator or setting Etag headers in the Response, helping clients avoid re-downloading unchanged data.", type: "Scenario" },
+        { level: "Senior", q: "Explain the pros and cons of 'Statelessness' in large-scale APIs.", a: "Pros: Scalability, simplicity. Cons: Every request must carry full context, which can increase payload size.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Deprecation' of old API versions?", a: "By using 'Warning' headers, documentation updates, and eventually returning 410 Gone status codes.", type: "Scenario" },
+        { level: "Senior", q: "What is 'REST Maturity Model' (Richardson)?", a: "A model that breaks REST into four levels: POX (0), Resources (1), HTTP Verbs (2), and HATEOAS (3).", type: "Conceptual" },
+        { level: "Junior", q: "What is a URL path?", a: "The part of the URL following the domain that identifies the specific resource.", type: "Conceptual" },
+        { level: "Mid", q: "How do you return a 204 No Content response?", a: "By returning Response(status=status.HTTP_204_NO_CONTENT).", type: "Coding" }
       ]
     },
     {
@@ -224,7 +234,17 @@ export const week3 = {
         { level: "Senior", q: "Explain the difference between 'Partial Update' (PATCH) and 'Full Update' (PUT) at the serializer level.", a: "PATCH passes 'partial=True' to the serializer constructor, making all fields optional during that specific validation pass.", type: "Conceptual" },
         { level: "Senior", q: "How do you implement unique validation across multiple fields in a serializer?", a: "Using UniqueTogetherValidator in the Meta class's 'validators' list.", type: "Coding" },
         { level: "Senior", q: "Why would you use a 'HyperlinkedModelSerializer' over a standard 'ModelSerializer'?", a: "To make the API more HATEOAS-compliant by providing URLs for relationships, making it more discoverable.", type: "Scenario" },
-        { level: "Senior", q: "How do you optimize serializer validation for millions of records?", a: "Avoiding database lookups inside 'validate' methods; using 'UniqueValidator' with 'queryset' is efficient but still hits the DB.", type: "Scenario" }
+        { level: "Senior", q: "How do you optimize serializer validation for millions of records?", a: "Avoiding database lookups inside 'validate' methods; using 'UniqueValidator' with 'queryset' is efficient but still hits the DB.", type: "Scenario" },
+        { level: "Junior", q: "What is 'ChoiceField' used for?", a: "To limit a serializer field to a specific set of allowed values.", type: "Conceptual" },
+        { level: "Junior", q: "How do you make a field read-only?", a: "Set 'read_only=True' in the field definition.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'serializers.SerializerMethodField'?", a: "A read-only field that gets its value by calling a method on the serializer (prefixed with get_).", type: "Conceptual" },
+        { level: "Mid", q: "How do you use 'source' to access a nested attribute?", a: "Using dot notation, e.g., source='profile.address.city'.", type: "Coding" },
+        { level: "Senior", q: "Explain the 'N+1' problem in serialization and how 'depth' affects it.", a: "Using 'depth' can trigger many individual SQL queries; always use 'select_related' on the queryset for better performance.", type: "Scenario" },
+        { level: "Senior", q: "How do you create a custom Serializer field?", a: "By subclassing 'serializers.Field' and implementing 'to_representation' and 'to_internal_value'.", type: "Coding" },
+        { level: "Senior", q: "Explain the 'to_internal_value' internal logic.", a: "It is the entry point for deserialization, responsible for parsing raw data into Python types before validation.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Conditional Serialization' (changing fields based on user)?", a: "By overriding '__init__' and dynamically removing fields from 'self.fields' based on the request context.", type: "Scenario" },
+        { level: "Junior", q: "What is the 'many=True' argument for?", a: "To tell the serializer to process a list of objects instead of a single one.", type: "Conceptual" },
+        { level: "Mid", q: "How do you handle 'Partial Updates' in a serializer?", a: "By passing 'partial=True' during instantiation; it makes all fields optional during validation.", type: "Coding" }
       ]
     },
     {
@@ -336,7 +356,17 @@ export const week3 = {
         { level: "Senior", q: "Explain 'Method Decorators' on class methods (like @method_decorator) vs view decorators.", a: "@method_decorator is used to apply standard Django decorators to class-based view methods.", type: "Conceptual" },
         { level: "Senior", q: "How do you implement a 'Read Only for Public' and 'Full Access for Authed' policy using only ViewSet settings?", a: "Setting permission_classes = [IsAuthenticatedOrReadOnly].", type: "Scenario" },
         { level: "Senior", q: "How do you handle 'Audit Logging' in a ViewSet?", a: "By adding logic in perform_create/perform_update to record changes in a separate log table or using a library like django-simple-history.", type: "Scenario" },
-        { level: "Senior", q: "Explain the internal logic of how GenericAPIView maps mixin methods to HTTP methods.", a: "The mixins provide handlers like 'list' or 'create', and the specific generic subclass (like ListCreateAPIView) maps 'get' to 'list' and 'post' to 'create'.", type: "Conceptual" }
+        { level: "Senior", q: "Explain the internal logic of how GenericAPIView maps mixin methods to HTTP methods.", a: "The mixins provide handlers like 'list' or 'create', and the specific generic subclass (like ListCreateAPIView) maps 'get' to 'list' and 'post' to 'create'.", type: "Conceptual" },
+        { level: "Junior", q: "What is ListCreateAPIView?", a: "A generic view that provides 'GET' (list) and 'POST' (create) endpoints.", type: "Conceptual" },
+        { level: "Junior", q: "What is RetrieveUpdateDestroyAPIView?", a: "A generic view that provides 'GET', 'PUT', 'PATCH', and 'DELETE' for a single item.", type: "Conceptual" },
+        { level: "Mid", q: "How do you customize the queryset dynamically?", a: "By overriding the 'get_queryset()' method in your view class.", type: "Coding" },
+        { level: "Mid", q: "What is 'self.request.data'?", a: "A unified dictionary of the request body (JSON, form data, etc.), unlike standard Django's request.POST.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement a 'Soft Delete' in a ViewSet?", a: "Override 'perform_destroy' to set a flag (like is_deleted=True) instead of calling the model's delete().", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Action Decorators' (@action).", a: "They allow defining custom endpoints within a ViewSet that don't match the standard CRUD pattern.", type: "Conceptual" },
+        { level: "Senior", q: "How do you use different serializers for different actions in a ViewSet?", a: "By overriding 'get_serializer_class()' and checking 'self.action'.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Method-based Throttling' in a ViewSet.", a: "Overriding 'get_throttles()' to apply different rate limits based on whether the action is 'list' or 'create'.", type: "Scenario" },
+        { level: "Junior", q: "What is 'lookup_field'?", a: "The model field used for individual object lookups, defaulting to 'pk'.", type: "Conceptual" },
+        { level: "Mid", q: "How do you filter a queryset by the logged-in user?", a: "return MyModel.objects.filter(owner=self.request.user) inside get_queryset().", type: "Coding" }
       ]
     },
     {
@@ -441,7 +471,22 @@ export const week3 = {
         { level: "Senior", q: "How would you handle URL routing for a 'Slug-only' API where IDs are never exposed?", a: "Set 'lookup_field = slug' in the viewset and ensure the router uses the correct regex via ViewSet attributes.", type: "Scenario" },
         { level: "Senior", q: "Explain 'Format Suffix' negotiation internals.", a: "DRF appends a (.?P<format>[a-z0-9]+)/? group to the regex to capture the requested extension.", type: "Conceptual" },
         { level: "Senior", q: "How do you optimize URL resolution time for an API with hundreds of routes?", a: "By grouping routes into apps and using nested 'include' calls to minimize the depth of the search tree.", type: "Scenario" },
-        { level: "Senior", q: "What is the difference between 'as_view' and 'include(router.urls)' in terms of URL pattern generation?", a: "'as_view' creates a single pattern; 'include(router.urls)' generates a full set of RESTful paths for all actions.", type: "Conceptual" }
+        { level: "Senior", q: "What is the difference between 'as_view' and 'include(router.urls)' in terms of URL pattern generation?", a: "'as_view' creates a single pattern; 'include(router.urls)' generates a full set of RESTful paths for all actions.", type: "Conceptual" },
+        { level: "Junior", q: "What is router.register()?", a: "The method used to add a ViewSet to a router with a specific URL prefix.", type: "Coding" },
+        { level: "Junior", q: "What is the default basename if not provided?", a: "It is automatically derived from the 'queryset' attribute in the ViewSet.", type: "Conceptual" },
+        { level: "Mid", q: "How do you handle 'Nested Routing'?", a: "Using the 'drf-nested-routers' extension to define child resources (e.g., /parent/1/children/).", type: "Scenario" },
+        { level: "Mid", q: "What is 'DefaultRouter's root view?", a: "A summary page that lists all available API endpoints, accessible at the API root URL.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement custom URL mapping in a Router?", a: "By subclassing 'SimpleRouter' and modifying the 'routes' list which contains namedtuples for each mapping.", type: "Coding" },
+        { level: "Senior", q: "Explain the 'basename' requirement when a queryset is missing.", a: "If the ViewSet doesn't have a '.queryset', the router cannot guess the URL name, so a 'basename' must be provided.", type: "Scenario" },
+        { level: "Senior", q: "How do you implement 'Format Suffix' routing?", a: "By using 'format_suffix_patterns' in your URL configuration to allow .json or .xml extensions.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Lookup Regex' in ViewSets.", a: "The 'lookup_value_regex' attribute allows you to restrict the format of the ID/Slug in the generated URL.", type: "Conceptual" },
+        { level: "Junior", q: "What is simple-router?", a: "A basic router that generates standard CRUD URL patterns without the root view.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'trailing_slash'?", a: "A router setting that determines if slashes are appended to the end of the generated URLs.", type: "Conceptual" },
+        { level: "Junior", q: "How do you name a router instance?", a: "Usually 'router', but any variable name works as long as you use it consistently.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'SimpleRouter' vs 'DefaultRouter' links.", a: "DefaultRouter adds specific links to the API root that SimpleRouter does not.", type: "Conceptual" },
+        { level: "Senior", q: "How to handle 'Recursive' routers?", a: "By carefully managing prefixes and ensuring no infinite loops in path inclusions.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Path Strategy' in routers.", a: "The logic used to transform ViewSet actions into specific URL strings and names.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'include(router.urls)'?", a: "The code that integrates the router's generated paths into the main Django URL patterns.", type: "Coding" }
       ]
     },
     {
@@ -549,7 +594,17 @@ export const week3 = {
         { level: "Senior", q: "Explain the security implications of 'AllowAny' at the global level.", a: "It leaves your entire API public by default. It's safer to use 'IsAuthenticated' globally and override only where needed.", type: "Scenario" },
         { level: "Senior", q: "How do you implement 'Object-level' permissions for Write actions but not Read?", a: "By checking 'request.method' inside 'has_object_permission' and returning True for safe methods, False otherwise for non-owners.", type: "Coding" },
         { level: "Senior", q: "How do you optimize authentication for an API handling 10k+ requests per second?", a: "Using JWT to avoid DB lookups, or caching standard tokens in Redis/Memcached.", type: "Scenario" },
-        { level: "Senior", q: "Explain 'Scope' based permissions often used in OAuth integration with DRF.", a: "Checking if a token has specific 'scopes' (e.g., 'read', 'write') granted by the user at the time of auth.", type: "Conceptual" }
+        { level: "Senior", q: "Explain 'Scope' based permissions often used in OAuth integration with DRF.", a: "Checking if a token has specific 'scopes' (e.g., 'read', 'write') granted by the user at the time of auth.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Token Authentication'?", a: "A simple scheme where a client includes a unique string in the Authorization header.", type: "Conceptual" },
+        { level: "Junior", q: "How do you check if a user is logged in in a view?", a: "By checking 'request.user.is_authenticated'.", type: "Coding" },
+        { level: "Mid", q: "What is 'JWT' (JSON Web Token)?", a: "A self-contained token that stores user identity and claims, avoiding database lookups for each request.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'IsOwner' custom permission?", a: "A common pattern where you check if 'obj.owner == request.user' to protect personal data.", type: "Scenario" },
+        { level: "Senior", q: "How do you implement 'Rate Limiting' (Throttling)?", a: "By defining 'DEFAULT_THROTTLE_RATES' in settings and adding throttle classes to your views.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'HSTS' and why it's important for API security.", a: "It forces the browser to use HTTPS only, preventing SSL stripping attacks.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'CORS' (Cross-Origin Resource Sharing)?", a: "Using 'django-cors-headers' to whitelist domains that can access your API from a browser.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Object-level' vs 'Global' permissions.", a: "Global (has_permission) checks general access; Object-level (has_object_permission) checks rights for a specific instance.", type: "Conceptual" },
+        { level: "Junior", q: "What is the status code for 'Forbidden'?", a: "403 Forbidden.", type: "Conceptual" },
+        { level: "Mid", q: "How do you define multiple default permissions?", a: "By adding them as a list to 'DEFAULT_PERMISSION_CLASSES' in settings.", type: "Coding" }
       ]
     }
   ]

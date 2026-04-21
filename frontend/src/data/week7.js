@@ -109,7 +109,18 @@ export const week7 = {
         { level: "Senior", q: "How does the 'Evaluation of Resource-based + Identity-based' policies work?", a: "If either allows and there's no deny, access is granted. (Note: different for cross-account where both must allow).", type: "Conceptual" },
         { level: "Senior", q: "How do you design for 'Regional Failover'?", a: "By deploying resources in multiple regions and using Route 53 Health Checks to redirect traffic if a region goes down.", type: "Scenario" },
         { level: "Senior", q: "What is the benefit of 'IAM Access Analyzer'?", a: "It helps identify resources in your account that are shared with an external entity (potential security risk).", type: "Conceptual" },
-        { level: "Senior", q: "Explain 'Identity Federation' for enterprise users.", a: "Allowing users to log in to AWS using their corporate credentials (e.g. Active Directory) using SAML 2.0.", type: "Conceptual" }
+        { level: "Senior", q: "Explain 'Identity Federation' for enterprise users.", a: "Allowing users to log in to AWS using their corporate credentials (e.g. Active Directory) using SAML 2.0.", type: "Conceptual" },
+        { level: "Senior", q: "How would you implement 'VPC Peering' between two different AWS accounts?", a: "Requester account sends a peering request; Accepter account must accept it, and then both must update their Route Tables to point to each other.", type: "Scenario" },
+        { level: "Junior", q: "What is a 'VPC'?", a: "Virtual Private Cloud; a private, isolated section of the AWS network where you can launch resources.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Subnet'?", a: "A range of IP addresses in your VPC; can be Public (connected to IGW) or Private.", type: "Conceptual" },
+        { level: "Mid", q: "What is an 'Internet Gateway' (IGW)?", a: "A VPC component that allows communication between instances in your VPC and the internet.", type: "Conceptual" },
+        { level: "Mid", q: "What is a 'NAT Gateway'?", a: "Allows instances in a private subnet to connect to the internet (for updates) but prevents the internet from initiating a connection with them.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'VPC Flow Logs'.", a: "Feature that captures IP traffic information for network interfaces in your VPC, useful for security auditing and troubleshooting.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Site-to-Site VPN'?", a: "Using a Virtual Private Gateway (AWS side) and a Customer Gateway (on-prem side) to create an encrypted tunnel over the internet.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Direct Connect' vs 'VPN'.", a: "VPN is cheap but over the public internet; Direct Connect is a dedicated, private fiber connection providing ultra-low latency and consistent bandwidth.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'IP Address Exhaustion' in a VPC?", a: "By adding secondary CIDR blocks to the VPC or planning subnets with larger masks (/20 instead of /24) from the start.", type: "Scenario" },
+        { level: "Junior", q: "What is a 'Security Group'?", a: "A virtual firewall for your EC2 instance that controls inbound and outbound traffic.", type: "Conceptual" },
+        { level: "Mid", q: "Difference between 'Security Group' and 'NACL'?", a: "SG is stateful and at the instance level; NACL is stateless and at the subnet level.", type: "Conceptual" }
       ]
     },
     {
@@ -219,7 +230,17 @@ export const week7 = {
         { level: "Senior", q: "What is 'Enhanced Networking' and how is it enabled?", a: "Using SR-IOV for higher I/O and lower CPU utilization, enabled by using ENA or ixgbevf drivers.", type: "Conceptual" },
         { level: "Senior", q: "How do you recover an EC2 instance if you lose the Private Key?", a: "Using EC2 Instance Connect (if configured) or by detaching the root volume, attaching it to another instance, and manually swapping the authorized_keys file.", type: "Scenario" },
         { level: "Senior", q: "Explain 'Dedicated Hosts' vs 'Dedicated Instances'.", a: "Hosts are physical servers where you have full control for compliance/licensing. Instances run on hardware dedicated to you but with less visibility.", type: "Conceptual" },
-        { level: "Senior", q: "What is 'AWS Outposts' in the context of EC2?", a: "Bringing AWS native services (including EC2) to your on-premises data center using special AWS hardware.", type: "Conceptual" }
+        { level: "Senior", q: "What is 'AWS Outposts' in the context of EC2?", a: "Bringing AWS native services (including EC2) to your on-premises data center using special AWS hardware.", type: "Conceptual" },
+        { level: "Junior", q: "What is an 'Instance' in EC2?", a: "A virtual server in the AWS cloud with its own OS, storage, and networking.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'AMI'?", a: "Amazon Machine Image; a template that contains the software configuration (OS, application server, and applications) required to launch an instance.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'EBS' (Elastic Block Store)?", a: "Network-attached block storage for EC2 instances, similar to a hard drive.", type: "Conceptual" },
+        { level: "Mid", q: "Difference between 'Public IP' and 'Elastic IP'?", a: "Public IPs change on instance stop/start; Elastic IPs are static and stay with your account.", type: "Conceptual" },
+        { level: "Senior", q: "How do you optimize 'EC2 Costs'?", a: "Using 'Reserved Instances' for predictable load and 'Spot Instances' for fault-tolerant, batch processing to save up to 90%.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'EBS Multi-Attach'.", a: "Feature allowing one EBS volume (Provisioned IOPS) to be attached to multiple EC2 instances in the same AZ.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'EC2 Auto-Healing'?", a: "By setting an ASG with a desired count of 1; if the instance fails a health check, ASG terminates and launches a new one automatically.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Dedicated Hosts' vs 'Dedicated Instances'.", a: "Instances are dedicated to your hardware; Hosts give you full physical server control, often for licensing reasons.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'User Data' in EC2?", a: "Scripts that run once when the instance is launched (e.g., installing updates or web servers).", type: "Coding" },
+        { level: "Mid", q: "Explain 'Instance Store' vs 'EBS'.", a: "Instance store is temporary (ephemeral) and fast; EBS is persistent and durable across reboots/stops.", type: "Conceptual" }
       ]
     },
     {
@@ -329,7 +350,18 @@ export const week7 = {
         { level: "Senior", q: "Explain 'S3 Multi-Region Access Points'.", a: "Combining buckets across regions behind a single global name, which routes traffic to the closest healthy bucket automatically.", type: "Conceptual" },
         { level: "Senior", q: "How do you handle 'Race Conditions' in S3?", a: "S3's strong consistency for PUTs and DELETEs ensures that the last successful request wins and subsequent reads see that update.", type: "Scenario" },
         { level: "Senior", q: "What is 'CloudFront OAI' (Origin Access Identity)?", a: "Restricting an S3 bucket so it can ONLY be accessed via CloudFront, preventing direct public access to S3 URLs.", type: "Scenario" },
-        { level: "Senior", q: "Explain 'S3 Inventory' vs 'S3 ListObjects'.", a: "Inventory is a daily/weekly scheduled report (scalable). ListObjects is an API call (better for small buckets/real-time).", type: "Conceptual" }
+        { level: "Senior", q: "Explain 'S3 Inventory' vs 'S3 ListObjects'.", a: "Inventory is a daily/weekly scheduled report (scalable). ListObjects is an API call (better for small buckets/real-time).", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'S3 Cross-Region Replication' for disaster recovery?", a: "Enable versioning on both buckets and create a replication rule; AWS automatically copies every uploaded object to the target region.", type: "Scenario" },
+        { level: "Junior", q: "What is 'S3'?", a: "Simple Storage Service; object storage providing industry-leading scalability, data availability, security, and performance.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Bucket' in S3?", a: "A container for objects stored in S3; names must be globally unique across all AWS accounts.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'S3 Lifecycle Policies'.", a: "Rules that automatically transition objects to cheaper storage classes (like Glacier) or delete them after a certain amount of time.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'S3 Versioning'?", a: "Keeping multiple versions of an object in the same bucket, protecting against accidental deletion or overwrite.", type: "Conceptual" },
+        { level: "Senior", q: "How do you optimize 'S3 Costs' for millions of small files?", a: "By using 'Intelligent Tiering' to move files between access tiers or by bundling small files together into larger archives.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'S3 Select'.", a: "Feature allowing you to use SQL queries to filter and retrieve only the specific data subset you need from an object, saving bandwidth.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Object Lockdown' (S3 Object Lock)?", a: "By using a Write-Once-Read-Many (WORM) model to prevent objects from being deleted or overwritten for a fixed amount of time.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Transfer Acceleration' in S3.", a: "Uses AWS Edge Locations and optimized network paths to speed up data uploads to S3 buckets over long distances.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'S3 Standard' storage class?", a: "The default storage class for frequently accessed data, providing 99.99% availability.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'S3 Glacier Deep Archive'.", a: "Lowest-cost storage class for long-term archive (retention 7-10 years) with retrieval times of 12-48 hours.", type: "Conceptual" }
       ]
     },
     {
@@ -439,7 +471,15 @@ export const week7 = {
         { level: "Senior", q: "How do you monitor 'Slow Queries' in RDS?", a: "Enabling the Slow Query Log and using CloudWatch Logs or Performance Insights to find and analyze them.", type: "Scenario" },
         { level: "Senior", q: "Explain 'DynamoDB Adaptive Capacity'.", a: "A feature that automatically increases throughput for a 'hot' partition by using unused capacity from other partitions.", type: "Conceptual" },
         { level: "Senior", q: "How would you design a 'Data Archive' pipeline from RDS?", a: "Exporting data to S3 using 'S3 Export' and then using Athena to query the archive or moving it to Glacier.", type: "Scenario" },
-        { level: "Senior", q: "What is the 'Query' vs 'Scan' performance trade-off?", a: "Query is logarithmic (O(log n)) using indexes. Scan is linear (O(n)) and should be avoided at scale.", type: "Conceptual" }
+        { level: "Senior", q: "What is the 'Query' vs 'Scan' performance trade-off?", a: "Query is logarithmic (O(log n)) using indexes. Scan is linear (O(n)) and should be avoided at scale.", type: "Conceptual" },
+        { level: "Junior", q: "What is an S3 bucket?", a: "A container for objects stored in Amazon S3.", type: "Conceptual" },
+        { level: "Junior", q: "What is an IAM Role?", a: "An identity you can create in your account that has specific permissions.", type: "Conceptual" },
+        { level: "Mid", q: "Explain S3 storage classes.", a: "Different tiers like Standard, Intelligent-Tiering, and Glacier for cost optimization.", type: "Conceptual" },
+        { level: "Mid", q: "What is AWS Lambda?", a: "A serverless compute service that runs code in response to events.", type: "Conceptual" },
+        { level: "Senior", q: "How to handle 'S3 Presigned URLs'?", a: "Generating a temporary URL that gives someone access to an object without IAM credentials.", type: "Coding" },
+        { level: "Senior", q: "Explain 'VPC Peering'.", a: "A networking connection between two VPCs that enables you to route traffic between them.", type: "Conceptual" },
+        { level: "Junior", q: "What is the AWS Console?", a: "The web-based interface for managing AWS resources.", type: "Conceptual" },
+        { level: "Mid", q: "Explain CloudWatch Logs.", a: "A service to monitor, store, and access your log files from EC2, Lambda, and other sources.", type: "Conceptual" }
       ]
     },
     {
@@ -549,7 +589,18 @@ export const week7 = {
         { level: "Senior", q: "How do you implement 'IP Address Management' (IPAM) at scale?", a: "Using AWS VPC IPAM to centrally plan, track, and monitor IP addresses across multiple VPCs and accounts.", type: "Scenario" },
         { level: "Senior", q: "Explain 'IPv6 adaptation' strategies for existing VPCs.", a: "Adding dual-stack subnets, using Egress-only IGWs, and ensuring ALBs are configured for dual-stack support.", type: "Scenario" },
         { level: "Senior", q: "How would you handle 'Network Isolation' for a high-security workload?", a: "Placing it in a private subnet with NO internet gateway, NO NAT gateway, and only using VPC Endpoints for necessary AWS services.", type: "Scenario" },
-        { level: "Senior", q: "What is 'VPC Lattice' exactly?", a: "It abstracts networking complexity by providing a consistent way to handle discovery, connectivity, and observability for services across accounts and VPCs.", type: "Conceptual" }
+        { level: "Senior", q: "What is 'VPC Lattice' exactly?", a: "It abstracts networking complexity by providing a consistent way to handle discovery, connectivity, and observability for services across accounts and VPCs.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Global Load Balancing' with AWS?", a: "Using 'Route 53' with Latency or Geolocation routing policies to direct traffic to the nearest ALB in different regions.", type: "Scenario" },
+        { level: "Junior", q: "What is an 'ALB'?", a: "Application Load Balancer; works at Layer 7 (HTTP/HTTPS) and routes based on URL paths or hostnames.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Auto Scaling'?", a: "Automatically adjusting the number of EC2 instances to maintain performance as demand changes.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Target Groups' in ALB.", a: "A logical collection of EC2 instances, containers, or lambda functions that the load balancer routes traffic to.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Cross-Zone Load Balancing'?", a: "Ensures the ALB distributes traffic evenly across all instances in all enabled AZs, regardless of how many instances are in each.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Sticky Sessions' (Session Affinity)?", a: "Enabling a setting on the Target Group that routes all requests from a single client to the same backend instance using cookies.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Predictive Scaling'.", a: "An ASG feature that uses machine learning to predict future traffic based on historical data and scales out before the actual load hits.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'SSL Termination' on ALB?", a: "Uploading a certificate to ACM and configuring an HTTPS listener on the ALB to decrypt traffic before sending it to backends.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'NLB' (Network Load Balancer) use cases.", a: "Required for TCP/UDP traffic, static IPs, and extreme performance (millions of requests per second).", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Launch Template'?", a: "A document that specifies EC2 instance configuration used by an Auto Scaling Group.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Cooldown Period' in Auto Scaling.", a: "A set time after a scaling activity where the ASG won't scale again, allowing metrics to stabilize.", type: "Conceptual" }
       ]
     }
   ]

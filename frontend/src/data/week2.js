@@ -111,7 +111,15 @@ export const week2 = {
         { level: "Senior", q: "How do you handle schema migrations for a large, live database?", a: "By using zero-downtime strategies like multi-stage deployments, adding fields as nullable first, or using database-level tools.", type: "Scenario" },
         { level: "Senior", q: "Explain the 'CORS' (Cross-Origin Resource Sharing) issue in Django.", a: "Browsers block requests from one domain to another by default. Django requires 'django-cors-headers' to allow authorized cross-origin requests.", type: "Conceptual" },
         { level: "Senior", q: "How does Django manage thread safety in its core components?", a: "Components like the DB connection and request object are stored in thread-local storage.", type: "Conceptual" },
-        { level: "Senior", q: "What is the purpose of 'django-admin' vs 'manage.py'?", a: "django-admin is for general tasks (starting projects). manage.py is project-specific and sets the DJANGO_SETTINGS_MODULE.", type: "Conceptual" }
+        { level: "Senior", q: "What is the purpose of 'django-admin' vs 'manage.py'?", a: "django-admin is for general tasks (starting projects). manage.py is project-specific and sets the DJANGO_SETTINGS_MODULE.", type: "Conceptual" },
+        { level: "Junior", q: "How do you install Django?", a: "Using pip: pip install django.", type: "Coding" },
+        { level: "Junior", q: "What is the result of 'python manage.py check'?", a: "It audits your project for common errors without running the server or touching the database.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'INSTALLED_APPS' order importance.", a: "Django processes apps in order, which affects template overriding and signal registration.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'WSGI'?", a: "Web Server Gateway Interface, the standard for Python web application servers.", type: "Conceptual" },
+        { level: "Mid", q: "How do you specify a different settings file for a command?", a: "Using the --settings flag, e.g., --settings=myproject.settings.prod.", type: "Coding" },
+        { level: "Senior", q: "Explain the 'AppConfig.ready()' method.", a: "It is called as soon as the registry is fully populated; used for registering signals and other initialization tasks.", type: "Conceptual" },
+        { level: "Senior", q: "How does Django's middleware onion architecture work?", a: "Requests go through middleware from top to bottom; responses go back through middleware from bottom to top.", type: "Conceptual" },
+        { level: "Senior", q: "What are the performance implications of having many apps in INSTALLED_APPS?", a: "Slower startup and potential namespace collisions in templates or static files.", type: "Scenario" }
       ]
     },
     {
@@ -224,7 +232,15 @@ export const week2 = {
         { level: "Senior", q: "How do you handle cross-app URL reversing?", a: "By using namespaces in URLs and referencing them like 'app_name:view_name'.", type: "Coding" },
         { level: "Senior", q: "Explain the 'as_view()' internal implementation.", a: "It returns a function that instantiates the class, copies the request/args/kwargs, and calls the dispatch() method.", type: "Conceptual" },
         { level: "Senior", q: "How do you implement a view that handles both AJAX and regular requests differently?", a: "By checking request.headers.get('x-requested-with') == 'XMLHttpRequest' or using different URL endpoints.", type: "Scenario" },
-        { level: "Senior", q: "What are the security implications of exposing internal IDs in URLs?", a: "ID enumeration attacks. Using UUIDs or slugs can mitigate this risk.", type: "Scenario" }
+        { level: "Senior", q: "What are the security implications of exposing internal IDs in URLs?", a: "ID enumeration attacks. Using UUIDs or slugs can mitigate this risk.", type: "Scenario" },
+        { level: "Junior", q: "How do you make a URL parameter optional?", a: "In Django, URLs are usually explicit; you define two patterns, one with and one without the parameter, both pointing to the view.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'path' vs 're_path'?", a: "path() uses simple converters; re_path() uses regular expressions.", type: "Conceptual" },
+        { level: "Mid", q: "How do you handle a redirect with a query string?", a: "By appending the string to the URL: redirect('/path/?q=val').", type: "Coding" },
+        { level: "Mid", q: "Explain 'get_object_or_404' implementation.", a: "It calls get() on a manager and raises Http404 if the object does not exist.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement custom URL converters?", a: "By creating a class with regex and to_python/to_url methods and registering it with register_converter.", type: "Coding" },
+        { level: "Senior", q: "Explain 'View caching' at the URL level.", a: "Using the cache_page() decorator in the urls.py file to cache the entire output of a view.", type: "Conceptual" },
+        { level: "Senior", q: "What is 'ResolverMatch'?", a: "An object returned by resolve() that contains information about the matched URL (view, args, name).", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle dynamically generated URLs that don't match any pattern (fallback)?", a: "Using a catch-all regex pattern at the end of urlpatterns or a custom middleware.", type: "Scenario" }
       ]
     },
     {
@@ -336,7 +352,15 @@ export const week2 = {
         { level: "Senior", q: "What are the risks of using 'spaceless' on large templates?", a: "It can incur a slight performance hit as it regex-processes the entire rendered HTML string before returning it.", type: "Conceptual" },
         { level: "Senior", q: "How do you implement dynamic template loading based on user agent (e.g., mobile vs desktop)?", a: "By using middleware to detect the user agent and injecting a different template folder path into the request context or using a custom loader.", type: "Scenario" },
         { level: "Senior", q: "Explain the concept of 'Template Loaders' and their priority.", a: "Loaders (filesystem, app_directories) are tried in order. Filesystem usually comes first, allowing easy project-level overrides.", type: "Conceptual" },
-        { level: "Senior", q: "How do you handle large-scale static asset management (like using a CDN)?", a: "By setting STATIC_URL to the CDN address and using a custom storage backend (like django-storages for S3).", type: "Scenario" }
+        { level: "Senior", q: "How do you handle large-scale static asset management (like using a CDN)?", a: "By setting STATIC_URL to the CDN address and using a custom storage backend (like django-storages for S3).", type: "Scenario" },
+        { level: "Junior", q: "How do you load a specific template tag library?", a: "{% load library_name %}.", type: "Coding" },
+        { level: "Junior", q: "What is the 'block.super' variable?", a: "It includes the content from the parent template's block.", type: "Conceptual" },
+        { level: "Mid", q: "How do you create a custom template filter?", a: "Using the @register.filter decorator in a templatetags module.", type: "Coding" },
+        { level: "Mid", q: "What is an 'Inclusion Tag'?", a: "A tag that renders another template with some context.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Template Fragment Caching'.", a: "Using the {% cache %} tag to cache specific parts of a rendered template for a period of time.", type: "Conceptual" },
+        { level: "Senior", q: "How do you write a custom template loader?", a: "By inheriting from django.template.loaders.base.Loader and implementing the get_contents method.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Context Overriding' in nested includes.", a: "Nested includes can access the parent context, but you can also pass specific variables using the 'with' keyword.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle asset versioning (cache-busting) in Django?", a: "Using ManifestStaticFilesStorage to add hashes to filenames.", type: "Scenario" }
       ]
     },
     {
@@ -449,7 +473,15 @@ export const week2 = {
         { level: "Senior", q: "What are the security implications of 'SECURE_PROXY_SSL_HEADER'?", a: "It tells Django a request is secure if it's behind a proxy; if misconfigured, it could allow attackers to spoof HTTPS status.", type: "Conceptual" },
         { level: "Senior", q: "How do you implement Two-Factor Authentication (2FA) for the Admin?", a: "Using packages like 'django-two-factor-auth' or 'django-otp'.", type: "Scenario" },
         { level: "Senior", q: "Explain the 'SameSite' cookie attribute.", a: "Controls whether cookies are sent with cross-site requests (Strict, Lax, or None). Django sets it to 'Lax' by default.", type: "Conceptual" },
-        { level: "Senior", q: "How do you handle large-scale permission management for thousands of users?", a: "By using Groups and possibly 'Object-level' permissions via 'django-guardian' instead of just model-level ones.", type: "Scenario" }
+        { level: "Senior", q: "How do you handle large-scale permission management for thousands of users?", a: "By using Groups and possibly 'Object-level' permissions via 'django-guardian' instead of just model-level ones.", type: "Scenario" },
+        { level: "Junior", q: "What is 'is_staff'?", a: "A boolean flag indicating if the user can access the admin site.", type: "Conceptual" },
+        { level: "Junior", q: "How do you change the admin site header?", a: "By setting admin.site.site_header in admin.py.", type: "Coding" },
+        { level: "Mid", q: "What is 'list_filter' in Admin?", a: "An attribute that adds a sidebar for filtering results based on specific fields.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Django Signals' security risks.", a: "If not used carefully, they can make code flow hard to follow and potentially lead to double-execution of logic.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Object-level' permissions?", a: "Using third-party libraries like 'django-guardian' or overriding methods in a ModelAdmin/QuerySet.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Session Hijacking' protection in Django.", a: "Using SESSION_COOKIE_SECURE, HTTPOnly, and rotated session IDs to prevent attackers from stealing sessions.", type: "Conceptual" },
+        { level: "Senior", q: "How do you use 'check --deploy'?", a: "It runs a checklist of security configurations for production environments.", type: "Conceptual" },
+        { level: "Senior", q: "What is 'HSTS' in Django settings?", a: "HTTP Strict Transport Security, which tells browsers to only interact with the site via HTTPS.", type: "Conceptual" }
       ]
     },
     {
@@ -601,7 +633,15 @@ export const week2 = {
         { level: "Senior", q: "How would you implement a 'bulk edit' feature using formsets?", a: "By passing a queryset to the formset, iterating through successfully validated forms, and saving each one.", type: "Coding" },
         { level: "Senior", q: "Explain the importance of 'ManagementForm' in formsets and how to protect it.", a: "It tracks form counts; tampering with it can lead to validation errors or missed data. Secure it by ensuring it's always rendered correctly.", type: "Conceptual" },
         { level: "Senior", q: "How do you implement field-level permissions in a Django form?", a: "By overriding __init__ and setting fields to read-only or removing them based on user permissions.", type: "Scenario" },
-        { level: "Senior", q: "How do you handle extremely large file uploads that might timeout?", a: "By using chunked file upload libraries, background tasks (Celery) to process files, or direct-to-S3 uploads with signed URLs.", type: "Scenario" }
+        { level: "Senior", q: "How do you handle extremely large file uploads that might timeout?", a: "By using chunked file upload libraries, background tasks (Celery) to process files, or direct-to-S3 uploads with signed URLs.", type: "Scenario" },
+        { level: "Junior", q: "What is 'is_valid()'?", a: "A method that runs validation and populates the errors or cleaned_data attributes.", type: "Conceptual" },
+        { level: "Junior", q: "How do you access form errors in a template?", a: "{{ form.errors }}.", type: "Coding" },
+        { level: "Mid", q: "What is 'commit=False'?", a: "An argument to save() that returns an unsaved instance of the model.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'clean_fieldname()' vs 'clean()'.", a: "clean_fieldname() is for one field; clean() is for cross-field validation.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement a dynamic form with variable fields at runtime?", a: "By overriding __init__ and adding fields directly to self.fields.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Formsets' management form importance.", a: "It tracks the number of forms; if tampered with, validation will fail or data might be lost.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle multi-step (wizard) forms?", a: "Using django-formtools or managing step state in the session.", type: "Scenario" },
+        { level: "Senior", q: "What is 'Form Media'?", a: "An inner class in a Form that defines the CSS or JS files needed for specific widgets.", type: "Conceptual" }
       ]
     }
   ]

@@ -109,7 +109,17 @@ export const week9 = {
         { level: "Senior", q: "How would you implement 'Auto-Save' using hooks?", a: "A useEffect with a debounced update function that triggers when specific state variables change.", type: "Scenario" },
         { level: "Senior", q: "Explain 'Context Over-rendering' and mitigation.", a: "When a context change triggers all consumers to re-render; mitigate by splitting contexts or using selectors (Zustand style).", type: "Scenario" },
         { level: "Senior", q: "What is 'Batching' in React 18?", a: "Automatic grouping of multiple state updates into a single re-render, even inside promises or timeouts.", type: "Conceptual" },
-        { level: "Senior", q: "How do you debug a performance issue with an expensive useMemo call?", a: "Use React Profiler to see if the memo is actually skipping re-renders or if the dependencies are changing unexpectedly.", type: "Scenario" }
+        { level: "Senior", q: "How do you debug a performance issue with an expensive useMemo call?", a: "Use React Profiler to see if the memo is actually skipping re-renders or if the dependencies are changing unexpectedly.", type: "Scenario" },
+        { level: "Junior", q: "What is the second argument of useState?", a: "A dispatcher function used to update the state variable.", type: "Conceptual" },
+        { level: "Junior", q: "Can handles be objects in useState?", a: "Yes, you can store any type of data in state, including objects and arrays.", type: "Conceptual" },
+        { level: "Mid", q: "When should you use useLayoutEffect instead of useEffect?", a: "When you need to measure the DOM or perform visual updates that must happen before the screen is painted.", type: "Conceptual" },
+        { level: "Mid", q: "What is an 'Identity' of a function in React?", a: "The memory reference of a function; recreating it on every render can cause children using it as a prop to re-render.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Hook Callstack' internals.", a: "React uses a list of hooks for each component instance; it relies on the call order to map each call to its specific state/effect storage.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Async' closures in useEffect?", a: "By checking if the component is still mounted using a flag or by using an AbortController in the cleanup.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Automatic Batching' in React 18.", a: "React now batches all state updates together even inside timeouts, promises, and native event handlers.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Imperative' code with hooks?", a: "Using useImperativeHandle to expose functions via a ref to the parent component.", type: "Coding" },
+        { level: "Junior", q: "What is useId hook useful for?", a: "Creating stable, unique IDs for accessibility (aria-labelledby) that match between server and client.", type: "Conceptual" },
+        { level: "Mid", q: "Explain the 'Dispatch' stable identity.", a: "The dispatch function from useReducer is guaranteed to never change referential identity between renders.", type: "Conceptual" }
       ]
     },
     {
@@ -217,7 +227,17 @@ export const week9 = {
         { level: "Senior", q: "Explain the 'Hook Composition' pattern.", a: "Breaking a large custom hook into smaller, specialized hooks that are then combined in a main hook.", type: "Conceptual" },
         { level: "Senior", q: "How do you handle 'AbortController' in a useFetch hook?", a: "Create an AbortController in useEffect, pass its signal to fetch, and call .abort() in the cleanup function.", type: "Coding" },
         { level: "Senior", q: "Explain the impact of 'Strict Mode' on custom hook testing.", a: "It causes effects to run twice, which helps find cleanup bugs but can be confusing during manual verification.", type: "Scenario" },
-        { level: "Senior", q: "How would you optimize a hook that returns an object?", a: "Wrap the return object in useMemo to ensure its identity only changes when its internal data changes.", type: "Scenario" }
+        { level: "Senior", q: "How would you optimize a hook that returns an object?", a: "Wrap the return object in useMemo to ensure its identity only changes when its internal data changes.", type: "Scenario" },
+        { level: "Junior", q: "What is 'useFetch' custom hook?", a: "A common pattern to encapsulate fetch logic, loading, and error states into a reusable function.", type: "Conceptual" },
+        { level: "Junior", q: "How do you return multiple values from a hook?", a: "By returning an array (like useState) or an object (like useForm).", type: "Conceptual" },
+        { level: "Mid", q: "What is 'useLocalStorage' custom hook?", a: "A hook that syncs a React state variable with a key in browser localStorage.", type: "Coding" },
+        { level: "Mid", q: "How do you share logic between two custom hooks?", a: "By calling one hook inside the other, or by sharing a common third hook.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Composable Hooks'.", a: "Building complex logic by nesting multiple smaller custom hooks together (e.g., useAuth using useUser and useToken).", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Server-Only' hooks?", a: "By using useSyncExternalStore or conditional checks if the library is built for both web and SSR (like Next.js).", type: "Scenario" },
+        { level: "Senior", q: "How do you test a hook that uses Context?", a: "Using the 'wrapper' option in renderHook to provide the necessary Context Providers during the test.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Ref-Steering' through hooks.", a: "When a hook creates a ref, interacts with it, and then passes it out to the component to attach to a DOM element.", type: "Conceptual" },
+        { level: "Junior", q: "Why start hook names with 'use'?", a: "To allow ESLint to identify it as a hook and enforce the Rules of Hooks.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Stale Closures' in custom hooks.", a: "When a hook captures a variable from an old render because it wasn't refreshed in a listener or effect.", type: "Conceptual" }
       ]
     },
     {
@@ -321,7 +341,21 @@ export const week9 = {
         { level: "Senior", q: "Explain 'Atomic State' management pros/cons vs Context.", a: "Atomic (Jotai/Recoil) allows for fine-grained updates without tree re-renders; Context is more native but coarser.", type: "Conceptual" },
         { level: "Senior", q: "How do you debug a Context consumer re-rendering too often?", a: "Use the React DevTools 'Why did it render?' feature or add console logs to your custom context consumer hooks.", type: "Scenario" },
         { level: "Senior", q: "Design a 'Global Modal' management system.", a: "Use a Context to store the current modal type and props, and a Provider at the root to render the Modal container.", type: "Scenario" },
-        { level: "Senior", q: "How do you migrate a large app from Redux to Context?", a: "By identifying low-frequency shared states and moving them piece-by-piece to small, specialized Context providers.", type: "Scenario" }
+        { level: "Senior", q: "How do you migrate a large app from Redux to Context?", a: "By identifying low-frequency shared states and moving them piece-by-piece to small, specialized Context providers.", type: "Scenario" },
+        { level: "Junior", q: "What is 'Zustand'?", a: "A lightweight state management library that uses a simplified flux pattern without the boilerplate of Redux.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Recoil'?", a: "An experimental state management library that uses 'atoms' and 'selectors' for fine-grained updates.", type: "Conceptual" },
+        { level: "Mid", q: "Difference between Context and Redux Performance?", a: "Redux allows components to subscribe to specific slices of state to avoid re-renders; Context re-renders all consumers.", type: "Conceptual" },
+        { level: "Mid", q: "What are 'Atoms' in state management?", a: "The smallest units of state that can be shared and updated independently (used in Recoil/Jotai).", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Middleware' with Context and useReducer?", a: "By wrapping the dispatch function in a custom function that logs or handles async before calling the real dispatch.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Time-Travel Debugging'.", a: "The ability to see previous states and 're-run' actions to see how the UI arrived at its current state (Redux feature).", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Computed State' in Redux?", a: "Using 'reselect' to create memoized selectors that only recalculate when the underlying state changes.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'State Normalization'.", a: "Storing data as a flat object (like a DB) to avoid nesting and allow easy updates by ID.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Redux Toolkit'?", a: "The recommended way to write Redux, which handles common boilerplate like store setup and immer integration.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Slice' in RTK.", a: "A single file that contains the initial state, reducers, and actions for a feature.", type: "Conceptual" },
+        { level: "Junior", q: "What is an 'Action'?", a: "A plain JavaScript object that describes what happened in the application.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Reducer'.", a: "A pure function that takes the current state and an action, and returns the next state.", type: "Conceptual" },
+        { level: "Senior", q: "How to handle 'Side Effects' in Redux?", a: "By using middleware like Redux Thunk or Redux Saga to handle async logic.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Immutability' importance.", a: "Ensures that state changes are predictable and allows for efficient change detection in React.", type: "Conceptual" }
       ]
     },
     {
@@ -429,7 +463,17 @@ export const week9 = {
         { level: "Senior", q: "Explain 'Error Boundaries' at the route level.", a: "Each route can have an 'errorElement' that catches errors only for that branch of the tree, keeping the rest of the UI intact.", type: "Scenario" },
         { level: "Senior", q: "How do you handle path matching priority in v6?", a: "V6 uses a ranking algorithm instead of 'first match', so the most specific route always wins regardless of order.", type: "Conceptual" },
         { level: "Senior", q: "Explain 'StaticRouter' for SEO and SSR.", a: "It is a stateless router that takes the current URL as a prop, intended for server-side environments where history doesn't exist.", type: "Conceptual" },
-        { level: "Senior", q: "How to handle 'Custom History' with Router outside React?", a: "By using the <Router> component directly (not BrowserRouter) and passing a custom history object created with 'history' library.", type: "Scenario" }
+        { level: "Senior", q: "How to handle 'Custom History' with Router outside React?", a: "By using the <Router> component directly (not BrowserRouter) and passing a custom history object created with 'history' library.", type: "Scenario" },
+        { level: "Junior", q: "What is 'useParams'?", a: "A hook that returns an object of key/value pairs of URL parameters from the current URL that were matched by the <Route path>.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'useNavigate'?", a: "A hook that returns a function that lets you navigate programmatically.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'useSearchParams'.", a: "Used to read and modify the query string in the URL (e.g., ?search=term).", type: "Coding" },
+        { level: "Mid", q: "What is '<Outlet />'?", a: "A component that should be used in parent route elements to render their child route elements.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Loader' and 'Action' in React Router 6.4+.", a: "Loaders fetch data before rendering; Actions handle mutations like POST/PUT during form submission.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Protected Routes'?", a: "By creating a wrapper component that checks for auth and either renders the <Outlet /> or redirects to login.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Nested Routing'.", a: "Defining sub-routes within a parent path, allowing for layouts that persist while inner content changes.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Breadcrumbs'?", a: "By using useMatches or useLocation to match the current path segments to route titles.", type: "Scenario" },
+        { level: "Junior", q: "What is 'NavLink'?", a: "A special version of Link that will add class attributes to the element when it matches the current URL.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Path Strategy' in v6.", a: "React Router v6 uses a ranking system for paths so the 'best' match is chosen regardless of order.", type: "Conceptual" }
       ]
     },
     {
@@ -537,7 +581,17 @@ export const week9 = {
         { level: "Senior", q: "Design a system to monitor 'Real User Metrics' (RUM).", a: "Integrating with tools like Sentry, DataDog, or custom Google Analytics to track CWV in production.", type: "Scenario" },
         { level: "Senior", q: "Explain 'Transition API' (useTransition).", a: "It allows you to mark some state updates as non-urgent, keeping the app interactive while expensive renders happen.", type: "Conceptual" },
         { level: "Senior", q: "How do you optimize 'Initialization' time for a large React SPA?", a: "Using prefetching, code-splitting, critical-path CSS, and reducing the total number of dependencies.", type: "Scenario" },
-        { level: "Senior", q: "Explain the importance of 'Accessibility' in a design system.", a: "Ensuring all components follow WCAG guidelines (keyboard nav, ARIA labels, contrast) to reach all users.", type: "Conceptual" }
+        { level: "Senior", q: "Explain the importance of 'Accessibility' in a design system.", a: "Ensuring all components follow WCAG guidelines (keyboard nav, ARIA labels, contrast) to reach all users.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Tailwind CSS'?", a: "A utility-first CSS framework for rapidly building custom user interfaces directly in your HTML/JSX.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Styled Components'?", a: "A library for React that uses tagged template literals to style your components with actual CSS.", type: "Conceptual" },
+        { level: "Mid", q: "Difference between 'BEM' and 'CSS Modules'?", a: "BEM is a naming convention to prevent collisions; CSS Modules automates this by scoping classes locally.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Radix UI' or 'Headless UI'?", a: "Unstyled, accessible component primitives that you can style yourself, ensuring full control over the UI.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Design Tokens'.", a: "The visual design atoms: colors, spacing, typography, etc., stored as platform-agnostic variables.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Visual Regression Testing'?", a: "Using tools like Playwright or Chromatic to take screenshots of components and compare them to baselines.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Atomic Design' levels.", a: "Atoms (buttons), Molecules (search bar), Organisms (header), Templates (layouts), Pages (templates with data).", type: "Conceptual" },
+        { level: "Senior", q: "How do you manage 'Theming' (Dark/Light mode) efficiently?", a: "Using CSS Variables or a ThemeProvider that distributes a theme object via Context.", type: "Scenario" },
+        { level: "Junior", q: "What is 'PostCSS'?", a: "A tool for transforming CSS with JS plugins (like autoprefixer).", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Skeleton Screens'.", a: "Placeholders that show a greyed-out shape of the content while it is loading to improve perceived performance.", type: "Conceptual" }
       ]
     }
   ]

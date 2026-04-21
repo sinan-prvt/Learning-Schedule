@@ -111,7 +111,17 @@ export const week4 = {
         { level: "Senior", q: "Explain 'Model Managers' and when to write a custom one.", a: "Managers provide the QuerySet interface. Custom ones are used to add extra methods or change the default queryset (e.g., showing only active items).", type: "Conceptual" },
         { level: "Senior", q: "How do you implement 'Soft Deletes' across the entire project efficiently?", a: "Using an abstract base model with a 'deleted_at' field and a custom manager that filters out deleted records by default.", type: "Scenario" },
         { level: "Senior", q: "Explain 'CheckConstraints' in Django 2.2+.", a: "They allow you to add database-level validation logic (e.g., ensure 'price > 0') directly in the model Meta.", type: "Conceptual" },
-        { level: "Senior", q: "How do you manage database-level 'Default' values versus Django-level 'Default' values?", a: "Django-level defaults are handled in Python; DB-level defaults require migrations with specific SQL or 'db_default' (in newer versions).", type: "Scenario" }
+        { level: "Senior", q: "How do you manage database-level 'Default' values versus Django-level 'Default' values?", a: "Django-level defaults are handled in Python; DB-level defaults require migrations with specific SQL or 'db_default' (in newer versions).", type: "Scenario" },
+        { level: "Junior", q: "What is the 'managed = True' meta option?", a: "It tells Django to manage the creation, modification, and deletion of the database table for the model.", type: "Conceptual" },
+        { level: "Junior", q: "How do you specify a different database for a specific model?", a: "Using a database router to direct queries for that model to a different database alias.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'GenericRelation'?", a: "The inverse of GenericForeignKey; it allows you to see all generic items related to a specific model instance.", type: "Conceptual" },
+        { level: "Mid", q: "How do you handle 'Indexes' on abstract models?", a: "Indexes defined in the Meta class of an abstract model are applied to each child model's database table.", type: "Conceptual" },
+        { level: "Senior", q: "Explain the pros and cons of 'UUIDField' as Primary Key.", a: "Pros: Non-predictable, easy merging across DBs. Cons: Larger storage, slower indexing than integers.", type: "Scenario" },
+        { level: "Senior", q: "How do you implement 'Partitioning' at the Django level?", a: "Django doesn't natively partition; you create the partitioned table in SQL (migration) and use 'managed=False' or specific backend extensions.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Unmanaged Models' with legacy databases.", a: "Models with 'managed=False' that map to existing tables; you must handle schema changes manually outside of Django.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Full-Text Search' in non-Postgres databases with Django?", a: "Usually via 3rd party tools like Elasticsearch or Solr, connected through Haystack or specific client libraries.", type: "Scenario" },
+        { level: "Junior", q: "What is the 'db_column' field argument?", a: "Allows you to specify the exact name of the database column for that field.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Model inheritance' and 'db_table' behavior.", a: "In multi-table inheritance, each level has its own 'db_table'; in abstract inheritance, only the leaf nodes have tables.", type: "Conceptual" }
       ]
     },
     {
@@ -224,7 +234,17 @@ export const week4 = {
         { level: "Senior", q: "How do you handle 'Empty Value' ordering in Django?", a: "Using 'F('field').asc(nulls_last=True)' to control where NULL values appear in the sort results.", type: "Coding" },
         { level: "Senior", q: "Explain the difference between .delete() on a QuerySet and .delete() on a Model instance.", a: "QuerySet .delete() is efficient (one SQL DELETE) but still iterates to call signals. Instance .delete() is just for one object.", type: "Conceptual" },
         { level: "Senior", q: "How do you perform a UNION between two different models?", a: "Using .union(). Requirements: Same number of fields and matching data types.", type: "Coding" },
-        { level: "Senior", q: "Explain 'QuerySet.raw()' vs 'connection.cursor()'.", a: "raw() returns Model instances and handles field mapping. cursor() returns raw tuples/rows and allows any SQL.", type: "Conceptual" }
+        { level: "Senior", q: "Explain 'QuerySet.raw()' vs 'connection.cursor()'.", a: "raw() returns Model instances and handles field mapping. cursor() returns raw tuples/rows and allows any SQL.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'QuerySet.iterator()'?", a: "A method that returns a generator to fetch records one-by-one from the DB, saving memory for large results.", type: "Conceptual" },
+        { level: "Junior", q: "How do you exclude items where price is null?", a: "filter(price__isnull=False).", type: "Coding" },
+        { level: "Mid", q: "What is the difference between 'values()' and 'values_list()'?", a: "values() returns dictionaries; values_list() returns tuples (or flat lists if flat=True).", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'prefetch_related' efficiency.", a: "It is O(1) in terms of queries (always 2), making it great for Many-to-Many but slightly slower than JOINs for 1-to-1.", type: "Conceptual" },
+        { level: "Senior", q: "How do you perform a 'CROSS JOIN' in Django ORM?", a: "Django doesn't natively support it; you must use raw SQL or a very creative '.extra()' snippet.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'QuerySet Pickling'.", a: "You can save a QuerySet state to a file or cache and reload it later; useful for passing complex queries between tasks.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Pagination' without using OFFSET (keyset pagination)?", a: "By filtering on the last ID of the previous page (e.g., id__gt=last_id), which is much faster for deep pages in large tables.", type: "Scenario" },
+        { level: "Senior", q: "Explain the 'Row Level Security' (RLS) impact on QuerySets.", a: "It filters data at the DB layer; Django is unaware but the returned results will naturally be filtered by the DB session user.", type: "Conceptual" },
+        { level: "Junior", q: "What is the 'in' lookup?", a: "Allows filtering against a list of values, e.g., id__in=[1, 2, 3].", type: "Conceptual" },
+        { level: "Mid", q: "How do you filter for 'Exactly' 5 characters in a field?", a: "Using 'Length' expression in a filter or regex_lookup if supported.", type: "Coding" }
       ]
     },
     {
@@ -337,7 +357,17 @@ export const week4 = {
         { level: "Senior", q: "How do you implement full-text search weighting using Django Postgres search features?", a: "By using 'SearchQuery' and 'SearchRank' with specific weightings (A, B, C, D) assigned to different fields.", type: "Coding" },
         { level: "Senior", q: "Explain the difference between .aggregate() and .annotate() when used with .values().", a: "annotate() after values() acts like a 'GROUP BY'. aggregate() always collapses the whole result set into one dictionary.", type: "Conceptual" },
         { level: "Senior", q: "How do you avoid 'Circular Dependency' when using models in subquery annotations?", a: "By using app-label string references or importing models inside the function/method where the query is constructed.", type: "Scenario" },
-        { level: "Senior", q: "Explain 'SQL Injection' risks in F-expressions.", a: "F-expressions are safe because Django handles the field names and parameters; risks only arise with raw SQL fragments in .extra().", type: "Conceptual" }
+        { level: "Senior", q: "Explain 'SQL Injection' risks in F-expressions.", a: "F-expressions are safe because Django handles the field names and parameters; risks only arise with raw SQL fragments in .extra().", type: "Conceptual" },
+        { level: "Junior", q: "What is Sum('field')?", a: "An aggregation function that calculates the total of a numeric column.", type: "Conceptual" },
+        { level: "Junior", q: "What is Count('field')?", a: "An aggregation function that counts the number of non-null values in a column.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Case-When' used for?", a: "To perform conditional logic directly in the SQL (e.g., tagging rows as 'expensive' if price > 100).", type: "Coding" },
+        { level: "Mid", q: "How do you handle 'None' values in annotation results?", a: "Using the 'Coalesce' function to provide a fallback value like 0.", type: "Coding" },
+        { level: "Senior", q: "Explain '@cached_property' versus a standard property.", a: "cached_property executes only once and stores the result; huge performance win for expensive logic in loops.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Window functions' for ranking users by score?", a: "Using annotate(rank=Window(expression=Rank(), order_by=F('score').desc())).", type: "Coding" },
+        { level: "Senior", q: "Explain 'OuterRef' internals.", a: "It creates a reference to the 'parent' query scope, allowing the DB to correlate subqueries for each row.", type: "Conceptual" },
+        { level: "Senior", q: "How do you optimize 'Subquery' performance?", a: "By ensuring the subquery only returns one row/column and that the correlation field is indexed.", type: "Scenario" },
+        { level: "Junior", q: "What is Avg('field')?", a: "Calculates the arithmetic mean of a column.", type: "Conceptual" },
+        { level: "Mid", q: "How do you annotate with a constant value?", a: "Using the 'Value()' expression, e.g., .annotate(source=Value('mobile')).", type: "Coding" }
       ]
     },
     {
@@ -447,7 +477,17 @@ export const week4 = {
         { level: "Senior", q: "Explain 'Sequential Scan' versus 'Index Scan' in the explain() output.", a: "Sequential scan reads the whole table from disk; Index scan uses the B-tree to find specific locations (much faster for large tables).", type: "Conceptual" },
         { level: "Senior", q: "How do you optimize 'In-list' queries with thousands of IDs?", a: "By using a temporary table or a subquery instead of a massive 'WHERE id IN (...)' which can hit limits or perform poorly.", type: "Scenario" },
         { level: "Senior", q: "What is the performance difference between .count() and .exists() in Django?", a: ".exists() is slightly faster because it tells the DB to stop searching after finding the very first record.", type: "Conceptual" },
-        { level: "Senior", q: "How do you handle 'Lock Contention' in high-concurrency Django apps?", a: "Shorten transactions, use atomic increments (F objects), and use 'select_for_update(nowait=True)' to handle locks gracefully.", type: "Scenario" }
+        { level: "Senior", q: "How do you handle 'Lock Contention' in high-concurrency Django apps?", a: "Shorten transactions, use atomic increments (F objects), and use 'select_for_update(nowait=True)' to handle locks gracefully.", type: "Scenario" },
+        { level: "Junior", q: "What is 'db_index=True'?", a: "Creates a database index for a field to speed up searches.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Database Index'?", a: "A data structure that helps the DB find specific rows quickly without scanning the entire table.", type: "Conceptual" },
+        { level: "Mid", q: "How do you identify N+1 using 'QuerySet.count()'?", a: "If you call .count() inside a loop, it hits the DB N times; fix with annotate.", type: "Scenario" },
+        { level: "Mid", q: "What is 'Functional Indexing'?", a: "Indexing the result of a function (e.g., Lower('email')) for faster case-insensitive searches.", type: "Conceptual" },
+        { level: "Senior", q: "How do you profile SQL during unit tests?", a: "Using 'self.assertNumQueries(n)' to ensure performance doesn't regress.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Index fragmentation' and how it affects Django.", a: "Frequent updates/deletes leave gaps in indexes; DBs need periodic 'VACUUM' or 'REINDEX' to maintain speed.", type: "Scenario" },
+        { level: "Senior", q: "How do you handle 'Slow Joins' on large many-to-many tables?", a: "By using 'prefetch_related' instead of 'select_related' or denormalizing the relationship.", type: "Scenario" },
+        { level: "Senior", q: "Explain the difference between 'B-Tree' and 'Hash' indexes.", a: "B-Tree is for range/equality; Hash is only for equality (usually faster but less flexible).", type: "Conceptual" },
+        { level: "Junior", q: "What does 'select_related' do?", a: "Performs an SQL JOIN to fetch related objects in a single query.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Database Vacuuming'.", a: "A Postgres-specific process to reclaim storage from deleted or updated rows.", type: "Conceptual" }
       ]
     },
     {
@@ -557,7 +597,17 @@ export const week4 = {
         { level: "Senior", q: "How do you debug a hung transaction in a production Postgres DB?", a: "By querying 'pg_stat_activity' to find idle-in-transaction connections and blocking locks.", type: "Scenario" },
         { level: "Senior", q: "Explain the impact of 'Autocommit' on DB performance.", a: "Frequent small commits are expensive due to disk I/O; batching inside 'atomic()' is much faster for write-heavy loads.", type: "Scenario" },
         { level: "Senior", q: "How do you prevent 'Signal Loops'?", a: "By being careful not to save a model inside its own post_save receiver unless you use a condition or disconnect the signal temporarily.", type: "Coding" },
-        { level: "Senior", q: "What is 'Row Level Security' (RLS) and how to use it with Django?", a: "A DB feature (Postgres) that limits row visibility. Django can use it by setting session variables in a custom middleware.", type: "Conceptual" }
+        { level: "Senior", q: "What is 'Row Level Security' (RLS) and how to use it with Django?", a: "A DB feature (Postgres) that limits row visibility. Django can use it by setting session variables in a custom middleware.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Receiver' in signals?", a: "The function that executes when the signal is triggered.", type: "Conceptual" },
+        { level: "Junior", q: "How do you define a signal receiver?", a: "Using the '@receiver' decorator.", type: "Coding" },
+        { level: "Mid", q: "What is 'savepoint' in transactions?", a: "A marker that allows you to rollback a specific part of a transaction without failing the whole thing.", type: "Conceptual" },
+        { level: "Mid", q: "How do you connect a signal only once?", a: "By using 'dispatch_uid' to avoid duplicate triggers if the signal is connected multiple times.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Transaction ID' and how it helps in logging.", a: "Unique ID assigned to each transaction; logging it helps trace all changes made in a single user action.", type: "Scenario" },
+        { level: "Senior", q: "How do you handle 'Signal performance' in large-scale apps?", a: "Move signal logic into background tasks (Celery) if the work is slow (like image processing).", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Nested Transactions' in Django.", a: "Simulated via Savepoints; a nested 'atomic' block creates a savepoint that can rollback independently.", type: "Conceptual" },
+        { level: "Senior", q: "How do you prevent 'Race Conditions' in state transitions?", a: "By using 'select_for_update' and checking the current state inside the transaction before updating.", type: "Scenario" },
+        { level: "Junior", q: "What is post_delete?", a: "A signal fired after an object is deleted from the database.", type: "Conceptual" },
+        { level: "Mid", q: "How do you disconnect a signal temporarily?", a: "Using 'signal.disconnect' then reconnecting, or using a specialized context manager.", type: "Coding" }
       ]
     }
   ]

@@ -109,7 +109,15 @@ export const week6 = {
         { level: "Senior", q: "How do you implement 'LDAP' or 'Social Login' with FastAPI?", a: "Usually via dependencies that interact with External Identity Providers (Google, GitHub) using OpenID Connect or specific driver libraries.", type: "Scenario" },
         { level: "Senior", q: "What is 'PKCE' in OAuth2?", a: "Proof Key for Code Exchange. A security extension to the authorization code flow that prevents authorization code injection.", type: "Conceptual" },
         { level: "Senior", q: "When would you prefer 'JWT' over 'Cookies'?", a: "For cross-domain APIs, mobile apps, or truly stateless microservices where sharing session state is difficult.", type: "Scenario" },
-        { level: "Senior", q: "How do you rotate JWT signing keys without logging out all users?", a: "By supporting multiple keys (a 'key set') and identifying which key was used via the 'kid' (Key ID) header in the JWT.", type: "Scenario" }
+        { level: "Senior", q: "How do you rotate JWT signing keys without logging out all users?", a: "By supporting multiple keys (a 'key set') and identifying which key was used via the 'kid' (Key ID) header in the JWT.", type: "Scenario" },
+        { level: "Senior", q: "How do you handle 'Multiple Authentication Schemes' simultaneously?", a: "By defining multiple dependencies and using 'Union' or custom logic to check them in order (e.g., check cookie, then check header).", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Public Key Infrastructure' (PKI) in the context of RS256.", a: "Using a Private Key for signing (server) and a Public Key for verification (clients/gateways), allowing secure third-party verification.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Account Locking' after failed attempts?", a: "Using a middleware or dependency that tracks attempts in Redis and increments a counter per user/IP, blocking if it exceeds a limit.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'CSRF' protection for JWT-in-Cookie scenarios.", a: "Requires a double-submit cookie or a specific header check, as cookies are automatically sent by the browser unlike Authorize headers.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Secret Key'?", a: "A string used by the server to sign and verify JWT tokens; must be kept secret.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Token Life' policy.", a: "The strategy of determining how long tokens remain valid before requiring re-authentication.", type: "Conceptual" },
+        { level: "Senior", q: "How to handle 'Multi-factor' logic?", a: "By adding additional verification steps (like SMS/Email codes) after initial password check.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Secure' cookie flag.", a: "Ensures the cookie is only sent over HTTPS connections, preventing interception.", type: "Conceptual" }
       ]
     },
     {
@@ -193,6 +201,9 @@ export const week6 = {
         { level: "Junior", q: "Why use 'Depends(get_db)'?", a: "To ensure each request gets its own database session and that it's closed correctly after use.", type: "Conceptual" },
         { level: "Junior", q: "What is a primary key?", a: "A unique identifier for each record in a database table.", type: "Conceptual" },
         { level: "Junior", q: "Can you name a common database used with FastAPI?", a: "PostgreSQL, MySQL, or SQLite.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'ORM' in the context of SQLAlchemy?", a: "Object Relational Mapper; it maps database tables to Python classes and rows to class instances.", type: "Conceptual" },
+        { level: "Junior", q: "How do you define a column in SQLAlchemy?", a: "Using the Column class, e.g., Column(Integer, primary_key=True).", type: "Coding" },
+        { level: "Junior", q: "What is the 'id' field in most models?", a: "The primary key, a unique identifier for each row in the table.", type: "Conceptual" },
         { level: "Mid", q: "Why choose SQLModel over plain SQLAlchemy?", a: "It reduces code duplication because you don't need separate models for the database and the API input/output.", type: "Conceptual" },
         { level: "Mid", q: "What is Alembic used for?", a: "It handles database migrations (schema changes) for SQLAlchemy projects, similar to how Django handles its migrations.", type: "Conceptual" },
         { level: "Mid", q: "Explain the importance of closing a database session.", a: "Failing to close sessions can lead to connection leaks, eventually causing the database to stop accepting new requests.", type: "Scenario" },
@@ -205,6 +216,9 @@ export const week6 = {
         { level: "Mid", q: "What is the result of 'session.exec(select(Hero)).all()'?", a: "A list of Hero objects fetched from the database.", type: "Coding" },
         { level: "Mid", q: "Explain 'Cascade' behaviors.", a: "Rules that define what happens to child records when a parent record is deleted or updated (e.g., delete children if parent is deleted).", type: "Conceptual" },
         { level: "Mid", q: "How do you handle database sessions in Background Tasks?", a: "You must create a new session specifically for the background task, as the request session might be closed by the time the task runs.", type: "Scenario" },
+        { level: "Mid", q: "What is 'Declarative Base'?", a: "The base class for SQLAlchemy models that enables the declarative mapping system.", type: "Conceptual" },
+        { level: "Mid", q: "How do you handle 'One-to-Many' in SQLAlchemy?", a: "Using ForeignKey on the child table and 'relationship' on the parent (and optionally the child for back-population).", type: "Coding" },
+        { level: "Mid", q: "What is 'Alembic'?", a: "A lightweight database migration tool for usage with SQLAlchemy.", type: "Conceptual" },
         { level: "Senior", q: "Difference between Declarative and Imperative mapping in SQLAlchemy?", a: "Declarative uses classes to define tables. Imperative maps existing table objects to classes manually. Declarative is most common.", type: "Conceptual" },
         { level: "Senior", q: "How does SQLAlchemy handle connection pooling?", a: "The Engine maintains a pool of active database connections, reusing them for new requests to improve performance.", type: "Conceptual" },
         { level: "Senior", q: "Explain the N+1 problem in SQLAlchemy and how to fix it.", a: "It occurs when fetching related items in a loop. Fix it using 'joinedload' or 'subqueryload' to fetch data more efficiently.", type: "Scenario" },
@@ -219,7 +233,12 @@ export const week6 = {
         { level: "Senior", q: "How would you handle 'Schema-per-tenant' multi-tenancy in SQLAlchemy?", a: "By dynamically setting the 'schema' argument in Table objects or using a custom execution option to switch schemas at runtime.", type: "Scenario" },
         { level: "Senior", q: "Explain the performance impact of SQLAlchemy's 'Identity Map'.", a: "It ensures that only one Python object exists for a given database row within a session, saving memory and preventing inconsistent state.", type: "Conceptual" },
         { level: "Senior", q: "How do you debug slow SQL queries generated by SQLAlchemy?", a: "By setting 'echo=True' in the engine or using a library like 'py-spy' or the DB's own slow-query log.", type: "Scenario" },
-        { level: "Senior", q: "What is 'Optimistic Concurrency Control' and how do you implement it?", a: "Using a 'version' column; adding it to the WHERE clause of updates to ensure the row hasn't changed since it was read.", type: "Conceptual" }
+        { level: "Senior", q: "What is 'Optimistic Concurrency Control' and how do you implement it?", a: "Using a 'version' column; adding it to the WHERE clause of updates to ensure the row hasn't changed since it was read.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Migrations' with SQLAlchemy and Alembic.", a: "SQLAlchemy defines the state; Alembic generates and runs the SQL scripts to evolve the database schema to match that state.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Eager Loading' (joinedload/subqueryload) in SQLAlchemy.", a: "Strategically fetching related data in the initial query to avoid the N+1 problem.", type: "Scenario" },
+        { level: "Senior", q: "How do you implement 'Soft Deletes' in SQLAlchemy using events?", a: "By using the 'before_delete' event to intercept the delete call and instead update a 'deleted_at' flag.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'SQLAlchemy Session' lifecycle management in FastAPI.", a: "Creating the session in a dependency, yielding it to the view, and closing it when the request is done.", type: "Conceptual" },
+        { level: "Senior", q: "How do you perform 'Bulk Inserts' for performance in SQLAlchemy?", a: "Using 'bulk_insert_mappings' or 'execute' with a list of dictionaries to skip record initialization overhead.", type: "Coding" }
       ]
     },
     {
@@ -283,9 +302,9 @@ export const week6 = {
         { text: "What is the 'run_in_executor' method for?", options: ["Running sync blocking code in a separate thread", "None", "None", "None"], correct: 0 },
         { text: "Does Tortoise-ORM support PostgreSQL schemas?", options: ["Yes", "No", "None", "None"], correct: 0 },
         { text: "How do you define a choice/enum field in Tortoise?", options: ["Using CharEnumField or IntEnumField", "None", "None", "None"], correct: 0 },
-        { text: "Is 'databases' library compatible with SQLAlchemy core?", options: ["Yes, it uses SQLAlchemy for query building", "No", "None", "None"], correct: 0 },
-        { text: "Does aiosqlite run in a separate thread internally?", options: ["Yes, because SQLite itself is blocking", "No", "None", "None"], correct: 0 },
-        { text: "Can you use async databases with FastAPI's TestClient?", options: ["Yes, but requires setup with pytest-asyncio", "No", "None", "None"], correct: 0 }
+        { text: "Is 'databases' library compatible with SQLAlchemy core?", options: ["Yes, it uses SQLAlchemy for query building", "None", "None", "None"], correct: 0 },
+        { text: "Does aiosqlite run in a separate thread internally?", options: ["Yes, because SQLite itself is blocking", "None", "None", "None"], correct: 0 },
+        { text: "Can you use async databases with FastAPI's TestClient?", options: ["Yes, but requires setup with pytest-asyncio", "None", "None", "None"], correct: 0 }
       ],
       interview: [
         { level: "Junior", q: "Why use an asynchronous database driver?", a: "To prevent the database call from blocking the main event loop, allowing the API to handle other requests while waiting for the DB.", type: "Conceptual" },
@@ -329,7 +348,15 @@ export const week6 = {
         { level: "Senior", q: "Can you use 'SQLAlchemy 2.0 style' queries with AsyncSession?", a: "Yes, using the 'select()' and 'execute()' methods which are more robust than the legacy Query API.", type: "Conceptual" },
         { level: "Senior", q: "How do you handle 'Schema drift' in production when using Tortoise or Beanie?", a: "By using strict migration tools (Aerich) and automated CI steps to verify schema matches the code before deployment.", type: "Scenario" },
         { level: "Senior", q: "Explain 'Event-driven database updates' using Beanie.", a: "Using Beanie's 'on_create' or 'on_update' hooks to trigger background tasks or cache invalidations.", type: "Scenario" },
-        { level: "Senior", q: "How would you implement a 'Custom Async Driver' handle in Starlette?", a: "By wrapping the driver's lifecycle in a custom context manager and injecting it into the app state or via a dependency.", type: "Scenario" }
+        { level: "Senior", q: "How would you implement a 'Custom Async Driver' handle in Starlette?", a: "By wrapping the driver's lifecycle in a custom context manager and injecting it into the app state or via a dependency.", type: "Scenario" },
+        { level: "Junior", q: "What is 'Asyncio'?", a: "The Python library used to write concurrent code using the async/await syntax.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Event Loop'.", a: "The core of every asyncio application; it executes all tasks and handles I/O events.", type: "Conceptual" },
+        { level: "Mid", q: "How to run sync code inside async?", a: "Using 'run_in_executor' to offload blocking work to a thread pool.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Concurrency' vs 'Parallelism'.", a: "Concurrency is managing many tasks at once; parallelism is executing many tasks at the same time.", type: "Conceptual" },
+        { level: "Senior", q: "How to handle 'DB Pool' sizing?", a: "Configuring enough connections to handle peak load without exhausting database resources.", type: "Scenario" },
+        { level: "Junior", q: "What is 'Await'?", a: "The keyword used to yield control back to the event loop while waiting for a task to finish.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'I/O Bound' tasks.", a: "Tasks that spend most of their time waiting for external resources like databases or APIs.", type: "Conceptual" },
+        { level: "Senior", q: "How to optimize 'Asyncpg' queries?", a: "Using binary format and prepared statements for maximum performance.", type: "Scenario" }
       ]
     },
     {
@@ -413,6 +440,9 @@ export const week6 = {
         { level: "Junior", q: "Does every message in WebSocket have headers like HTTP?", a: "No, after the handshake, messages have very small framing headers, making them high-performance.", type: "Conceptual" },
         { level: "Junior", q: "How do you define a WebSocket route in FastAPI?", a: "Using the '@app.websocket(\"/path\")' decorator.", type: "Coding" },
         { level: "Junior", q: "Can you use query parameters in a WebSocket URL?", a: "Yes, e.g., 'ws://example.com/chat?user_id=123'.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'WebSocket'?", a: "A protocol providing full-duplex communication channels over a single TCP connection.", type: "Conceptual" },
+        { level: "Junior", q: "How do you accept a WebSocket in FastAPI?", a: "Using the '.accept()' method on the WebSocket object in an async function.", type: "Coding" },
+        { level: "Junior", q: "What is the decorator for a WebSocket?", a: "@app.websocket('/path').", type: "Coding" },
         { level: "Mid", q: "How do you handle multiple WebSocket connections in FastAPI?", a: "By creating a ConnectionManager class that stores a list of active WebSocket objects and provides methods for broadcasting.", type: "Coding" },
         { level: "Mid", q: "How do you authenticate a WebSocket connection?", a: "Usually by passing a token in a query parameter during the initial handshake or checking cookies, as custom headers are sometimes limited in JS WebSocket API.", type: "Scenario" },
         { level: "Mid", q: "What is the purpose of websocket.accept()?", a: "It completes the handshake with the client and establishes the connection.", type: "Conceptual" },
@@ -425,6 +455,9 @@ export const week6 = {
         { level: "Mid", q: "Can you use Pydantic models to validate WebSocket data?", a: "Yes, by calling 'receive_json', then passing the resulting dict into a Pydantic model constructor.", type: "Coding" },
         { level: "Mid", q: "How do you handle exceptions in a WebSocket route?", a: "You must handle them within the function, otherwise the connection might close abruptly without a proper error frame.", type: "Scenario" },
         { level: "Mid", q: "Explain 'Strict-Transport-Security' importance for WebSockets.", a: "Ensures that 'wss://' is always used and prevents downgrade attacks in supported browsers.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Connection Manager' pattern?", a: "A class that tracks active WebSocket connections, allowing broadcasting to all or sending to specific users.", type: "Conceptual" },
+        { level: "Mid", q: "How do you handle 'WebSocket Disconnections'?", a: "By catching 'WebSocketDisconnect' exceptions inside a try-except block in the communication loop.", type: "Coding" },
+        { level: "Mid", q: "Can you use Pydantic with WebSockets?", a: "Yes, by manually parsing the incoming text/json into a Pydantic model.", type: "Coding" },
         { level: "Senior", q: "Explain the 'Broadcasting' mechanism.", a: "Iterating through a collection of active connections and calling 'send_text' or 'send_json' on each one to transmit data to many users at once.", type: "Conceptual" },
         { level: "Senior", q: "How would you implement 'Rooms' in a WebSocket chat?", a: "By using a dictionary in your ConnectionManager where keys are room IDs and values are sets of active WebSocket objects for those rooms.", type: "Scenario" },
         { level: "Senior", q: "What are the scaling limitations of WebSockets?", a: "Each connection consumes server memory and resources. For massive scale, you'd need a pub/sub system like Redis to sync messages across multiple server instances.", type: "Scenario" },
@@ -439,7 +472,11 @@ export const week6 = {
         { level: "Senior", q: "Explain 'Compression' (per-message-deflate).", a: "An extension that allows compressing WebSocket payload data to save bandwidth, supported by modern browsers and Starlette.", type: "Conceptual" },
         { level: "Senior", q: "How do you implement 'User Presence' tracking?", a: "By updating a global store (like Redis) when a WebSocket connects (Online) and disconnects (Offline).", type: "Scenario" },
         { level: "Senior", q: "Explain 'Security challenges' of WebSockets in a microservices architecture.", a: "Passing auth state reliably, managing many open file descriptors across nodes, and handling service discovery for persistent connections.", type: "Scenario" },
-        { level: "Senior", q: "Why use 'wss' over 'ws' even in internal networks?", a: "To prevent eavesdropping and to bypass some restrictive firewalls/proxies that might block non-standard HTTP protocols.", type: "Scenario" }
+        { level: "Senior", q: "Why use 'wss' over 'ws' even in internal networks?", a: "To prevent eavesdropping and to bypass some restrictive firewalls/proxies that might block non-standard HTTP protocols.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Scaling WebSockets' with a Pub/Sub (Redis).", a: "Multiple server instances use Redis to sync messages; if a user is on Server A and the message is for Server B, Redis routes it.", type: "Scenario" },
+        { level: "Senior", q: "How do you implement 'Throttling' on WebSockets?", a: "By rate-limiting the 'receive' loop within the WebSocket handler based on IP or User ID.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Protocols' (JSON vs Binary) in WebSockets.", a: "JSON is easy; Binary (MessagePack/Protobuf) is more efficient for high-frequency or large data transfers.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Keep-Alive' (Pings/Pongs) in FastAPI WebSockets?", a: "FastAPI handles some automatically, but you can implement manual pinging to detect half-open connections.", type: "Scenario" }
       ]
     },
     {
@@ -522,6 +559,9 @@ export const week6 = {
         { level: "Junior", q: "What is 'Uvicorn'?", a: "The ASGI server that runs the FastAPI application.", type: "Conceptual" },
         { level: "Junior", q: "How do you copy files into a Docker image?", a: "Using the 'COPY' instruction in the Dockerfile.", type: "Coding" },
         { level: "Junior", q: "What is 'docker-compose up'?", a: "Command to start all services defined in a docker-compose.yml file.", type: "Coding" },
+        { level: "Junior", q: "What is 'Gunicorn'?", a: "A WSGI HTTP Server for Python, often used to manage multiple Uvicorn workers in production.", type: "Conceptual" },
+        { level: "Junior", q: "What is an 'Environment Variable'?", a: "A value set outside the code to configure the app (like DATABASE_URL).", type: "Conceptual" },
+        { level: "Junior", q: "What is the '--host 0.0.0.0' flag for?", a: "Tells the server to listen on all available network interfaces, necessary for Docker.", type: "Coding" },
         { level: "Mid", q: "Explain the difference between TestClient and Httpx (Async) client for testing.", a: "TestClient is synchronous and works with Starlette/FastAPI internals. Httpx is needed for testing properly asynchronous endpoints.", type: "Conceptual" },
         { level: "Mid", q: "How do you mock a database during testing?", a: "By using dependency_overrides to replace the real database dependency with a test database or an in-memory SQLite instance.", type: "Coding" },
         { level: "Mid", q: "What is a multi-stage Docker build?", a: "An optimization technique where you use one image for building/compiling and a smaller, cleaner image for the final production run.", type: "Conceptual" },
@@ -534,6 +574,9 @@ export const week6 = {
         { level: "Mid", q: "What is 'Entrypoint' vs 'CMD'?", a: "ENTRYPOINT is the main command that is always run. CMD is the default argument for the entrypoint (can be overridden).", type: "Conceptual" },
         { level: "Mid", q: "How do you ensure your Docker container runs with a non-root user?", a: "By adding a 'USER' instruction in the Dockerfile after creating a user and group.", type: "Scenario" },
         { level: "Mid", q: "Explain 'Dependency Overrides' in tests.", a: "A FastAPI feature ('app.dependency_overrides') that allows you to swap out any dependency with a mock version specifically for a test.", type: "Conceptual" },
+        { level: "Mid", q: "How do you use 'Nginx' with FastAPI?", a: "As a reverse proxy that handles SSL/TLS termination and routes traffic to the Gunicorn/Uvicorn processes.", type: "Scenario" },
+        { level: "Mid", q: "What is 'Docker'?", a: "A platform to containerize your application, ensuring it runs identically in dev and production.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Pytest'?", a: "A robust testing framework often used for unit and integration testing in FastAPI.", type: "Conceptual" },
         { level: "Senior", q: "Explain the 'Gunicorn + Uvicorn' deployment strategy.", a: "Gunicorn act as a process manager (handling restarts and workers), while Uvicorn workers handle the actual asynchronous API requests.", type: "Conceptual" },
         { level: "Senior", q: "How would you implement CI/CD for a FastAPI app on GitHub?", a: "By creating a .github/workflows file that runs pytest on every push and triggers a deployment (e.g., to Render or AWS) if tests pass.", type: "Scenario" },
         { level: "Senior", q: "What are 'Contract Tests' in the context of APIs?", a: "Tests that ensure the API output strictly matches its documented schema, preventing breaking changes for consumers.", type: "Conceptual" },
@@ -547,8 +590,22 @@ export const week6 = {
         { level: "Senior", q: "Explain 'Log Aggregation' in a production environment.", a: "Shipping logs from multiple containers to a central store like ElasticSearch, Loki, or CloudWatch for searching and alerting.", type: "Scenario" },
         { level: "Senior", q: "How do you handle 'Database Migrations' in a CI/CD pipeline?", a: "By running 'alembic upgrade head' as part of the deployment process, ensuring the schema is updated before the new code starts.", type: "Scenario" },
         { level: "Senior", q: "What is 'Observability' vs 'Monitoring'?", a: "Monitoring tells you something is wrong (metrics). Observability allows you to understand why it's wrong (logs, traces, metrics).", type: "Conceptual" },
-        { level: "Senior", q: "How do you implement 'Distributed Tracing' in FastAPI?", a: "Using OpenTelemetry middleware to track a request as it moves through multiple internal services.", type: "Scenario" },
-        { level: "Senior", q: "Explain 'Blue-Green' deployment vs 'Canary' deployment.", a: "Blue-Green swaps the entire traffic between two versions. Canary gradually rolls out the new version to a small subset of users.", type: "Conceptual" }
+        { level: "Senior", q: "How do you monitor 'Celery Task' progress in real-time?", a: "Using 'update_state' in the task to set progress % and polling the 'AsyncResult' object from a FastAPI endpoint.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Horizontal Scaling' for FastAPI.", a: "Running multiple instances of the application container behind a load balancer to handle increased traffic.", type: "Scenario" },
+        { level: "Senior", q: "How do you handle 'Health Checks' in Kubernetes?", a: "Defining liveness and readiness probes that ping the FastAPI /health endpoint.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Log Aggregation' (ELK/Graylog).", a: "Centralizing logs from all containers in one place for easier searching and alerting.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'CI/CD' for FastAPI?", a: "Using tools like GitHub Actions to automatically run tests and deploy on every push.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Blue-Green' deployment vs 'Canary' deployment.", a: "Blue-Green swaps the entire traffic between two versions. Canary gradually rolls out the new version to a small subset of users.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Celery'?", a: "An asynchronous task queue/job queue based on distributed message passing.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Message Broker'?", a: "A service (like Redis or RabbitMQ) that facilitates communication between the web app and the Celery workers.", type: "Conceptual" },
+        { level: "Mid", q: "How do you define a Celery task?", a: "Using the '@app.task' decorator on a Python function.", type: "Coding" },
+        { level: "Mid", q: "How do you trigger a task asynchronously?", a: "Using 'task.delay(args)' or 'task.apply_async(args, kwargs)'.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Task Retries' with exponential backoff.", a: "Automatically retrying a task if it fails, with increasing wait times between attempts to avoid overwhelming dependencies.", type: "Scenario" },
+        { level: "Senior", q: "How do you handle 'Dead Letter Queues'?", a: "Configuring the broker to move tasks that consistently fail to a separate queue for manual inspection.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Celery Beat' usage.", a: "A scheduler that kicks off tasks at regular intervals (like cron jobs).", type: "Conceptual" },
+        { level: "Senior", q: "How do you avoid 'Circular Imports' with Celery and FastAPI?", a: "Defining Celery in a separate 'worker.py' or using string-based task names.", type: "Scenario" },
+        { level: "Junior", q: "What is worker?", a: "A separate process that listens to the broker and executes the tasks.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Result Backend'?", a: "Where Celery stores the status and return values of tasks (often Redis or a DB).", type: "Conceptual" }
       ]
     }
   ]

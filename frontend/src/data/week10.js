@@ -109,7 +109,17 @@ export const week10 = {
         { level: "Senior", q: "How to handle 'Non-Serializable' data in Redux Toolkit?", a: "Configure the middleware to ignore specific action paths or move the data to a non-Redux location.", type: "Scenario" },
         { level: "Senior", q: "Explain 'Thunk' middleware internals.", a: "It checks if the dispatched action is a function; if so, it calls it with dispatch and getState.", type: "Conceptual" },
         { level: "Senior", q: "How do you choose between Redux and React Query?", a: "Redux is for global client state; React Query/RTK Query is for server state/caching.", type: "Scenario" },
-        { level: "Senior", q: "Why is 'State Mutation' the most common bug in legacy Redux?", a: "Because accidental direct mutations break the reference equality check, so components don't re-render.", type: "Scenario" }
+        { level: "Senior", q: "Why is 'State Mutation' the most common bug in legacy Redux?", a: "Because accidental direct mutations break the reference equality check, so components don't re-render.", type: "Scenario" },
+        { level: "Junior", q: "What is the 'reducer' parameter in configureStore?", a: "An object that maps slice names to their respective reducer functions.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'getDefaultMiddleware' used for?", a: "To retrieve the default set of middlewares provided by RTK, allowing you to easily add custom ones.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Action Type' string format in RTK.", a: "It follows the 'sliceName/reducerName' pattern, making it easy to trace actions to their sources.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Serializability' check?", a: "A dev-mode middleware that warns you if you put non-serializable data (like Promises) into the store.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'State Persistence' manually?", a: "By subscribing to store changes using 'store.subscribe()' and saving the state to LocalStorage.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Redux Thunk' mechanics.", a: "Thunks allow action creators to return a function that receives 'dispatch' and 'getState', enabling async logic.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Concurrent' updates in Redux?", a: "By ensuring all updates go through a single sequence of actions and reducers that produce new state trees.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Functional State' patterns.", a: "Using pure functions to produce predictable state changes based on clearly defined input actions.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'DevTools' Extension?", a: "A browser tool that tracks Redux actions, state changes, and allows 'Time Travel' debugging.", type: "Conceptual" },
+        { level: "Mid", q: "Why is 'Immutability' important for React performance?", a: "It allows React to use 'Shallow Equality' checks to skip re-rendering components when state hasn't changed.", type: "Conceptual" }
       ]
     },
     {
@@ -217,7 +227,17 @@ export const week10 = {
         { level: "Senior", q: "How do you handle 'Non-Serializable' data in a slice?", a: "You don't; you should move that data to a local component state or a non-Redux service.", type: "Scenario" },
         { level: "Senior", q: "Explain 'prepare' callback versus handling logic in the component.", a: "Prepare keeps the action creator 'clean' and ensures that the payload is consistent regardless of where it's called.", type: "Scenario" },
         { level: "Senior", q: "How do you test an RTK slice?", a: "By importing the reducer and calling it with a dummy state and a manually created action object, then asserting on the result.", type: "Coding" },
-        { level: "Senior", q: "Why is 'Switch-Case' still used in some low-level Redux code?", a: "For maximum performance or if one doesn't want the dependency on Immer/RTK, though it's rare in modern apps.", type: "Conceptual" }
+        { level: "Senior", q: "Why is 'Switch-Case' still used in some low-level Redux code?", a: "For maximum performance or if one doesn't want the dependency on Immer/RTK, though it's rare in modern apps.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Action Creator' function?", a: "A function that returns an action object, simplifying state dispatching.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Payload' object?", a: "The part of an action that carries the data needed for the state update.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Immer' and how does it help?", a: "It's a library that lets you write 'mutating' code while automatically converting it into immutable updates.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'ExtraReducers' in createSlice.", a: "Allows a slice to handle actions that were not defined in its own 'reducers' section.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Multiple Cases' for the same action in a slice?", a: "By using 'builder.addMatcher()' or adding multiple cases in 'extraReducers' that listen for the same action type.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Action Matching' with matchers.", a: "A feature to catch a group of actions based on a predicate function, useful for loading/error indicators across many thunks.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Optimistic Updates' with createAsyncThunk?", a: "Update the slice state in 'pending' case, and roll back in 'rejected' case if the operation fails.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'State Normalization' with createEntityAdapter.", a: "Storing data as collections with IDs to perform fast CRUD and avoid deeply nested updates.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'InitialState'?", a: "The starting structure and values of a slice before any actions are dispatched.", type: "Conceptual" },
+        { level: "Mid", q: "Can you return 'null' instead of state in a reducer?", a: "You can return any serializable value, but usually you return the current state if no change is needed.", type: "Conceptual" }
       ]
     },
     {
@@ -325,7 +345,17 @@ export const week10 = {
         { level: "Senior", q: "How to handle 'Expensive' data transformations in Redux?", a: "Offload them to a specialized memoized selector or a Web Worker if they are extremely heavy.", type: "Scenario" },
         { level: "Senior", q: "Why avoid using 'this' in selector functions?", a: "Because they should be pure, stateless functions that only depend on the passed Redux state.", type: "Conceptual" },
         { level: "Senior", q: "Explain 'Redux Thunk' access to state via selectors.", a: "Thunks get 'getState' which can be passed to selectors manually to read data before an async call.", type: "Coding" },
-        { level: "Senior", q: "How would you implement 'Global Loader' state using selectors and middleware?", a: "Middleware sets a global 'loading' flag; selectors provide it to the main layout for a progress bar.", type: "Scenario" }
+        { level: "Senior", q: "How would you implement 'Global Loader' state using selectors and middleware?", a: "Middleware sets a global 'loading' flag; selectors provide it to the main layout for a progress bar.", type: "Scenario" },
+        { level: "Junior", q: "What is the return type of useSelector?", a: "It returns whatever you select from the state (array, object, primitive).", type: "Conceptual" },
+        { level: "Junior", q: "Is 'useDispatch' always stable?", a: "Yes, its referential identity stays the same for the entire life of the store.", type: "Conceptual" },
+        { level: "Mid", q: "Difference between 'Shallow' and 'Deep' selector comparisons?", a: "Shallow checks top-level keys; Deep recursively checks every value. useSelector uses Strict (reference) by default.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Reselect' and why use it?", a: "A library for memoizing selectors to prevent expensive recalculations when unrelated parts of state change.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Parameterized Selectors'?", a: "By using a function that returns a selector or passing the parameter as an argument to the selector call.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Selector Composition' logic.", a: "Using outputs of simple selectors as inputs for complex ones, creating a hierarchy of data derivations.", type: "Conceptual" },
+        { level: "Senior", q: "How do you optimize 'Bulk Updates' to prevent re-render storms?", a: "By using 'batch()' from react-redux to group multiple state changes into one UI update.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Referential Identity' issues with array.map() in selectors.", a: "array.map() returns a NEW array every time; if not memoized, it will always trigger a re-render in the component.", type: "Scenario" },
+        { level: "Junior", q: "What is 'connect' higher order component?", a: "The legacy way to link React components to Redux before hooks, still used in some class-based codebases.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'memoized' selectors.", a: "Selectors that cache their previous results and only re-run if their input arguments change.", type: "Conceptual" }
       ]
     },
     {
@@ -433,7 +463,17 @@ export const week10 = {
         { level: "Senior", q: "Design a 'Global Error Interceptor' using RTK Query middleware.", a: "A custom middleware that checks if an action matches 'isRejectedWithValue' and triggers a toast notification.", type: "Scenario" },
         { level: "Senior", q: "How do you handle 'Expired Tokens' (401) and 'Refresh' logic?", a: "Inside a custom 'baseQuery' that checks for 401, attempts a refresh, and then retries the original request.", type: "Scenario" },
         { level: "Senior", q: "Explain 'Query Deduplication' and how to tune it.", a: "Preventing multiple simultaneous identical requests; usually controlled via internal state but can be influenced by args.", type: "Conceptual" },
-        { level: "Senior", q: "How do you use RTK Query with 'Normalized' cache (like Apollo)?", a: "RTK Query is document-based, not entity-based, so you must use 'providesTags' with IDs to mimic normalized invalidation.", type: "Scenario" }
+        { level: "Senior", q: "How do you use RTK Query with 'Normalized' cache (like Apollo)?", a: "RTK Query is document-based, not entity-based, so you must use 'providesTags' with IDs to mimic normalized invalidation.", type: "Scenario" },
+        { level: "Junior", q: "What is 'createApi' function?", a: "The central function to define your API service, including base URL and endpoints.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'fetchBaseQuery'?", a: "A lightweight wrapper around the fetch API that handles common tasks like auth headers and JSON parsing.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Cache Tags' in RTK Query.", a: "A system to label data so it can be automatically invalidated (refetched) when a mutation occurs.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'transformResponse' used for?", a: "To modify or filter the raw server data before it is stored in the Redux cache.", type: "Coding" },
+        { level: "Senior", q: "How do you implement 'Pagination' with RTK Query?", a: "By passing the page number as an argument to the query hook; RTK handles different pages in the cache automatically.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Optimistic Updates' mechanism.", a: "Updating the UI before the server responds to a mutation, then rolling back if the request fails.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Global Error Interception' in RTK Query?", a: "Using custom middleware that listens for query rejections and triggers a global notification.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Polling' feature.", a: "Automatically refetching data at a set interval (e.g. every 5 seconds) to keep the UI fresh.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'isLoading' vs 'isFetching'?", a: "isLoading is true only for the first load; isFetching is true for every load including subsequent refetches.", type: "Conceptual" },
+        { level: "Mid", q: "How to add an API key to every request in RTK Query?", a: "Using the 'prepareHeaders' option in fetchBaseQuery.", type: "Coding" }
       ]
     },
     {
@@ -541,7 +581,17 @@ export const week10 = {
         { level: "Senior", q: "How do you prevent 'Race Conditions' in multiple thunks?", a: "By checking the current 'status' in state before starting a new request, or using RTK Query's built-in deduplication.", type: "Scenario" },
         { level: "Senior", q: "Explain the 'Ducks' pattern vs Feature-Folders.", a: "Ducks puts everything in one file; Feature-Folders group multiple related files (selectors, thunks, components) together.", type: "Conceptual" },
         { level: "Senior", q: "How do you optimize 'Persistence' for performance?", a: "By using throttled saving or blacklisting high-frequency data (like mouse coordinates) from being saved to storage.", type: "Scenario" },
-        { level: "Senior", q: "Design a 'Global Error Boundary' for Redux Actions.", a: "A middleware that wraps the 'next(action)' call in a try/catch block and dispatches a 'REPORT_ERROR' action on failure.", type: "Coding" }
+        { level: "Senior", q: "Design a 'Global Error Boundary' for Redux Actions.", a: "A middleware that wraps the 'next(action)' call in a try/catch block and dispatches a 'REPORT_ERROR' action on failure.", type: "Coding" },
+        { level: "Junior", q: "What is 'Middleware' in Redux?", a: "A way to extend Redux with custom functions that intercept actions between dispatch and reducer.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'createAsyncThunk' used for?", a: "To handle asynchronous operations (like API calls) that need to dispatch multiple actions (pending, fulfilled, rejected).", type: "Conceptual" },
+        { level: "Mid", q: "Difference between 'Thunks' and 'Sagas'?", a: "Thunks use async/await and functions; Sagas use Generator functions and have more advanced flow control (cancellation, etc.).", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Redux Persist' library?", a: "A tool to save your Redux state to storage (like LocalStorage) so it persists after page refreshes.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Token Refresh' manually with thunks?", a: "Catch 401 errors, call the refresh API, update the store, and retry the original failed action.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Custom Middleware currying' signature.", a: "(store) => (next) => (action) => { ... } pattern used to access store methods and the pipeline.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'Code Splitting' for Redux slices?", a: "By using the store's 'replaceReducer' method to inject new reducers at runtime as needed.", type: "Scenario" },
+        { level: "Senior", q: "Explain 'Action Lifecycle' monitoring.", a: "Using libraries like Sentry to track which actions were dispatched leading up to a crash for easier debugging.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'getState' in thunks?", a: "A function that returns the current complete state tree of the Redux store.", type: "Conceptual" },
+        { level: "Mid", q: "How to 'Reset' the entire store state easily?", a: "By creating a root reducer that captures a 'RESET_STORE' action and returns undefined for every slice.", type: "Coding" }
       ]
     }
   ]

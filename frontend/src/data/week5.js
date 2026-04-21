@@ -95,6 +95,9 @@ export const week5 = {
         { level: "Mid", q: "How do you define a constant status code for an endpoint?", a: "Using the 'status_code' parameter in the decorator: @app.post('/items', status_code=201).", type: "Coding" },
         { level: "Mid", q: "What is the purpose of 'uvloop' in production?", a: "It's a faster Drop-in replacement for the standard asyncio event loop, often used by Uvicorn.", type: "Conceptual" },
         { level: "Mid", q: "How do you read the raw request body?", a: "Using the 'Request' object from FastAPI: async def my_func(request: Request).", type: "Coding" },
+        { level: "Mid", q: "What is 'pydantic-settings' used for?", a: "A library to handle application configuration via environment variables, integrated well with FastAPI.", type: "Conceptual" },
+        { level: "Mid", q: "How do you define an optional query parameter?", a: "By using a type hint like 'str | None = None' or 'Optional[str] = None'.", type: "Coding" },
+        { level: "Mid", q: "Explain 'FastAPI vs Flask' performance.", a: "FastAPI is significantly faster for I/O bound tasks due to its asynchronous nature and optimized parsing with Pydantic.", type: "Conceptual" },
         { level: "Senior", q: "Why is FastAPI faster than traditional Python frameworks?", a: "Due to its underlying foundations (Starlette and Pydantic) and its efficient use of Python's asyncio for non-blocking I/O.", type: "Conceptual" },
         { level: "Senior", q: "How does FastAPI handle data type conversion automatically?", a: "It uses Python type hints for function parameters. If a parameter is typed as an 'int', FastAPI automatically converts the incoming URL string into an integer.", type: "Conceptual" },
         { level: "Senior", q: "What is the significance of Python 3.6+ type hints in FastAPI?", a: "They are the core of the framework, providing data validation, serialization, and auto-generated editor support (autocompletion).", type: "Conceptual" },
@@ -110,7 +113,16 @@ export const week5 = {
         { level: "Senior", q: "How would you implement a simple health check endpoint?", a: "A simple GET /health that returns {'status': 'ok'}, often used by load balancers or orchestrators.", type: "Coding" },
         { level: "Senior", q: "Can you run FastAPI with Django? How?", a: "Yes, by using a 'SubApp' mount or by having them share the same ASGI server if architected carefully.", type: "Scenario" },
         { level: "Senior", q: "How do you custom-configure the OpenAPI schema generated?", a: "By overriding the app.openapi() method or passing extra metadata to the FastAPI constructor.", type: "Coding" },
-        { level: "Senior", q: "What is the role of 'Starlette's TestClient'?", a: "It allows you to simulate requests to your FastAPI app within unit tests without actually running a server.", type: "Conceptual" }
+        { level: "Senior", q: "What is the role of 'Starlette's TestClient'?", a: "It allows you to simulate requests to your FastAPI app within unit tests without actually running a server.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Type Hinting' internals in Python 3.10+.", a: "Newer versions support '|' for unions and automatic detection without the 'Optional' wrapper, making FastAPI code cleaner.", type: "Conceptual" },
+        { level: "Senior", q: "How do you implement 'Throttling' in FastAPI?", a: "FastAPI doesn't have built-in throttling; you usually use a dependency/middleware (like fastapi-limiter) or manage it via Redis.", type: "Scenario" },
+        { level: "Senior", q: "Explain the 'Event Loop' in the context of FastAPI.", a: "Asyncio uses a single-threaded loop to manage tasks; blocking it with synchronous code can stall the entire server.", type: "Conceptual" },
+        { level: "Senior", q: "How do you handle 'CORS' globally in FastAPI?", a: "By adding the 'CORSMiddleware' to the app's middleware list with allowed origins/methods.", type: "Coding" },
+        { level: "Junior", q: "How to check available routes?", a: "Access /docs or /redoc; or inspect app.routes programmatically.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Starlette' relation.", a: "FastAPI is built on top of Starlette, inheriting its routing and middleware systems.", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Pydantic' relation?", a: "FastAPI uses Pydantic for all data validation and serialization tasks.", type: "Conceptual" },
+        { level: "Senior", q: "Explain 'Uvicorn' workers.", a: "Process workers that handle the ASGI protocol; using multiple workers allows for handling concurrent traffic.", type: "Conceptual" },
+        { level: "Senior", q: "How to mount a static files directory?", a: "Using app.mount('/static', StaticFiles(directory='static'), name='static').", type: "Coding" }
       ]
     },
     {
@@ -194,6 +206,9 @@ export const week5 = {
         { level: "Junior", q: "How do you define multiple path parameters in one endpoint?", a: "By including multiple {} placeholders in the path decorator string.", type: "Coding" },
         { level: "Junior", q: "Can you valid a path parameter with a regex?", a: "Yes, using the 'regex' parameter in the Path() class.", type: "Conceptual" },
         { level: "Junior", q: "How do you mark a parameter as required if using Query()?", a: "By using Ellipsis (...) as the first argument: q: str = Query(...).", type: "Coding" },
+        { level: "Junior", q: "What is a 'Path Parameter'?", a: "A variable part of the URL path, e.g., /items/{item_id}.", type: "Conceptual" },
+        { level: "Junior", q: "How do you define a query parameter?", a: "By adding arguments to the function that are not part of the path.", type: "Coding" },
+        { level: "Junior", q: "How do you mark a parameter as 'Required'?", a: "By not providing a default value in the function argument.", type: "Conceptual" },
         { level: "Mid", q: "Explain the difference between Path() and Query() classes.", a: "They are used for adding metadata and validation to path and query parameters respectively. Path() is for URL segments, Query() is for query strings.", type: "Conceptual" },
         { level: "Mid", q: "How do you validate a query parameter with a regular expression?", a: "By passing the regex argument to the Query() class: Query(..., regex='^fixedquery$').", type: "Coding" },
         { level: "Mid", q: "Can you have multiple path parameters in one URL?", a: "Yes, e.g., /users/{user_id}/items/{item_id}. Both will be available as function arguments.", type: "Conceptual" },
@@ -206,6 +221,9 @@ export const week5 = {
         { level: "Mid", q: "What is the difference between 'Optional[str]' and 'str = None'?", a: "They are functionally similar in FastAPI, but 'Optional' (from typing) is more explicit for static analysis tools.", type: "Conceptual" },
         { level: "Mid", q: "Can you use Pydantic models as Query parameters directly?", a: "Not natively like Body. You can use 'Annotated' with 'Query' or 'Depends' to achieve this.", type: "Scenario" },
         { level: "Mid", q: "How do you specify multiple examples for a query parameter?", a: "By passing a dictionary to the 'openapi_examples' argument in Query().", type: "Coding" },
+        { level: "Mid", q: "What is 'Query' class from fastapi?", a: "A utility to add extra validation and metadata to query parameters (min_length, regex, etc.).", type: "Conceptual" },
+        { level: "Mid", q: "What is 'Path' class from fastapi?", a: "A utility to add extra validation and metadata to path parameters.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Default Values' in Pydantic models.", a: "Values used if the field is missing in the JSON input; ensures the model instance is always valid.", type: "Conceptual" },
         { level: "Senior", q: "Why use 'gt' and 'ge' instead of checking inside the function?", a: "Using these in Path()/Query() allows FastAPI to automatically generate validation errors and include these constraints in the API documentation.", type: "Conceptual" },
         { level: "Senior", q: "What is the 'Required' ellipsis (...) in Query/Path?", a: "It tells FastAPI that a parameter is required even if it has a Query/Path metadata object attached.", type: "Conceptual" },
         { level: "Senior", q: "How does FastAPI differentiate between a path parameter and a query parameter?", a: "If a variable is declared in the path (inside {}), it's a path parameter. If not, and it's a simple type, it's a query parameter.", type: "Conceptual" },
@@ -220,7 +238,16 @@ export const week5 = {
         { level: "Senior", q: "What is the 'Queryset' equivalent in FastAPI for filtering via query parameters?", a: "There isn't one; you manually map query parameters to your database filter logic (SQLAlchemy filters, etc).", type: "Conceptual" },
         { level: "Senior", q: "How do you customize the 422 error response for specific parameters?", a: "By overriding the 'exception_handler' for 'RequestValidationError' and inspecting the error details.", type: "Coding" },
         { level: "Senior", q: "Explain 'Literal' types for parameter restriction.", a: "Using Literal['fast', 'slow'] restricts the input to exactly those two strings, improving type safety more than a generic string.", type: "Conceptual" },
-        { level: "Senior", q: "How do you implement 'Pagination' parameters consistently across an API?", a: "By creating a common Dependency function (e.g., get_pagination_params) and using Depends() in every route.", type: "Scenario" }
+        { level: "Senior", q: "How do you implement 'Pagination' parameters consistently across an API?", a: "By creating a common Dependency function (e.g., get_pagination_params) and using Depends() in every route.", type: "Scenario" },
+        { level: "Senior", q: "How do you handle 'Multiple Body' parameters?", a: "Using 'Body()' to tell FastAPI that multiple Pydantic models should be merged into a single JSON request body.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Form Data' handling in FastAPI.", a: "Using the 'Form' class; requires 'python-multipart' to parse non-JSON request bodies.", type: "Conceptual" },
+        { level: "Senior", q: "How do you validate a list of items in the request body?", a: "By using a type hint like 'List[Item]' or 'list[Item]' in the function argument.", type: "Coding" },
+        { level: "Senior", q: "How do you handle 'Request' object usage?", a: "Directly accessing the Starlette Request object for headers, cookies, or raw body access when needed.", type: "Conceptual" },
+        { level: "Junior", q: "What is a 'Dynamic Segment'?", a: "A part of the path enclosed in curly braces that acts as a variable.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Query String' structure.", a: "A list of key-value pairs separated by '&', starting after a '?' in the URL.", type: "Conceptual" },
+        { level: "Mid", q: "How to handle multiple file uploads?", a: "By using List[UploadFile] as a parameter type in the route function.", type: "Coding" },
+        { level: "Senior", q: "Explain 'StreamResponse' usage.", a: "Returning a generator to the client to send large data chunks without loading everything in memory.", type: "Scenario" },
+        { level: "Senior", q: "How to set custom response headers?", a: "By using the 'Response' parameter and modifying 'response.headers'.", type: "Coding" }
       ]
     },
     {
@@ -330,7 +357,15 @@ export const week5 = {
         { level: "Senior", q: "How do you customize 'JSON Schema generation' in Pydantic?", a: "By adding extra metadata to fields or overriding the '__get_pydantic_json_schema__' method on the model.", type: "Coding" },
         { level: "Senior", q: "What is the impact of heavy Pydantic models on API latency?", a: "Validation and serialization become CPU-bound tasks. Pydantic v2 (Rust) mitigates this significantly compared to v1.", type: "Conceptual" },
         { level: "Senior", q: "How do you use 'TypeAdapter' for validating non-BaseModel types?", a: "Create a 'TypeAdapter(List[str])' and call its 'validate_python()' method on the data.", type: "Coding" },
-        { level: "Senior", q: "How do you handle 'Circular Dependencies' between Pydantic models in different files?", a: "Using forward references (strings) in type hints and calling 'model_rebuild()' after both classes are defined.", type: "Scenario" }
+        { level: "Senior", q: "How do you handle 'Circular Dependencies' between Pydantic models in different files?", a: "Using forward references (strings) in type hints and calling 'model_rebuild()' after both classes are defined.", type: "Scenario" },
+        { level: "Junior", q: "What is 'BaseModel'?", a: "The base class for defining data schemas in Pydantic.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Field' vs 'Property'.", a: "Fields are part of the data schema; properties are calculated methods on the class instance.", type: "Conceptual" },
+        { level: "Mid", q: "How to exclude None values from JSON?", a: "Using model_dump(exclude_none=True).", type: "Coding" },
+        { level: "Senior", q: "Explain 'JSON Schema' export.", a: "Generating a standard JSON description of the Pydantic model for interoperability.", type: "Conceptual" },
+        { level: "Senior", q: "How to validate nested lists of objects?", a: "By defining a List[SubModel] type hint in the parent model.", type: "Coding" },
+        { level: "Junior", q: "What is Pydantic?", a: "A data validation and settings management library using Python type annotations.", type: "Conceptual" },
+        { level: "Mid", q: "How to handle optional fields in Pydantic?", a: "By using Optional[type] = None or field: type | None = None.", type: "Coding" },
+        { level: "Senior", q: "Explain Pydantic 'ConfigDict'.", a: "A way to configure model-level behavior like allowing extra fields or string stripping.", type: "Conceptual" }
       ]
     },
     {
@@ -406,14 +441,14 @@ export const week5 = {
         { level: "Junior", q: "Can a dependency be a simple function?", a: "Yes, any callable can be used as a dependency.", type: "Conceptual" },
         { level: "Junior", q: "How do you pass parameters to a dependency function?", a: "You don't call it yourself; FastAPI calls it. If you need parameters, you can use a class or a factory function.", type: "Conceptual" },
         { level: "Junior", q: "What is the Request object?", a: "A Starlette object containing all information about the incoming HTTP request, which can be injected into any route or dependency.", type: "Conceptual" },
-        { level: "Junior", q: "How do you handle teardown in a dependency?", a: "By using the 'yield' keyword instead of 'return'. Code after 'yield' runs after the response is sent.", type: "Coding" },
         { level: "Junior", q: "Can dependencies be async?", a: "Yes, and they are usually async if they perform I/O operations.", type: "Conceptual" },
         { level: "Junior", q: "Does a dependency run for every request?", a: "Yes, for every request that targets a route requiring that dependency.", type: "Conceptual" },
         { level: "Junior", q: "Basic concept of sub-dependencies?", a: "A dependency that itself requires another dependency to function.", type: "Conceptual" },
         { level: "Junior", q: "What is 'Depends(oauth2_scheme)'?", a: "A common dependency pattern used to extract and validate security tokens from the request.", type: "Coding" },
         { level: "Junior", q: "Can you name one built-in FastAPI security dependency?", a: "OAuth2PasswordBearer or HTTPBasic.", type: "Conceptual" },
         { level: "Junior", q: "How do you import Depends?", a: "from fastapi import Depends.", type: "Coding" },
-        { level: "Junior", q: "What is the return value of Depends()?", a: "FastAPI handles this internally; it doesn't return the dependency's value directly to the programmer during declaration.", type: "Conceptual" },
+        { level: "Junior", q: "What is 'Depends'?", a: "The function used to declare a dependency in a path operation.", type: "Conceptual" },
+        { level: "Junior", q: "What happens if a dependency fails?", a: "FastAPI returns the appropriate error (usually 401 or 400) and stops the request execution.", type: "Conceptual" },
         { level: "Mid", q: "Explain 'yield' dependencies.", a: "They allow you to perform setup code, yield a value to the view, and then perform teardown code after the request is finished.", type: "Conceptual" },
         { level: "Mid", q: "How do you use sub-dependencies?", a: "Simply by having one dependency function use 'Depends' to call another dependency function.", type: "Coding" },
         { level: "Mid", q: "Why use DI instead of global variables for DB sessions?", a: "DI allows for easier testing (overriding), better resource management (closing sessions), and avoids hidden state issues.", type: "Scenario" },
@@ -440,7 +475,15 @@ export const week5 = {
         { level: "Senior", q: "What is the impact of synchronous dependencies on an asynchronous app?", a: "FastAPI runs sync dependencies in a threadpool, so they don't block the event loop, but they do have the overhead of context switching.", type: "Conceptual" },
         { level: "Senior", q: "How do you implement a 'Singleton-like' dependency across requests?", a: "By defining the resource outside the dependency function (global scope) and returning it within the dependency.", type: "Scenario" },
         { level: "Senior", q: "Explain 'Security Scopes' in FastAPI dependencies.", a: "They allow defining specific permissions (scopes) for OAuth2 tokens and verifying them within the same dependency chain.", type: "Conceptual" },
-        { level: "Senior", q: "How do you handle 'Context Managers' in dependencies without 'yield'?", a: "You can't easily; 'yield' is the standard way to bridge Context Managers into the FastAPI DI system.", type: "Scenario" }
+        { level: "Senior", q: "How do you handle 'Context Managers' in dependencies without 'yield'?", a: "You can't easily; 'yield' is the standard way to bridge Context Managers into the FastAPI DI system.", type: "Scenario" },
+        { level: "Junior", q: "What is 'Depends'?", a: "The utility used to declare requirements for a route or another dependency.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Shared Dependencies'.", a: "When multiple routes use the same dependency, reducing redundant code.", type: "Conceptual" },
+        { level: "Mid", q: "How to inject settings into routes?", a: "Using a dependency that calls 'get_settings()' to provide config data.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Sub-router' dependencies.", a: "Applying a dependency to an entire group of routes defined in a specific APIRouter.", type: "Conceptual" },
+        { level: "Senior", q: "How to handle 'Clean-up' logic in DI?", a: "Using the 'yield' keyword to perform actions after the response is sent.", type: "Coding" },
+        { level: "Junior", q: "Can a dependency return a value?", a: "Yes, the return value is what gets injected into the route function.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'Sub-dependencies' caching.", a: "FastAPI caches the result of a dependency within a single request by default (use_cache=True).", type: "Conceptual" },
+        { level: "Senior", q: "How to override dependencies in tests?", a: "By using app.dependency_overrides[original] = override.", type: "Coding" }
       ]
     },
     {
@@ -550,7 +593,15 @@ export const week5 = {
         { level: "Senior", q: "Explain 'TrustedHostMiddleware' security benefits.", a: "It prevents 'HTTP Host Header' attacks by only allowing requests that match a specific list of allowed hostnames.", type: "Conceptual" },
         { level: "Senior", q: "How do you implement a 'Circuit Breaker' in a FastAPI backend?", a: "By using a middleware (or dependency) that tracks failure rates of downstream services and 'opens the circuit' (returns early error) if failures exceed a threshold.", type: "Scenario" },
         { level: "Senior", q: "How do you handle 'CORS on pre-flight failure'?", a: "Ensure the 'CORSMiddleware' is added FIRST in the app so it can handle OPTIONS requests before any other logic or authentication blocks them.", type: "Scenario" },
-        { level: "Senior", q: "What is 'Pure ASGI' middleware?", a: "Middleware that works at the lowest ASGI specification level (handling scope, receive, send) without dependencies on FastAPI/Starlette classes.", type: "Conceptual" }
+        { level: "Senior", q: "What is 'Pure ASGI' middleware?", a: "Middleware that works at the lowest ASGI specification level (handling scope, receive, send) without dependencies on FastAPI/Starlette classes.", type: "Conceptual" },
+        { level: "Junior", q: "How to add a background task?", a: "Inject BackgroundTasks and call .add_task(func, *args).", type: "Coding" },
+        { level: "Mid", q: "Explain 'CORS' pre-flight.", a: "An OPTIONS request sent by the browser to verify permissions for cross-origin requests.", type: "Conceptual" },
+        { level: "Mid", q: "How to log every request URL?", a: "Using middleware that prints 'request.url' before calling the next handler.", type: "Coding" },
+        { level: "Senior", q: "Explain 'Custom Exception' handlers.", a: "Using @app.exception_handler to catch specific errors and return custom JSON responses.", type: "Coding" },
+        { level: "Senior", q: "How to use 'GZip' compression?", a: "By adding GZipMiddleware to the app to shrink outgoing response bodies.", type: "Coding" },
+        { level: "Junior", q: "What is a Background Task?", a: "A function that runs after the response has been sent to the user.", type: "Conceptual" },
+        { level: "Mid", q: "Explain 'CORS' pre-flight requests.", a: "OPTIONS requests sent by browsers to check if cross-origin access is allowed.", type: "Conceptual" },
+        { level: "Senior", q: "How to handle 'lifespan' events?", a: "By using a context manager to manage startup and shutdown logic for the entire app.", type: "Coding" }
       ]
     }
   ]
